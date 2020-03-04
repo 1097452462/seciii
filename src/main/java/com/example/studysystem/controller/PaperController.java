@@ -1,5 +1,4 @@
 package com.example.studysystem.controller;
-
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SearchForm;
 import com.example.studysystem.service.PaperService;
