@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value = {"/paper"})
 public class PaperController {
-
     @Autowired
     private PaperService paperService;
     @ResponseBody
