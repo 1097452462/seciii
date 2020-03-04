@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.studysystem.dao.PaperDao" >
+    <resultMap id="BaseResultMap" type="com.example.studysystem.entity.Paper" >
+
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="Document_title" property="Document_title" jdbcType="LONGVARCHAR" />
+        <result column="Authors" property="Authors" jdbcType="LONGVARCHAR" />
+        <result column="Author_Affiliations" property="Author_Affiliations" jdbcType="LONGVARCHAR" />
+        <result column="Publication_Title" property="Publication_Title" jdbcType="LONGVARCHAR" />
+        <result column="Date_Added_To_Xplore" property="Date_Added_To_Xplore" jdbcType="LONGVARCHAR" />
+        <result column="Publication_Year" property="Publication_Year" jdbcType="VARCHAR" />
+        <result column="Volume" property="Volume" jdbcType="LONGVARCHAR" />
+        <result column="Issue" property="Issue" jdbcType="LONGVARCHAR" />
+        <result column="Start_Page" property="Start_Page" jdbcType="VARCHAR" />
+        <result column="End_Page" property="End_Page" jdbcType="VARCHAR" />
+        <result column="Abstract" property="Abstract" jdbcType="LONGVARCHAR" />
+        <result column="ISSN" property="ISSN" jdbcType="LONGVARCHAR" />
+        <result column="ISBNs" property="ISBNs" jdbcType="LONGVARCHAR" />
+        <result column="DOI" property="DOI" jdbcType="LONGVARCHAR" />
+        <result column="Funding_Information" property="Funding_Information" jdbcType="LONGVARCHAR" />
+        <result column="PDF_Link" property="PDF_Link" jdbcType="LONGVARCHAR" />
+        <result column="Author_Keywords" property="Author_Keywords" jdbcType="LONGVARCHAR" />
+        <result column="IEEE_Terms" property="IEEE_Terms" jdbcType="LONGVARCHAR" />
+        <result column="INSPEC_Controlled_Terms" property="INSPEC_Controlled_Terms" jdbcType="LONGVARCHAR" />
+        <result column="INSPEC_Non_Controlled_Terms" property="INSPEC_Non_Controlled_Terms" jdbcType="LONGVARCHAR" />
+        <result column="Mesh_Terms" property="Mesh_Terms" jdbcType="LONGVARCHAR" />
+        <result column="Article_Citation_Count" property="Article_Citation_Count" jdbcType="VARCHAR" />
+        <result column="Reference_Count" property="Reference_Count" jdbcType="VARCHAR" />
+        <result column="License" property="License" jdbcType="LONGVARCHAR" />
+        <result column="Online_Date" property="Online_Date" jdbcType="LONGVARCHAR" />
+        <result column="Issue_Date" property="Issue_Date" jdbcType="LONGVARCHAR" />
+        <result column="Meeting_Date" property="Meeting_Date" jdbcType="LONGVARCHAR" />
+        <result column="Publisher" property="Publisher" jdbcType="VARCHAR" />
+        <result column="Document_Identifier" property="Document_Identifier" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id,
+    Document_title,
+    Authors,
+    Author_Affiliations,
+    Publication_Title,
+    Date_Added_To_Xplore,
+    Publication_Year,
+    Volume,
+    Issue,
+    Start_Page,
+    End_Page,
+    Abstract,
+    ISSN,
+    ISBNs,
+    DOI,
+    Funding_Information,
+    PDF_Link,
+    Author_Keywords,
+    IEEE_Terms,
+    INSPEC_Controlled_Terms,
+    INSPEC_Non_Controlled_Terms,
+    Mesh_Terms,
+    Article_Citation_Count,
+    Reference_Count,
+    License,
+    Online_Date,
+    Issue_Date,
+    Meeting_Date,
+    Publisher,
+    Document_Identifier
+    </sql>
+
+
+    <select id="getPapers"  resultType="Paper">
+        SELECT * FROM paper
+    </select>
+
+
+</mapper>

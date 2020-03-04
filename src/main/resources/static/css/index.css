@@ -1,0 +1,58 @@
+.detail{
+    border:1px  solid #1012ff;
+    color: blueviolet;
+    height: 40px;
+
+    text-align: center;
+    opacity: 0.5;
+    border-collapse: collapse;
+}
+.container{
+    border:1px  solid #1012ff;
+    color: blueviolet;
+    height: 40px;
+    width: 20%;
+    text-align: center;
+    opacity: 0.5;
+    border-collapse: collapse;
+}
+.smallcontainer{
+    border:1px  solid #1012ff;
+    color: blueviolet;
+    height: 40px;
+    width: 10px;
+    text-align: center;
+    opacity: 0.5;
+    border-collapse: collapse;
+}
+/* 遮盖层 */
+.box-mask{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,.5);
+    display: none;
+}
+/* 模态框 */
+.box-modal{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -75px;
+    width: 400px;
+    height: 400px;
+    text-align: center;
+    line-height: 150px;
+    background: #fff;
+    border-radius: 4px;
+}
+.box-modal span{
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: -55px;
+}

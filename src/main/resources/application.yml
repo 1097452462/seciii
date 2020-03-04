@@ -1,0 +1,14 @@
+server:
+  port: 4396
+
+spring:
+  datasource:
+    name: docs
+    url: jdbc:mysql://127.0.0.1:3306/docs
+    username: root
+    password: XIAhz990306
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:xml/*.xml #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.example.studysystem.entity  # 注意：对应实体类的路径

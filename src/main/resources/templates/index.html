@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" type="text/css" href="/css/index.css"/>
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.js"></script>
+    <!-- 引入js脚本文件 -->
+    <script src="/js/request.js"></script>
+    <script src="/js/index.js"></script>
+</head>
+<body>
+<div align="center">
+    <h1>学术图谱系统</h1>
+
+<input id="s_author" type="txt"  placeholder="Authors" align="center" style="width:20%;height:25px">
+    <input id="s_department" type="txt"  placeholder="Author_Affiliations" align="center" style="width:20%;height:25px">
+    <input id="s_meeting" type="txt"  placeholder="Publication_Title" align="center" style="width:20%;height:25px">
+    <input id="s_pointWord" type="txt"  placeholder="Author_Keywords" align="center" style="width:20%;height:25px">
+<button id="search" type="button" class="btn btn-primary input-interval btn-block">搜索</button>
+<table class="table" align="center" border="1px" style="border: green">
+    <thead>
+    <tr align="center" style="border: green;width: 100%" >
+
+        <th class="container">Authors</th>
+        <th class="container">Author_Affiliations</th>
+        <th class="container">Publication_Title</th>
+        <th class="container">Author_Keywords</th>
+
+    </tr>
+    </thead>
+    <tbody id="paper-list">
+    </tbody>
+</table>
+    <div class="box-mask"></div>
+    <div class="box-modal">恭喜你关注成功<span class="close">X</span></div>
+
+
+
+
+</div>
+</body>
+</html>
