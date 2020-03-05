@@ -6,7 +6,7 @@ spring:
     name: docs
     url: jdbc:mysql://127.0.0.1:3306/docs
     username: root
-    password: XIAhz990306
+    password: z123456.
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   servlet:
