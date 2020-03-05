@@ -8,8 +8,11 @@ import com.example.studysystem.entity.SearchForm;
 import com.example.studysystem.entity.SimplePaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +21,30 @@ public class PaperServiceImpl implements PaperService {
     private PaperDao paperDao;
     @Autowired
     private readCSV readCSV;
+
+    @Override
+    public Response addFile(MultipartFile file) {//System.out.println("26");
+       try{
+           String fileName = file.getOriginalFilename();
+           String suffix = fileName.substring(fileName.lastIndexOf('.'));
+           String newFileName = new Date().getTime() + suffix;//System.out.println(newFileName);
+           File directory = new File("./");
+           String path2=directory.getAbsolutePath();
+           path2=path2.substring(0,path2.length()-1);
+           File newFile = new File(path2 + "src/main/resources/excel/" + newFileName);
+           try {
+               file.transferTo(newFile);
+           }
+           catch (Exception e){
+               e.printStackTrace();
+               return (Response.buildFailure("失败"));
+           }
+           return Response.buildSuccess();
+       }catch (Exception e){
+           e.printStackTrace();
+           return (Response.buildFailure("失败"));
+       }
+    }
 
     @Override
     public Response plugPapers(){
@@ -45,14 +72,58 @@ public class PaperServiceImpl implements PaperService {
         try{
             List<Paper> papers= paperDao.getPapers();
             List<Paper> ans=new ArrayList<>();
-            for(Paper paper:papers){
-                if((searchForm.getAuthors().isEmpty()||paper.getAuthors().contains(searchForm.getAuthors()))&&
-                        (searchForm.getAuthor_Affiliations().isEmpty()||paper.getAuthor_Affiliations().contains(searchForm.getAuthor_Affiliations()))&&
-                        (searchForm.getPublication_Title().isEmpty()||paper.getPublication_Title().contains(searchForm.getPublication_Title()))&&
-                        (searchForm.getAuthor_Keywords().isEmpty()||paper.getAuthor_Keywords().contains(searchForm.getAuthor_Keywords()))
-                )ans.add(paper);
+
+            for(Paper paper:papers) {
+                boolean flag1=true, flag2=true, flag3=true, flag4 = true;
+
+                if (!searchForm.getAuthors().isEmpty()) {
+                    String temp = searchForm.getAuthors().toLowerCase();
+                    temp.replaceAll(";", " ");
+                    String list[] = temp.split(" ");
+                    for (String x : list) {
+                        if (!paper.getAuthors().toLowerCase().contains(x)){
+                            flag1=false;
+                            break;
+                        }
+                    }
+                }
+                if (!searchForm.getAuthor_Affiliations().isEmpty()) {
+                    String temp = searchForm.getAuthor_Affiliations().toLowerCase();
+                    temp.replaceAll(";", " ");
+                    String list[] = temp.split(" ");
+                    for (String x : list) {
+                        if (!paper.getAuthor_Affiliations().toLowerCase().contains(x)){
+                            flag2=false;
+                            break;
+                        }
+                    }
+                }
+                if (!searchForm.getPublication_Title().isEmpty()) {
+                    String temp = searchForm.getPublication_Title().toLowerCase();
+                    temp.replaceAll(";", " ");
+                    String list[] = temp.split(" ");
+                    for (String x : list) {
+                        if (!paper.getPublication_Title().toLowerCase().contains(x)){
+                            flag3=false;
+                            break;
+                        }
+                    }
+                }
+                if (!searchForm.getAuthor_Keywords().isEmpty()) {
+                    String temp = searchForm.getAuthor_Keywords().toLowerCase();
+                    temp.replaceAll(";", " ");
+                    String list[] = temp.split(" ");
+                    for (String x : list) {
+                        if (!paper.getAuthor_Keywords().toLowerCase().contains(x)){
+                            flag4=false;
+                            break;
+                        }
+                    }
+                }
+                if(flag1&&flag2&&flag3&&flag4)ans.add(paper);
             }
-            System.out.println(ans.size());
+
+            //System.out.println(ans.size());
             return Response.buildSuccess(ans);
         }catch (Exception e){
         e.printStackTrace();

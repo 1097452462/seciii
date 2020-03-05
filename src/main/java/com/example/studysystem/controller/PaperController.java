@@ -5,12 +5,19 @@ import com.example.studysystem.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+
+import java.io.File;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = {"/paper"})
 public class PaperController {
     @Autowired
     private PaperService paperService;
+
+    //获得所有论文信息
     @ResponseBody
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public Response getPapers(){
@@ -19,17 +26,30 @@ public class PaperController {
         return  response;
     }
 
+    //更新数据库（新增文件之后）
     @ResponseBody
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Response updatePapers(){
+        //System.out.println("25");
         Response response= paperService.plugPapers();
         return  response;
     }
 
+    //搜索论文
     @ResponseBody
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public Response searchUser(@RequestBody SearchForm searchForm){
         Response response= paperService.searchPapers(searchForm);
         return  response;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/addFile",method = RequestMethod.POST)
+    @PostMapping(value = "/file2")
+    public Response uploadFile(@RequestParam("file") MultipartFile file){//System.out.println("49");
+        Response a=paperService.addFile(file);
+        if(a.getSuccess())return paperService.plugPapers();
+        return a;
+    }
+
 }

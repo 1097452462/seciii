@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,13 +16,34 @@ import java.util.List;
 @Mapper
 @Component
 public class readCSV {
+    //用与记录哪些文件以及插入到数据库，避免重复
+    ArrayList<String> allreadyUpdate=new ArrayList<>();
+
+    private boolean alreadyPlus(String name){
+        if(allreadyUpdate.size()==0)return false;
+        for(String s:allreadyUpdate){
+            if(s.equals(name))
+                return true;
+        }
+        return false;
+    }
+
     public Response tranfData()
     {
         try{
-            String s1="src/main/resources/excel/ase13_15_16_17_19.csv";
-            String s2="src/main/resources/excel/icse15_16_17_18_19.csv";
-            readCSV_to_MySQL(s1);
-            readCSV_to_MySQL(s2);
+            String path="src/main/resources/excel/";
+            File file=new File(path);
+            File[] fs=file.listFiles();
+            for(File f:fs){
+                //检查是否该文件已经更新
+                if(alreadyPlus(f.getName()))continue;
+                if(!f.isDirectory()&&f.getName().substring(f.getName().length()-4).equals(".csv")){
+                    String s=f.getPath();//System.out.println(s);
+                    readCSV_to_MySQL(s);
+                    allreadyUpdate.add(f.getName());
+                }
+            }
+
             return Response.buildSuccess();
         }catch (Exception e){
             e.printStackTrace();
