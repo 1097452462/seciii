@@ -70,8 +70,7 @@ public class MavenWrapperDownloader {
                         mavenWrapperPropertyFileInputStream.close();
                     }
                 } catch (IOException e) {
-                    // Ignore ...
-                }
+                    // Ignore ...nmsl
             }
         }
         System.out.println("- Downloading from: " + url);
