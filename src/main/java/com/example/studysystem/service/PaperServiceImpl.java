@@ -23,7 +23,7 @@ public class PaperServiceImpl implements PaperService {
     public Response plugPapers(){
         try{
             readCSV.tranfData();
-            return Response.buildSuccess();
+            return Response.buildSuccess(paperDao.getPapers());
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));

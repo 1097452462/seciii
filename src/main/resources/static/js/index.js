@@ -33,6 +33,22 @@ $(document).ready(function() {
 
     });
 
+    $("#update").click(function() {
+
+        postRequest(
+            '/paper/update',
+            null,
+            function (res) {
+                papers=res.content;
+                display(papers);
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+
+    });
+
     $('.close').click(function(){
         $('.box-mask, .box-modal').css('display', 'none');
     })

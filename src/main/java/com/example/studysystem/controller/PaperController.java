@@ -20,6 +20,13 @@ public class PaperController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public Response updatePapers(){
+        Response response= paperService.plugPapers();
+        return  response;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public Response searchUser(@RequestBody SearchForm searchForm){
         Response response= paperService.searchPapers(searchForm);
