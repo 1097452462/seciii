@@ -13,6 +13,11 @@ public class PaperController {
     @Autowired
     private PaperService paperService;
 
+    @RequestMapping(value = "/manage")
+    public String jumpToManage(){
+        return "manage.html";
+    }
+
     //获得所有论文信息
     @ResponseBody
     @RequestMapping(value = "/get",method = RequestMethod.GET)
