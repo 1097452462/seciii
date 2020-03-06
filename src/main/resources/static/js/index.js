@@ -23,6 +23,7 @@ $(document).ready(function() {
                 processData: false, // 告诉jQuery不要去处理发送的数据
                 contentType: false, // 告诉jQuery不要去设置Content-Type请求头
                 success: function(){
+                    window.location.reload();
                     alert("成功");
                 }
             })
@@ -32,7 +33,7 @@ $(document).ready(function() {
 
 
     getRequest(
-        '/paper/getSimplePaper',
+        '/paper/get',
         function (res) {
             papers=res.content;
             display(papers);
@@ -54,8 +55,8 @@ $(document).ready(function() {
             '/paper/search',
             searchform,
             function (res) {
-                papers=res.content;
-                display(papers);
+               papers=res.content;
+               display(papers);
             },
             function (error) {
                 alert(JSON.stringify(error));
@@ -64,21 +65,8 @@ $(document).ready(function() {
 
     });
 
-    $("#update").click(function() {
 
-        postRequest(
-            '/paper/update',
-            null,
-            function (res) {
-                papers=res.content;
-                display(papers);
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
 
-    });
 
     $('.close').click(function(){
         $('.box-mask, .box-modal').css('display', 'none');

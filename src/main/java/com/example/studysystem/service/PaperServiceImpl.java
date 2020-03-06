@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PaperServiceImpl implements PaperService {
@@ -59,11 +60,12 @@ public class PaperServiceImpl implements PaperService {
         }
     }
 
+
     @Override
-    public Response getSimplePapers() {
+    public Response getPapers() {
         try{
-            List<SimplePaper> simplePapers =simplePaperDao.getSimplePapers();
-            return Response.buildSuccess(simplePapers);
+            List<Paper> papers =paperDao.getPapers();
+            return Response.buildSuccess(papers);
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
@@ -71,30 +73,36 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public void handle(List<SimplePaper> origin) {
-       int n=origin.size();
-       List<SimplePaper> after=new ArrayList<>();
-       after.add(origin.get(0));
-       for(int i=1;i<n;i++){
-
-       }
-
-    }
-
-
-    public Response getPaperById(int id) {
+    public Response orderAuthors() {
         try{
-            return (Response.buildSuccess(paperDao.getPapersById(id)));
+            List<Paper> papers =new ArrayList<>();
+            //从simplePaper里查，返回的papers是按照作者出现次数排序，比如开头连续10篇文章都是同一个作者，然后连续8篇是另一个作者
+
+            return Response.buildSuccess(papers);
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
         }
     }
+
+    @Override
+    public Response orderOrganizations() {
+        try{
+            List<Paper> papers =new ArrayList<>();
+            //从simplePaper里查，返回的papers是按照机构出现次数排序，比如开头连续10篇文章都是同一个机构，然后连续8篇是另一个机构
+
+            return Response.buildSuccess(papers);
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
     @Override
     public Response searchPapers(SimplePaper simplePaper){
         try{
             List<SimplePaper> simplePapers= simplePaperDao.getSimplePapers();
-            List<SimplePaper> ans=new ArrayList<>();
+            List<Integer> num=new ArrayList<>();
 
             for(SimplePaper p:simplePapers) {
                 boolean flag1=true, flag2=true, flag3=true, flag4 = true;
@@ -143,11 +151,15 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
-                if(flag1&&flag2&&flag3&&flag4)ans.add(p);
+                if(flag1&&flag2&&flag3&&flag4)num.add(p.getPaper_id());
             }
 
-            //System.out.println(ans.size());
-            return Response.buildSuccess(ans);
+
+            List newList = num.stream().distinct().collect(Collectors.toList());
+            List<Paper> papers=paperDao.getPapersByIds(newList);
+
+            System.out.println(papers.size());
+            return Response.buildSuccess(papers);
         }catch (Exception e){
         e.printStackTrace();
         return (Response.buildFailure("失败"));

@@ -15,21 +15,13 @@ public class PaperController {
 
     //获得所有论文信息
     @ResponseBody
-    @RequestMapping(value = "/getSimplePaper",method = RequestMethod.GET)
-    public Response getSimplePapers(){
+    @RequestMapping(value = "/get",method = RequestMethod.GET)
+    public Response getpapers(){
         //Response flag=paperService.plugPapers();System.out.println(flag);
-        Response response= paperService.getSimplePapers();
+        Response response= paperService.getPapers();
         return  response;
     }
 
-    //更新数据库（新增文件之后）
-    @ResponseBody
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public Response updatePapers(){
-        //System.out.println("25");
-        Response response= paperService.plugPapers();
-        return  response;
-    }
 
     //搜索论文
     @ResponseBody
@@ -39,6 +31,7 @@ public class PaperController {
         return  response;
     }
 
+    //新增文件并更新数据库
     @ResponseBody
     @RequestMapping(value = "/addFile",method = RequestMethod.POST)
     @PostMapping(value = "/file2")

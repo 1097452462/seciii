@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface PaperDao {
-    List<Paper> getPapersById(int id);
-
+    List<Paper> getPapers();
+    List<Paper> getPapersByIds(List<Integer> id);
     //List<simplePaperDao> searchPapers(@Param("searchForm") SearchForm searchForm);
 }

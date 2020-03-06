@@ -11,9 +11,10 @@ import java.util.List;
 public interface PaperService {
     Response addFile(MultipartFile file);
     Response plugPapers();
-    Response getSimplePapers();
-    void handle(List<SimplePaper> origin);
-    Response getPaperById(int id);
+
+    Response getPapers();
+    Response orderAuthors();
+    Response orderOrganizations();
 
     Response searchPapers(SimplePaper simplePaper);
 }

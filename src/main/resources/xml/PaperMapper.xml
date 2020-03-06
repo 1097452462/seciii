@@ -67,9 +67,18 @@
     Document_Identifier
     </sql>
 
+    <select id="getPapers" resultType="Paper">
+        select * from paper
+    </select>
 
-    <select id="getPapers"  resultType="Paper">
-        SELECT * FROM paper
+    <select id="getPapersByIds"  resultType="Paper" parameterType="java.util.List">
+        select * from paper
+        where id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+
     </select>
 
 
