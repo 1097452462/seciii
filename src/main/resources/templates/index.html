@@ -10,10 +10,46 @@
     <!-- 引入js脚本文件 -->
     <script src="/js/request.js"></script>
     <script src="/js/index.js"></script>
+    <style>
+
+        input::-webkit-input-placeholder {
+            /* placeholder颜色  */
+            color: rgba(255, 5, 14, 0.54);
+            /* placeholder字体大小  */
+            font-size: 16px;
+        }
+    </style>
+
 </head>
 <body>
 <div align="center">
     <h1>学术图谱系统</h1>
+    <div align="left">
+    <div style=" background-color: #b10d12;
+         width: 15%;
+         height: 40px;
+         text-align: center">
+        <a href="index.html" >总览</a>
+    </div>
+        <div style=" background-color: #b1671f;
+         width: 15%;
+         height: 40px;
+         text-align: center">
+            <a href="index.html" >总览</a>
+        </div>
+        <div style=" background-color: #abb123;
+         width: 15%;
+         height: 40px;
+         text-align: center">
+            <a href="index.html" >总览</a>
+        </div>
+        <div style=" background-color: #5db12f;
+         width: 15%;
+         height: 40px;
+         text-align: center">
+            <a href="index.html" >总览</a>
+        </div>
+    </div>
 <br>
     <div >新增数据库文件(csv格式)
     <input type="file" id="newFile"  width="30%">
@@ -22,27 +58,35 @@
     </button>
     </div>
 <br><br>
-<input id="s_author" type="txt"  placeholder="Authors" align="center" style="width:14%;height:25px">
-    <input id="s_department" type="txt"  placeholder="Author_Affiliations" align="center" style="width:14%;height:25px">
-    <input id="s_meeting" type="txt"  placeholder="Publication_Title" align="center" style="width:14%;height:25px">
-    <input id="s_pointWord" type="txt"  placeholder="Author_Keywords" align="center" style="width:14%;height:25px">
-    <button id="search" type='button' style="background-color: #cbff64;border: 2px solid #2994af;color: #2616ff;
-               padding: 7px 15px;text-align: center;border-radius: 6px;text-decoration: none;display: inline-block;
-                font-size:13px">搜索</button>
-<br><br>
-<table class="table" align="center" border="1px" style="border: green">
-    <thead>
-    <tr align="center" style="border: green;width: 100%" >
 
-        <th class="container">Authors</th>
-        <th class="container">Author_Affiliations</th>
-        <th class="container">Publication_Title</th>
-        <th class="container">Author_Keywords</th>
+<table class="table" align="center" border="1px" style="border: #152067">
+    <thead>
+    <tr align="center" style="width: 100% border-box" >
+
+        <th width="12%" >
+            <input id="s_author" type="txt"  placeholder="Authors" style="width: 99%; " >
+        </th>
+        <th width="20%">
+            <input id="s_department" type="txt"  placeholder="Author_Affiliations" style="width: 99%; " >
+        </th>
+        <th width="24%">
+            <input id="s_meeting" type="txt"  placeholder="Publication_Title" style="width: 99%; " >
+        </th>
+        <th width="24%">
+            <input id="s_pointWord" type="txt"  placeholder="Author_Keywords" style="width: 99%; " >
+        </th>
+        <th align="left">
+            <button id="search" type='button' style="  background-color: #cbff64;border: 2px solid #2994af;color: #2616ff;
+               padding: 0px 10px;text-align: center;border-radius: 6px;text-decoration: none;display: inline-block;
+                font-size:15px">搜索</button>
+        </th>
 
     </tr>
     </thead>
-    <tbody id="paper-list">
-    </tbody>
+
+            <tbody id="paper-list" style="border: green">
+
+
 </table>
     <div class="box-mask"></div>
     <div class="box-modal">论文详情<span class="close">X</span>
