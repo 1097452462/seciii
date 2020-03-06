@@ -4,7 +4,6 @@ import com.example.studysystem.csv.readCSV;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
-import com.example.studysystem.entity.SearchForm;
 import com.example.studysystem.entity.SimplePaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +67,7 @@ public class PaperServiceImpl implements PaperService {
         }
     }
     @Override
-    public Response searchPapers(SearchForm searchForm){
+    public Response searchPapers(SimplePaper simplePaper){
         try{
             List<Paper> papers= paperDao.getPapers();
             List<Paper> ans=new ArrayList<>();
@@ -76,8 +75,8 @@ public class PaperServiceImpl implements PaperService {
             for(Paper paper:papers) {
                 boolean flag1=true, flag2=true, flag3=true, flag4 = true;
 
-                if (!searchForm.getAuthors().isEmpty()) {
-                    String temp = searchForm.getAuthors().toLowerCase();
+                if (!simplePaper.getAuthors().isEmpty()) {
+                    String temp = simplePaper.getAuthors().toLowerCase();
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
@@ -87,8 +86,8 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
-                if (!searchForm.getAuthor_Affiliations().isEmpty()) {
-                    String temp = searchForm.getAuthor_Affiliations().toLowerCase();
+                if (!simplePaper.getAuthor_Affiliations().isEmpty()) {
+                    String temp = simplePaper.getAuthor_Affiliations().toLowerCase();
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
@@ -98,8 +97,8 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
-                if (!searchForm.getPublication_Title().isEmpty()) {
-                    String temp = searchForm.getPublication_Title().toLowerCase();
+                if (!simplePaper.getPublication_Title().isEmpty()) {
+                    String temp = simplePaper.getPublication_Title().toLowerCase();
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
@@ -109,8 +108,8 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
-                if (!searchForm.getAuthor_Keywords().isEmpty()) {
-                    String temp = searchForm.getAuthor_Keywords().toLowerCase();
+                if (!simplePaper.getAuthor_Keywords().isEmpty()) {
+                    String temp = simplePaper.getAuthor_Keywords().toLowerCase();
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {

@@ -2,10 +2,10 @@ package com.example.studysystem.entity;
 
 public class SimplePaper {
     private int id;
-    private String author;
-    private String department;
-    private String meeting;
-    private String pointWord;
+    private String Authors;
+    private String Author_Affiliations;
+    private String Publication_Title;
+    private String Author_Keywords;
 
     public int getId() {
         return id;
@@ -14,38 +14,36 @@ public class SimplePaper {
     public void setId(int id) {
         this.id = id;
     }
-    public String getAuthor() {
-        return author;
+
+    public String getAuthors() {
+        return Authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(String authors) {
+        Authors = authors;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getAuthor_Affiliations() {
+        return Author_Affiliations;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setAuthor_Affiliations(String author_Affiliations) {
+        Author_Affiliations = author_Affiliations;
     }
 
-    public String getMeeting() {
-        return meeting;
+    public String getPublication_Title() {
+        return Publication_Title;
     }
 
-    public void setMeeting(String metting) {
-        this.meeting = metting;
+    public void setPublication_Title(String publication_Title) {
+        Publication_Title = publication_Title;
     }
 
-    public String getPointWord() {
-        return pointWord;
+    public String getAuthor_Keywords() {
+        return Author_Keywords;
     }
 
-    public void setPointWord(String pointWord) {
-        this.pointWord = pointWord;
+    public void setAuthor_Keywords(String author_Keywords) {
+        Author_Keywords = author_Keywords;
     }
-
-
-
 }

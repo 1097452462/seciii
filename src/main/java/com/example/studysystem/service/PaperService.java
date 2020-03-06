@@ -1,7 +1,7 @@
 package com.example.studysystem.service;
 
 import com.example.studysystem.entity.Response;
-import com.example.studysystem.entity.SearchForm;
+import com.example.studysystem.entity.SimplePaper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,5 +10,5 @@ public interface PaperService {
     Response addFile(MultipartFile file);
     Response plugPapers();
     Response getPapers();
-    Response searchPapers(SearchForm searchForm);
+    Response searchPapers(SimplePaper simplePaper);
 }
