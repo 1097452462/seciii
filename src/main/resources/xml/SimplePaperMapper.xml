@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.studysystem.dao.SimplePaperDao" >
+    <resultMap id="BaseResultMap" type="com.example.studysystem.entity.SimplePaper" >
+
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <id column="paper_id" property="paper_id" jdbcType="INTEGER" />
+        <id column="Authors" property="Authors" jdbcType="LONGVARCHAR" />
+        <id column="Author_Affiliations" property="Author_Affiliations" jdbcType="LONGVARCHAR" />
+        <id column="Publication_Title" property="Publication_Title" jdbcType="LONGVARCHAR" />
+        <id column="Author_Keywords" property="Author_Keywords" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id,
+    paper_id,
+    Authors,
+    Author_Affliations,
+    Publication_Title,
+    Author_Keywords
+    </sql>
+
+
+    <select id="getSimplePapers"  resultType="SimplePaper">
+        SELECT * FROM simplepaper
+    </select>
+
+
+</mapper>

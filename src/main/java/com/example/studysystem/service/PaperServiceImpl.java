@@ -2,6 +2,7 @@ package com.example.studysystem.service;
 
 import com.example.studysystem.csv.readCSV;
 import com.example.studysystem.dao.PaperDao;
+import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SimplePaper;
@@ -18,6 +19,8 @@ import java.util.List;
 public class PaperServiceImpl implements PaperService {
     @Autowired
     private PaperDao paperDao;
+    @Autowired
+    private SimplePaperDao simplePaperDao;
     @Autowired
     private readCSV readCSV;
 
@@ -49,18 +52,39 @@ public class PaperServiceImpl implements PaperService {
     public Response plugPapers(){
         try{
             readCSV.tranfData();
-            return Response.buildSuccess(paperDao.getPapers());
+            return Response.buildSuccess(simplePaperDao.getSimplePapers());
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
         }
     }
 
-    public Response getPapers() {
+    @Override
+    public Response getSimplePapers() {
         try{
-            List<Paper> papers= paperDao.getPapers();//System.out.println(papers.size());
-            //System.out.println(papers.get(0).getAuthors());
-            return Response.buildSuccess(papers);
+            List<SimplePaper> simplePapers =simplePaperDao.getSimplePapers();
+            return Response.buildSuccess(simplePapers);
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public void handle(List<SimplePaper> origin) {
+       int n=origin.size();
+       List<SimplePaper> after=new ArrayList<>();
+       after.add(origin.get(0));
+       for(int i=1;i<n;i++){
+
+       }
+
+    }
+
+
+    public Response getPaperById(int id) {
+        try{
+            return (Response.buildSuccess(paperDao.getPapersById(id)));
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
@@ -69,10 +93,10 @@ public class PaperServiceImpl implements PaperService {
     @Override
     public Response searchPapers(SimplePaper simplePaper){
         try{
-            List<Paper> papers= paperDao.getPapers();
-            List<Paper> ans=new ArrayList<>();
+            List<SimplePaper> simplePapers= simplePaperDao.getSimplePapers();
+            List<SimplePaper> ans=new ArrayList<>();
 
-            for(Paper paper:papers) {
+            for(SimplePaper p:simplePapers) {
                 boolean flag1=true, flag2=true, flag3=true, flag4 = true;
 
                 if (!simplePaper.getAuthors().isEmpty()) {
@@ -80,7 +104,7 @@ public class PaperServiceImpl implements PaperService {
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
-                        if (!paper.getAuthors().toLowerCase().contains(x)){
+                        if (!p.getAuthors().toLowerCase().contains(x)){
                             flag1=false;
                             break;
                         }
@@ -91,7 +115,7 @@ public class PaperServiceImpl implements PaperService {
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
-                        if (!paper.getAuthor_Affiliations().toLowerCase().contains(x)){
+                        if (!p.getAuthor_Affiliations().toLowerCase().contains(x)){
                             flag2=false;
                             break;
                         }
@@ -102,7 +126,7 @@ public class PaperServiceImpl implements PaperService {
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
-                        if (!paper.getPublication_Title().toLowerCase().contains(x)){
+                        if (!p.getPublication_Title().toLowerCase().contains(x)){
                             flag3=false;
                             break;
                         }
@@ -113,13 +137,13 @@ public class PaperServiceImpl implements PaperService {
                     temp.replaceAll(";", " ");
                     String list[] = temp.split(" ");
                     for (String x : list) {
-                        if (!paper.getAuthor_Keywords().toLowerCase().contains(x)){
+                        if (!p.getAuthor_Keywords().toLowerCase().contains(x)){
                             flag4=false;
                             break;
                         }
                     }
                 }
-                if(flag1&&flag2&&flag3&&flag4)ans.add(paper);
+                if(flag1&&flag2&&flag3&&flag4)ans.add(p);
             }
 
             //System.out.println(ans.size());

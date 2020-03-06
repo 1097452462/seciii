@@ -15,10 +15,10 @@ public class PaperController {
 
     //获得所有论文信息
     @ResponseBody
-    @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public Response getPapers(){
+    @RequestMapping(value = "/getSimplePaper",method = RequestMethod.GET)
+    public Response getSimplePapers(){
         //Response flag=paperService.plugPapers();System.out.println(flag);
-        Response response= paperService.getPapers();
+        Response response= paperService.getSimplePapers();
         return  response;
     }
 

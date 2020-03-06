@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 
     getRequest(
-        '/paper/get',
+        '/paper/getSimplePaper',
         function (res) {
             papers=res.content;
             display(papers);

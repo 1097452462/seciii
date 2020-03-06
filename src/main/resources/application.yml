@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     name: docs
-    url: jdbc:mysql://127.0.0.1:3306/docs
+    url: jdbc:mysql://127.0.0.1:3306/docs?serverTimezone=UTC
     username: root
-    password: XIAhz990306
+    password: z123456.
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
     schema: classpath*:sql/schema.sql

@@ -2,11 +2,20 @@ package com.example.studysystem.entity;
 
 public class SimplePaper {
     private int id;
+    private int paper_id;
     private String Authors;
     private String Author_Affiliations;
     private String Publication_Title;
     private String Author_Keywords;
 
+
+    public int getPaper_id() {
+        return paper_id;
+    }
+
+    public void setPaper_id(int paper_id) {
+        this.paper_id = paper_id;
+    }
     public int getId() {
         return id;
     }

@@ -1,9 +1,8 @@
 package com.example.studysystem.csv;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
+import com.example.studysystem.entity.SimplePaper;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -55,10 +54,10 @@ public class readCSV {
         try{
             BufferedReader reader1=new BufferedReader(new FileReader(file_address1));
             List<Paper> ase=readCSV(reader1);
-            for(int i=0;i<ase.size();i++){
-                Paper p=ase.get(i);
-                Add(p);
-            }
+//            for(int i=0;i<ase.size();i++){
+//                Paper p=ase.get(i);
+//                Add(p);
+//            }
         }
         catch(Exception e){
             e.printStackTrace();
@@ -70,26 +69,27 @@ public class readCSV {
         //遍历查询结果集
         try {
             con = MySQLconnection.getConnection();//1.调用方法返回连接
-            if(!con.isClosed())
-                System.out.println("Succeeded connecting to the Database!");
-            Statement statement = con.createStatement(); //2.创建statement类对象，用来执行SQL语句！！
-            String sql = "SELECT * FROM paper WHERE PDF_Link = \"%s\"";//要执行的SQL语句
-            ResultSet rs = statement.executeQuery(String.format(sql,stuid));
-            while(rs.next()){
-                Paper p=new Paper();
-                p.setPDF_Link(rs.getString("PDF_Link"));
-                stu.add(p);
-                //stu.add(rs.getString("stuid").trim());
-                // stu.add(rs.getString("name").trim());
-            }
-            MySQLconnection.close(rs);
-            MySQLconnection.close(statement);
-            MySQLconnection.close(con);
+            if(!con.isClosed()) {
+//                System.out.println("Succeeded connecting to the Database!");
+                Statement statement = con.createStatement(); //2.创建statement类对象，用来执行SQL语句！！
+                String sql = "SELECT * FROM paper WHERE PDF_Link = \"%s\"";//要执行的SQL语句
+                ResultSet rs = statement.executeQuery(String.format(sql, stuid));
+                while (rs.next()) {
+                    Paper p = new Paper();
+                    p.setPDF_Link(rs.getString("PDF_Link"));
+                    stu.add(p);
+                    //stu.add(rs.getString("stuid").trim());
+                    // stu.add(rs.getString("name").trim());
+                }
+                MySQLconnection.close(rs);
+                MySQLconnection.close(statement);
+                MySQLconnection.close(con);
             /*for(int i=0;i<stu.size();i++){
                 System.out.print("id:");
                 System.out.println(stu.get(i).getId());
             }*/
-            return stu;
+                return stu;
+            }
         }	catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -138,7 +138,25 @@ public class readCSV {
                 p.setMeeting_Date(deleteQuotes(info[26]));
                 p.setPublisher(deleteQuotes(info[27]));
                 p.setDocument_Identifier(deleteQuotes(info[28]));
-                docs.add(p);
+                List<Paper> papers=Select(p.getPDF_Link());
+                int key=0;
+                if(papers.size()>0){
+                    System.out.println("重复");
+                }
+                else{
+                    key=Add(p);
+                    String[] authorList=deleteQuotes(info[1]).split(";");
+                    String[] affiliationList=deleteQuotes(info[2]).split(";");
+                    for(int i=0;i<Math.min(authorList.length,affiliationList.length);i++){
+                        SimplePaper sp=new SimplePaper();
+                        sp.setPaper_id(key);
+                        sp.setPublication_Title(deleteQuotes(info[3]));
+                        sp.setAuthor_Keywords(deleteQuotes(info[16]));
+                        sp.setAuthors(authorList[i]);
+                        sp.setAuthor_Affiliations(affiliationList[i]);
+                        AddAdd(sp);
+                    }
+                }
             }
         }
         catch (Exception e){
@@ -146,30 +164,54 @@ public class readCSV {
         }
         return docs;
     }
-    public static void Add(Paper p) {
+    public static void AddAdd(SimplePaper sp){
+        Connection con;
+        try{
+            con = MySQLconnection.getConnection();
+            if(!con.isClosed()){
+                Statement statement = con.createStatement();
+                String sql="insert into simplepaper(paper_id,Authors,Author_Affiliations,Publication_Title,Author_Keywords) values (\"%d\",\"%s\",\"%s\",\"%s\",\"%s\")";
+                String sss=String.format(sql,sp.getPaper_id(),sp.getAuthors(),sp.getAuthor_Affiliations(),sp.getPublication_Title(),sp.getAuthor_Keywords());
+                if(statement.executeUpdate(sss)!=0){
+                    System.out.println("simplepaper插入成功");
+                }
+                else{System.out.println("simplepaper插入失败");}
+                MySQLconnection.close(statement);
+                MySQLconnection.close(con);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    public static int Add(Paper p) {
         Connection con;//声明一个连接对象
+        int key=0;
         //遍历查询结果集
         try {
             con = MySQLconnection.getConnection();//1.调用方法返回连接
-            if(!con.isClosed())
-                System.out.println("Succeeded connecting to the Database!");
+            if(!con.isClosed()) {
+//                System.out.println("Succeeded connecting to the Database!");
                 Statement statement = con.createStatement(); //2.创建statement类对象，用来执行SQL语句！！
-                String sql="insert into paper(Document_title,Authors,Author_Affiliations,Publication_Title,Date_Added_To_Xplore,Publication_Year,Volume,Issue,Start_Page,End_Page,Abstract,ISSN,ISBNs,DOI,Funding_Information,PDF_Link,Author_Keywords,IEEE_Terms,INSPEC_Controlled_Terms,INSPEC_Non_Controlled_Terms,Mesh_Terms,Article_Citation_Count,Reference_Count,License,Online_Date,Issue_Date,Meeting_Date,Publisher,Document_Identifier) values (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
-            //要执行的SQL语句
-            List<Paper> papers=Select(p.getPDF_Link());
-            if(papers.size()>0){
-                System.out.println("重复");
-                return;
+                String sql = "insert into paper(Document_title,Authors,Author_Affiliations,Publication_Title,Date_Added_To_Xplore,Publication_Year,Volume,Issue,Start_Page,End_Page,Abstract,ISSN,ISBNs,DOI,Funding_Information,PDF_Link,Author_Keywords,IEEE_Terms,INSPEC_Controlled_Terms,INSPEC_Non_Controlled_Terms,Mesh_Terms,Article_Citation_Count,Reference_Count,License,Online_Date,Issue_Date,Meeting_Date,Publisher,Document_Identifier) values (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
+                //要执行的SQL语句
+                String sss = String.format(sql, p.getDocument_title(), p.getAuthors(), p.getAuthor_Affiliations(), p.getPublication_Title(), p.getDate_Added_To_Xplore(), p.getPublication_Year(), p.getVolume(), p.getIssue(), p.getStart_Page(), p.getEnd_Page(), p.getAbstract(), p.getISSN(), p.getISBNs(), p.getDOI(), p.getFunding_Information(), p.getPDF_Link(), p.getAuthor_Keywords(), p.getIEEE_Terms(), p.getINSPEC_Controlled_Terms(), p.getINSPEC_Non_Controlled_Terms(), p.getMesh_Terms(), p.getArticle_Citation_Count(), p.getReference_Count(), p.getLicense(), p.getOnline_Date(), p.getIssue_Date(), p.getMeeting_Date(), p.getPublisher(), p.getDocument_Identifier());
+                if (statement.executeUpdate(sss, statement.RETURN_GENERATED_KEYS) != 0) {
+                    ResultSet rs=statement.getGeneratedKeys();
+                    if(rs.next()){key=rs.getInt(1);System.out.println(key);}
+                    System.out.println("paper插入成功");
+                }
+                else {
+                    System.out.println("paper插入失败");
+                }
+                MySQLconnection.close(statement);
+                MySQLconnection.close(con);
             }
-            if(statement.executeUpdate(String.format(sql,p.getDocument_title(),p.getAuthors(),p.getAuthor_Affiliations(),p.getPublication_Title(),p.getDate_Added_To_Xplore(),p.getPublication_Year(),p.getVolume(),p.getIssue(),p.getStart_Page(),p.getEnd_Page(),p.getAbstract(),p.getISSN(),p.getISBNs(),p.getDOI(),p.getFunding_Information(),p.getPDF_Link(),p.getAuthor_Keywords(),p.getIEEE_Terms(),p.getINSPEC_Controlled_Terms(),p.getINSPEC_Non_Controlled_Terms(),p.getMesh_Terms(),p.getArticle_Citation_Count(),p.getReference_Count(),p.getLicense(),p.getOnline_Date(),p.getIssue_Date(),p.getMeeting_Date(),p.getPublisher(),p.getDocument_Identifier()))!=0){
-                System.out.println("插入成功");}
-            else
-                System.out.println("插入失败");
-            MySQLconnection.close(statement);
-            MySQLconnection.close(con);
+            return key;
         }	catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
+            return key;
         }
     }
     public static String deleteQuotes(String s){
