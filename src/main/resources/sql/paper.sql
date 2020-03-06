@@ -36,7 +36,7 @@ CREATE TABLE paper (
 )ENGINE=InnoDB;
 
 
-CREATE TABLE f_SEARCH(
+CREATE TABLE simplepaper(
     id   INT AUTO_INCREMENT PRIMARY KEY,
     Authors TEXT,
     Author_Affiliations TEXT,

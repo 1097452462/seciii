@@ -8,6 +8,10 @@ spring:
     username: root
     password: z123456.
     driver-class-name: com.mysql.cj.jdbc.Driver
+    schema:
+        - classpath:sql/paper.sql
+        - classpath:sql/procedure.sql
+    initialization-mode=always
 
   servlet:
     multipart:
