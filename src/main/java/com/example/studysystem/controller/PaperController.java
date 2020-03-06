@@ -1,7 +1,7 @@
 package com.example.studysystem.controller;
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SimplePaper;
-import com.example.studysystem.service.PaperService;
+import com.example.studysystem.service.paper.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,22 +13,7 @@ public class PaperController {
     @Autowired
     private PaperService paperService;
 
-    @RequestMapping(value = "/home")
-    public String jumpToHome(){
-        return "index.html";
-    }
-    @RequestMapping(value = "/manage")
-    public String jumpToManage(){
-        return "manage.html";
-    }
-    @RequestMapping(value = "/author")
-    public String jumpToAuthor(){
-        return "author.html";
-    }
-    @RequestMapping(value = "/org")
-    public String jumpToOrg(){
-        return "organization.html";
-    }
+
 
     //获得所有论文信息
     @ResponseBody
@@ -36,6 +21,13 @@ public class PaperController {
     public Response getpapers(){
         //Response flag=paperService.plugPapers();System.out.println(flag);
         Response response= paperService.getPapers();
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getSimple",method = RequestMethod.GET)
+    public Response getSimplepapers(){
+        //Response flag=paperService.plugPapers();System.out.println(flag);
+        Response response= paperService.getSimplePapers();
         return  response;
     }
 

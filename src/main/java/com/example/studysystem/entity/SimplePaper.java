@@ -3,12 +3,22 @@ package com.example.studysystem.entity;
 public class SimplePaper {
     private int id;
     private int paper_id;
+
+
+    private String Publication_Year;
     private String Authors;
     private String Author_Affiliations;
     private String Publication_Title;
     private String Author_Keywords;
 
 
+    public String getPublication_Year() {
+        return Publication_Year;
+    }
+
+    public void setPublication_Year(String publication_Year) {
+        Publication_Year = publication_Year;
+    }
     public int getPaper_id() {
         return paper_id;
     }

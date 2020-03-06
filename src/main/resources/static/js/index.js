@@ -12,12 +12,13 @@ $(document).ready(function() {
         }
     );
 
-    $("#search").click(function () {
+    $("#paper-search").click(function () {
         var searchform = {
-            authors: $('#s_author').val(),
-            author_Affiliations: $('#s_department').val(),
-            publication_Title: $('#s_meeting').val(),
-            author_Keywords: $('#s_pointWord').val()
+            authors: $('#index_1').val(),
+            publication_Year:$('#index_2').val(),
+            author_Affiliations: $('#index_3').val(),
+            publication_Title: $('#index_4').val(),
+            author_Keywords: $('#index_5').val()
         };
 
         postRequest(
@@ -49,6 +50,7 @@ $(document).ready(function() {
         var paperInfo = "";
         for (let paper of paperList) {
             paperInfo += "<tr></tr><td>" + paper.authors.substr(0, 20) + "</td>" +
+                "<td >" + paper.publication_Year.substr(0, 100) + "</td>" +
                 "<td >" + paper.author_Affiliations.substr(0, 100) + "</td>" +
                 "<td>" + paper.publication_Title.substr(0, 150) + "</td>" +
                 "<td >" + paper.author_Keywords.substr(0, 50) + "</td>";
@@ -61,7 +63,7 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='paperClick(" + paper.id + ")'>查看详情</button>" + "</td></tr>";
+                "    font-size:13px;' onclick='paperClick(" + paper.id + ")'>论文详情</button>" + "</td></tr>";
         }
         $('#paper-list').html(paperInfo);
     }
@@ -70,5 +72,7 @@ $(document).ready(function() {
 });
 
 function paperClick(id){
-    $('.box-mask, .box-modal').css('display', 'block');
+
 }
+
+

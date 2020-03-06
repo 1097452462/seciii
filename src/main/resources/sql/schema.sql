@@ -42,6 +42,7 @@ CREATE TABLE simplepaper(
     Authors TEXT,
     Author_Affiliations TEXT,
     Publication_Title TEXT,
+    Publication_Year TEXT,
     Author_Keywords TEXT
 )ENGINE=InnoDB;
 

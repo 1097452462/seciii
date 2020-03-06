@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 @Component
 public interface SimplePaperDao {
-    List<Paper> getPapers();
+
     List<SimplePaper> getSimplePapers();
 }

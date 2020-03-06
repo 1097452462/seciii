@@ -3,21 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>author</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/uniform.css"/>
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.js"></script>
+    <!-- 引入js脚本文件 -->
+    <script src="/js/request.js"></script>
+    <script src="/js/author.js"></script>
+    <style>
+
+        input::-webkit-input-placeholder {
+            /* placeholder颜色  */
+            color: rgba(255, 5, 14, 0.54);
+            /* placeholder字体大小  */
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 <div align="center">
     <div >
         <div style=" background-color: #b10d12;font-size: 22px;float:left;width: 15%;height: 40px;text-align: center">
-            <a href="/paper/home" >总览</a>
+            <a href="/view/home" >总览</a>
         </div>
         <div style=" background-color: #b1671f; font-size: 22px;  float:left;width: 15%;height: 40px;text-align: center">
-            <a href="#" >作者</a>
+            <a href="javascript:location.reload();" >作者</a>
         </div>
         <div style=" background-color: #abb123;font-size: 22px;float:left;width: 15%;height: 40px;text-align: center">
-            <a href="/paper/org" >机构</a>
+            <a href="/view/org" >机构</a>
         </div>
         <div style=" background-color: #5db12f;font-size: 22px;float:left;width: 15%;height: 40px;text-align: center">
-            <a href="/paper/manage" >数据源</a>
+            <a href="/view/manage" >数据源</a>
         </div>
         <div style=" background-color: #21b1b0;font-size: 22px;float:left;width: 40%;height: 40px;text-align: center">
             <a href="" >nmsl</a>
@@ -27,6 +43,36 @@
     <hr>
     <h1>学术图谱系统</h1>
     <hr>
+
+    <table class="table" align="left" border="1px" style="border: #1c196e" width="50%">
+        <thead>
+        <tr align="center" style="width: 100% border-box" >
+
+            <th >
+                <input id="author_1" type="txt" placeholder="Authors" style="width: 99%; background-color:transparent;border:0">
+            </th>
+            <th width="140px" >
+                <input id="author_2" type="txt"  placeholder="Num" style="width: 99%; background-color:transparent;border:0" >
+            </th>
+
+            <th align="left" width="140px">
+                <button id="author-search" type='button' style="  background-color: #cbff64;border: 2px solid #2994af;color: #2616ff;
+               padding: 0px 10px;text-align: center;border-radius: 6px;text-decoration: none;display: inline-block;
+                font-size:15px">搜索</button>
+            </th>
+
+        </tr>
+        </thead>
+
+        <tbody id="author-list" style="border: #8ae292">
+
+
+    </table>
+    <div class="box-mask"></div>
+    <div class="box-modal" style="display: none">作者详情<span class="close">X</span>
+        <h1> title</h1>
+        <p>content</p>
+    </div>
 </div>
 </body>
 </html>

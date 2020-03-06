@@ -1,4 +1,4 @@
-package com.example.studysystem.service;
+package com.example.studysystem.service.paper;
 
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SimplePaper;
@@ -11,10 +11,8 @@ import java.util.List;
 public interface PaperService {
     Response addFile(MultipartFile file);
     Response plugPapers();
-
+    Response getSimplePapers();
     Response getPapers();
-    Response orderAuthors();
-    Response orderOrganizations();
 
     Response searchPapers(SimplePaper simplePaper);
 }

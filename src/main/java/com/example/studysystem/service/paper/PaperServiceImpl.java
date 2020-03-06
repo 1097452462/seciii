@@ -1,6 +1,6 @@
-package com.example.studysystem.service;
+package com.example.studysystem.service.paper;
 
-import com.example.studysystem.csv.readCSV;
+import com.example.studysystem.csv.ReadCSV;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Paper;
@@ -23,7 +23,7 @@ public class PaperServiceImpl implements PaperService {
     @Autowired
     private SimplePaperDao simplePaperDao;
     @Autowired
-    private readCSV readCSV;
+    private ReadCSV readCSV;
 
     @Override
     public Response addFile(MultipartFile file) {//System.out.println("26");
@@ -60,37 +60,22 @@ public class PaperServiceImpl implements PaperService {
         }
     }
 
+    @Override
+    public Response getSimplePapers() {
+        try{
+            List<SimplePaper> simplePapers =simplePaperDao.getSimplePapers();
+            return Response.buildSuccess(simplePapers);
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
 
     @Override
     public Response getPapers() {
         try{
             List<Paper> papers =paperDao.getPapers();
-            return Response.buildSuccess(papers);
-        }catch (Exception e){
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
-
-    @Override
-    public Response orderAuthors() {
-        try{
-            List<Paper> papers =new ArrayList<>();
-            //从simplePaper里查，返回的papers是按照作者出现次数排序，比如开头连续10篇文章都是同一个作者，然后连续8篇是另一个作者
-
-            return Response.buildSuccess(papers);
-        }catch (Exception e){
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
-
-    @Override
-    public Response orderOrganizations() {
-        try{
-            List<Paper> papers =new ArrayList<>();
-            //从simplePaper里查，返回的papers是按照机构出现次数排序，比如开头连续10篇文章都是同一个机构，然后连续8篇是另一个机构
-
             return Response.buildSuccess(papers);
         }catch (Exception e){
             e.printStackTrace();
@@ -105,8 +90,14 @@ public class PaperServiceImpl implements PaperService {
             List<Integer> num=new ArrayList<>();
 
             for(SimplePaper p:simplePapers) {
-                boolean flag1=true, flag2=true, flag3=true, flag4 = true;
+                boolean flag0=true,flag1=true, flag2=true, flag3=true, flag4 = true;
 
+                if(!simplePaper.getPublication_Year().isEmpty()) {
+                    if (!simplePaper.getPublication_Year().equals(p.getPublication_Year())) {
+                        flag0 = false;
+                    }
+                }
+                if(!flag0)continue;
                 if (!simplePaper.getAuthors().isEmpty()) {
                     String temp = simplePaper.getAuthors().toLowerCase();
                     temp.replaceAll(";", " ");
@@ -118,6 +109,7 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
+                if(!flag1)continue;
                 if (!simplePaper.getAuthor_Affiliations().isEmpty()) {
                     String temp = simplePaper.getAuthor_Affiliations().toLowerCase();
                     temp.replaceAll(";", " ");
@@ -129,6 +121,7 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
+                if(!flag2)continue;
                 if (!simplePaper.getPublication_Title().isEmpty()) {
                     String temp = simplePaper.getPublication_Title().toLowerCase();
                     temp.replaceAll(";", " ");
@@ -140,6 +133,7 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
+                if(!flag3)continue;
                 if (!simplePaper.getAuthor_Keywords().isEmpty()) {
                     String temp = simplePaper.getAuthor_Keywords().toLowerCase();
                     temp.replaceAll(";", " ");
@@ -151,15 +145,16 @@ public class PaperServiceImpl implements PaperService {
                         }
                     }
                 }
-                if(flag1&&flag2&&flag3&&flag4)num.add(p.getPaper_id());
+                if(flag4)num.add(p.getPaper_id());
             }
 
 
-            List newList = num.stream().distinct().collect(Collectors.toList());
-            List<Paper> papers=paperDao.getPapersByIds(newList);
-
+            List newList = num.stream().distinct().collect(Collectors.toList());System.out.println(newList.size());
+            List<Paper> papers=new ArrayList<>();
+            if(newList.size()>0)papers=paperDao.getPapersByIds(newList);
             System.out.println(papers.size());
             return Response.buildSuccess(papers);
+
         }catch (Exception e){
         e.printStackTrace();
         return (Response.buildFailure("失败"));
