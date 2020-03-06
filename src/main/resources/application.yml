@@ -6,10 +6,10 @@ spring:
     name: docs
     url: jdbc:mysql://127.0.0.1:3306/docs?serverTimezone=UTC
     username: root
-    password: z123456.
+    password: XIAhz990306
     driver-class-name: com.mysql.cj.jdbc.Driver
-    initialization-mode: always
-    schema: classpath*:sql/schema.sql
+    #initialization-mode: always
+    #schema: classpath*:sql/schema.sql
 
 
   servlet:

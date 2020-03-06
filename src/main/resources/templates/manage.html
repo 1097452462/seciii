@@ -3,8 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>manage</title>
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.js"></script>
+    <!-- 引入js脚本文件 -->
+    <script src="/js/request.js"></script>
+    <script src="/js/manage.js"></script>
+    <style>
+        input::-webkit-input-placeholder {
+            /* placeholder颜色  */
+            color: rgba(255, 5, 14, 0.54);
+            /* placeholder字体大小  */
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-<h1>mmm</h1>
+<div align="center">
+    <div >
+        <div style=" background-color: #b10d12;font-size: 22px;float:left;width: 15%;height: 40px;text-align: center">
+            <a href="/paper/home" >总览</a>
+        </div>
+        <div style=" background-color: #b1671f; font-size: 22px;  float:left;width: 15%;height: 40px;text-align: center">
+            <a href="/paper/author" >作者</a>
+        </div>
+        <div style=" background-color: #abb123;font-size: 22px;float:left;width: 15%;height: 40px;text-align: center">
+            <a href="/paper/org" >机构</a>
+        </div>
+        <div style=" background-color: #5db12f;font-size: 22px;float:left;width: 15%;height: 40px;text-align: center">
+            <a href="#" >数据源</a>
+        </div>
+        <div style=" background-color: #21b1b0;font-size: 22px;float:left;width: 40%;height: 40px;text-align: center">
+            <a href="" >nmsl</a>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <h1>学术图谱系统</h1>
+    <hr>
+    <br><br><hr><br><br>
+    <div >新增数据库文件(csv格式)
+        <input type="file" id="newFile"  width="30%">
+        <button class="myBtn" id="uploadFile">
+            更新数据库
+        </button>
+    </div>
+    <br><br>
+</div>
 </body>
 </html>

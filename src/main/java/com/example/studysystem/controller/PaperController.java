@@ -13,9 +13,21 @@ public class PaperController {
     @Autowired
     private PaperService paperService;
 
+    @RequestMapping(value = "/home")
+    public String jumpToHome(){
+        return "index.html";
+    }
     @RequestMapping(value = "/manage")
     public String jumpToManage(){
         return "manage.html";
+    }
+    @RequestMapping(value = "/author")
+    public String jumpToAuthor(){
+        return "author.html";
+    }
+    @RequestMapping(value = "/org")
+    public String jumpToOrg(){
+        return "organization.html";
     }
 
     //获得所有论文信息
