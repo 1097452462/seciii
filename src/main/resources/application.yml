@@ -4,12 +4,12 @@ server:
 spring:
   datasource:
     name: docs
-    url: jdbc:mysql://47.97.244.206:3306/docs?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/docs?serverTimezone=UTC
     username: root
     password: z123456.
     driver-class-name: com.mysql.cj.jdbc.Driver
-    initialization-mode: always
-    schema: classpath*:sql/schema.sql
+    #initialization-mode: always
+    #schema: classpath*:sql/schema.sql
 
 
   servlet:
