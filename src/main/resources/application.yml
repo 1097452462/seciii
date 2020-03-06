@@ -1,17 +1,16 @@
 server:
-  port: 4396
+  port: 2800
 
 spring:
   datasource:
     name: docs
-    url: jdbc:mysql://47.97.244.206:3306/docs
+    url: jdbc:mysql://127.0.0.1:3306/docs
     username: root
-    password: z123456.
+    password: XIAhz990306
     driver-class-name: com.mysql.cj.jdbc.Driver
-    schema:
-        - classpath:sql/paper.sql
-        - classpath:sql/procedure.sql
-    initialization-mode=always
+    initialization-mode: always
+    schema: classpath*:sql/schema.sql
+
 
   servlet:
     multipart:

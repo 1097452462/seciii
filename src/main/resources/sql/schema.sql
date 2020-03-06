@@ -38,6 +38,7 @@ CREATE TABLE paper (
 
 CREATE TABLE simplepaper(
     id   INT AUTO_INCREMENT PRIMARY KEY,
+    paper_id  INT,
     Authors TEXT,
     Author_Affiliations TEXT,
     Publication_Title TEXT,
