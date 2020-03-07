@@ -14,7 +14,6 @@ import java.util.*;
 @Component
 public class OrgDao {
 
-
     public  List<List<String>> sortByAffiliation(){
 
         List<SimplePaper> kkk=new ArrayList<>();

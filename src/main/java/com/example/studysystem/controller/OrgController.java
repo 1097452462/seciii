@@ -23,6 +23,8 @@ public class OrgController {
         Response response= orgService.orderOrganizations();
         return  response;
     }
+
+
     @ResponseBody
     @RequestMapping(value = "/search",method = RequestMethod.GET)
     public Response searchOrgs(@RequestParam("name") String name,@RequestParam("num") String num){

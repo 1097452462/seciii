@@ -10,6 +10,7 @@ import java.util.List;
 @Component
 public interface PaperDao {
     List<Paper> getPapers();
+    Paper getPaperById(int id);
     List<Paper> getPapersByIds(List<Integer> id);
     //List<simplePaperDao> searchPapers(@Param("searchForm") SearchForm searchForm);
 }

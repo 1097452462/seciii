@@ -5,13 +5,22 @@ public class SimplePaper {
     private int paper_id;
 
 
+
+    private String Document_title;
+
     private String Publication_Year;
     private String Authors;
     private String Author_Affiliations;
     private String Publication_Title;
     private String Author_Keywords;
 
+    public String getDocument_title() {
+        return Document_title;
+    }
 
+    public void setDocument_title(String document_title) {
+        Document_title = document_title;
+    }
     public String getPublication_Year() {
         return Publication_Year;
     }

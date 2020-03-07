@@ -23,6 +23,16 @@ public class PaperController {
         Response response= paperService.getPapers();
         return  response;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getById",method = RequestMethod.GET)
+    public Response getpapersById(@RequestParam("id") int id){
+        //Response flag=paperService.plugPapers();System.out.println(flag);
+        Response response= paperService.getPapersById(id);
+
+        return  response;
+    }
+
     @ResponseBody
     @RequestMapping(value = "/getSimple",method = RequestMethod.GET)
     public Response getSimplepapers(){

@@ -13,6 +13,6 @@ public interface PaperService {
     Response plugPapers();
     Response getSimplePapers();
     Response getPapers();
-
+    Response getPapersById(int id);
     Response searchPapers(SimplePaper simplePaper);
 }

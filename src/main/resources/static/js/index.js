@@ -14,6 +14,7 @@ $(document).ready(function() {
 
     $("#paper-search").click(function () {
         var searchform = {
+            document_title:$('#index_0').val(),
             authors: $('#index_1').val(),
             publication_Year:$('#index_2').val(),
             author_Affiliations: $('#index_3').val(),
@@ -49,11 +50,12 @@ $(document).ready(function() {
     function display(paperList) {
         var paperInfo = "";
         for (let paper of paperList) {
-            paperInfo += "<tr></tr><td>" + paper.authors.substr(0, 20) + "</td>" +
-                "<td >" + paper.publication_Year.substr(0, 100) + "</td>" +
-                "<td >" + paper.author_Affiliations.substr(0, 100) + "</td>" +
-                "<td>" + paper.publication_Title.substr(0, 150) + "</td>" +
-                "<td >" + paper.author_Keywords.substr(0, 50) + "</td>";
+            paperInfo += "<tr></tr><td>" + paper.document_title + "</td>" +
+                "<td >" + paper.authors.substr(0, 30)+"..." + "</td>" +
+                "<td >" + paper.publication_Year+ "</td>" +
+                "<td >" + paper.author_Affiliations.substr(0, 50)+"..." + "</td>" +
+                "<td>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
+                "<td >" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
             paperInfo +=
                 "<td><button type='button' style='background-color: #4CAF50; /* Green */\n" +
                 "border: 2px solid #4CAF50;" +
@@ -72,9 +74,7 @@ $(document).ready(function() {
 });
 
 function paperClick(id){
-    $(".btn").click(function(){
-        $(".main").fadeIn();
-    });
+    window.open("/view/paper-detail?paper-id="+id);
 }
 
 

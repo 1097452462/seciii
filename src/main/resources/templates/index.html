@@ -27,16 +27,7 @@
             font-size: 16px;
         }
     </style>
-    <script>
-        $(function(){
-            $(".btn").click(function(){
-                $(".main").fadeIn();
-            });
-            $(".close").click(function(){
-                $(".main").fadeOut();
-            });
-        });
-    </script>
+
 </head>
 <body>
 <div align="center">
@@ -58,15 +49,7 @@
         </div>
     </div>
 <br>
-    <div class="main">
-        <div class="mainbox">
-            <div class="close">点击关闭</div>
-        </div>
-    </div>
-
-            <input class="btn" type="button" value="点击淡入弹窗" />
-
-
+  
     <hr>
     <h1>学术图谱系统</h1>
     <hr>
@@ -76,22 +59,25 @@
     <thead>
     <tr align="center" style="width: 100% border-box" >
 
-        <th width="12%" height="30px">
+        <th width="25%" >
+            <input id="index_0" type="txt" placeholder="Document_title" style="width: 99%; background-color:transparent;border:0">
+        </th>
+        <th width="10%">
             <input id="index_1" type="txt" placeholder="Authors" style="width: 99%; background-color:transparent;border:0">
         </th>
-        <th width="6%" height="30px">
+        <th width="4%">
             <input id="index_2" type="txt"  placeholder="Year" style="width: 99%; background-color:transparent;border:0" >
         </th>
-        <th width="20%"height="30px">
+        <th width="17%">
             <input id="index_3" type="txt"  placeholder="Author_Affiliations" style="width: 99%; background-color:transparent;border:0" >
         </th>
-        <th width="24%"height="30px">
+        <th width="15%">
             <input id="index_4" type="txt"  placeholder="Publication_Title" style="width: 99%; background-color:transparent;border:0" >
         </th>
-        <th width="24%"height="30px">
+        <th width="15%">
             <input id="index_5" type="txt"  placeholder="Author_Keywords" style="width: 99%; background-color:transparent;border:0">
         </th>
-        <th align="left">
+        <th >
             <button id="paper-search" type='button' style="  background-color: #cbff64;border: 2px solid #2994af;color: #2616ff;
                padding: 0px 10px;text-align: center;border-radius: 6px;text-decoration: none;display: inline-block;
                 font-size:15px">搜索</button>

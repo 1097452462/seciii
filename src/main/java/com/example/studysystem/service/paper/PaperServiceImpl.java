@@ -84,13 +84,37 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
+    public Response getPapersById(int id) {
+        try{
+            Paper paper=paperDao.getPaperById(id);
+            return Response.buildSuccess(paper);
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
     public Response searchPapers(SimplePaper simplePaper){
         try{
             List<SimplePaper> simplePapers= simplePaperDao.getSimplePapers();
             List<Integer> num=new ArrayList<>();
 
             for(SimplePaper p:simplePapers) {
-                boolean flag0=true,flag1=true, flag2=true, flag3=true, flag4 = true;
+                boolean flag00=true,flag0=true,flag1=true, flag2=true, flag3=true, flag4 = true;
+
+                if (!simplePaper.getDocument_title().isEmpty()) {
+                    String temp = simplePaper.getDocument_title().toLowerCase();
+                    temp.replaceAll(";", " ");
+                    String list[] = temp.split(" ");
+                    for (String x : list) {
+                        if (!p.getDocument_title().toLowerCase().contains(x)){
+                            flag00=false;
+                            break;
+                        }
+                    }
+                }
+                if(!flag00)continue;
 
                 if(!simplePaper.getPublication_Year().isEmpty()) {
                     if (!simplePaper.getPublication_Year().equals(p.getPublication_Year())) {

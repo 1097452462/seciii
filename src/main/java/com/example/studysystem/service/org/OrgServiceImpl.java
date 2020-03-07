@@ -16,9 +16,10 @@ public class OrgServiceImpl implements OrgService{
     @Autowired
     private OrgDao orgDao;
     @Autowired
-    private PaperDao paperDao;
-    @Autowired
-    private ReadCSV readCSV;
+    private SimplePaperDao simplePaperDao;
+
+
+
     @Override
     public Response orderOrganizations() {
         try{

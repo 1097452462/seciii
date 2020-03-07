@@ -150,6 +150,7 @@ public class ReadCSV {
                     for(int i=0;i<Math.min(authorList.length,affiliationList.length);i++){
                         SimplePaper sp=new SimplePaper();
                         sp.setPaper_id(key);
+                        sp.setDocument_title(deleteQuotes(info[0]));
                         sp.setPublication_Year(deleteQuotes(info[5]));
                         sp.setPublication_Title(deleteQuotes(info[3]));
                         sp.setAuthor_Keywords(deleteQuotes(info[16]));
@@ -172,8 +173,8 @@ public class ReadCSV {
             con = MySQLconnection.getConnection();
             if(!con.isClosed()){
                 Statement statement = con.createStatement();
-                String sql="insert into simplepaper(paper_id,Authors,Author_Affiliations,Publication_Title,Publication_Year,Author_Keywords) values (\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
-                String sss=String.format(sql,sp.getPaper_id(),sp.getAuthors(),sp.getAuthor_Affiliations(),sp.getPublication_Title(),sp.getPublication_Year(),sp.getAuthor_Keywords());
+                String sql="insert into simplepaper(paper_id,Document_title,Authors,Author_Affiliations,Publication_Title,Publication_Year,Author_Keywords) values (\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
+                String sss=String.format(sql,sp.getPaper_id(),sp.getDocument_title(),sp.getAuthors(),sp.getAuthor_Affiliations(),sp.getPublication_Title(),sp.getPublication_Year(),sp.getAuthor_Keywords());
                 if(statement.executeUpdate(sss)!=0){
                     System.out.println("simplepaper插入成功");
                 }

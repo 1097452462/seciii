@@ -71,6 +71,10 @@
         select * from paper
     </select>
 
+    <select id="getPaperById" resultType="Paper" parameterType="java.lang.Integer" >
+        select * from paper where id = #{id}
+    </select>
+
     <select id="getPapersByIds"  resultType="Paper" parameterType="java.util.List">
         select * from paper
         where id in

@@ -5,6 +5,7 @@
 
         <id column="id" property="id" jdbcType="INTEGER" />
         <id column="paper_id" property="paper_id" jdbcType="INTEGER" />
+        <id column="Document_title" property="Document_title" jdbcType="LONGVARCHAR" />
         <id column="Authors" property="Authors" jdbcType="LONGVARCHAR" />
         <id column="Author_Affiliations" property="Author_Affiliations" jdbcType="LONGVARCHAR" />
         <id column="Publication_Title" property="Publication_Title" jdbcType="LONGVARCHAR" />
@@ -13,6 +14,7 @@
     <sql id="Base_Column_List" >
     id,
     paper_id,
+    Document_title,
     Authors,
     Author_Affliations,
     Publication_Title,
@@ -22,6 +24,10 @@
 
     <select id="getSimplePapers"  resultType="SimplePaper">
         SELECT * FROM simplepaper
+    </select>
+
+    <select id="getSimplePapersByOrg"  resultType="SimplePaper" parameterType="java.lang.String">
+        SELECT * FROM simplepaper where Author_Affiliations=#{name}
     </select>
 
 
