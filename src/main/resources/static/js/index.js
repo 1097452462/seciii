@@ -72,7 +72,9 @@ $(document).ready(function() {
 });
 
 function paperClick(id){
-
+    $(".btn").click(function(){
+        $(".main").fadeIn();
+    });
 }
 
 
