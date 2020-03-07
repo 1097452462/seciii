@@ -12,6 +12,13 @@
     <script src="/js/index.js"></script>
     <style>
 
+        *{padding: 0;margin: 0;}
+        .box{width: 100%;height: 100%;}
+        .main{width: 100%;height: 100%;background-color: rgba(0,0,0,0.8);display: none;position: fixed;z-index: 1;}
+        .mainbox{width: 800px;height: 100%;margin: 0 auto;background-color: rgba(255,255,255,0.8);padding: 20px;}
+        .kkk{width: 100%;height: 1200px;background-color: red;}
+        .close{color: red;cursor: pointer;}
+
         input::-webkit-input-placeholder {
             width:99%;height:99%;border-top:0px;border-left:0px;border-right:0px;border-bottom:0px;
             /* placeholder颜色  */
@@ -19,9 +26,17 @@
             /* placeholder字体大小  */
             font-size: 16px;
         }
-
     </style>
-
+    <script>
+        $(function(){
+            $(".btn").click(function(){
+                $(".main").fadeIn();
+            });
+            $(".close").click(function(){
+                $(".main").fadeOut();
+            });
+        });
+    </script>
 </head>
 <body>
 <div align="center">
@@ -43,6 +58,15 @@
         </div>
     </div>
 <br>
+    <div class="main">
+        <div class="mainbox">
+            <div class="close">点击关闭</div>
+        </div>
+    </div>
+
+            <input class="btn" type="button" value="点击淡入弹窗" />
+
+
     <hr>
     <h1>学术图谱系统</h1>
     <hr>
