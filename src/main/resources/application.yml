@@ -18,5 +18,5 @@ spring:
       max-request-size: 100MB
 
 mybatis:
-  mapper-locations: classpath:xml/*.xml #注意：一定要对应mapper映射xml文件的所在路径
+  mapper-locations: classpath:xml/*.xml #注意：一定要对应mapper映射xml文件的所在路径1
   type-aliases-package: com.example.studysystem.entity  # 注意：对应实体类的路径
