@@ -1,14 +1,12 @@
 $(document).ready(function() {
-    var name=getUrlParameter('org-name');//alert(name);
-
-    $('#orgDetail-name').text(decodeURI(name));
-
+    var name=getUrlParameter('author-name');//alert(name);
+    $('#authorDetail-name').text(decodeURI(name));
     getRequest(
-        '/org/getByName?name='+name,
+        '/author/getByName?name='+name,
         function (res) {
             var papers= res.content;
             var num=papers.length;
-            $('#orgDetail-num').text(num+"  total papers");
+            $('#authorDetail-num').text(num+"  total papers");
             display(papers);
         },
         function (error) {
@@ -32,7 +30,7 @@ function display(paperList) {
 
     for (let paper of paperList) {
         paperInfo += "<tr></tr><td>" + paper.document_title + "</td>" +
-            "<td >" + paper.author_Affiliations+ "</td>" +
+            "<td >" + paper.authors+ "</td>" +
             "<td >" + paper.publication_Year+ "</td>" +
             "<td>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
             "<td >" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
@@ -45,10 +43,10 @@ function display(paperList) {
             " border-radius: 6px;\n" +
             "    text-decoration: none;\n" +
             "    display: inline-block;\n" +
-            "    font-size:13px;' onclick='paperClick(" + paper.paper_id + ")'>论文详情</button>" + "</td></tr>";
+            "    font-size:13px;' onclick='paperClick(" + paper.paper_id+ ")'>论文详情</button>" + "</td></tr>";
     }
 
-    $('#orgDetail-list').html(paperInfo);
+    $('#authorDetail-list').html(paperInfo);
 }
 function paperClick(id){
     window.open("/view/paper-detail?paper-id="+id);

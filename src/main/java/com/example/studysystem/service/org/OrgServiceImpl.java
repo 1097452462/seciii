@@ -19,6 +19,15 @@ public class OrgServiceImpl implements OrgService{
     private SimplePaperDao simplePaperDao;
 
 
+    @Override
+    public Response getSimplePaperByOrg(String name) {
+        try{
+            return Response.buildSuccess(simplePaperDao.getSimplePaperByOrg(name));
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
 
     @Override
     public Response orderOrganizations() {

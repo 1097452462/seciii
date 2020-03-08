@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface SimplePaperDao {
-
+    List<SimplePaper> getSimplePaperByAuthor(String name);
+    List<SimplePaper> getSimplePaperByOrg(String name);
     List<SimplePaper> getSimplePapers();
 }

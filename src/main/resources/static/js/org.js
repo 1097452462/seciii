@@ -52,7 +52,7 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='orgClick(&quot;"+ org[0] + "&quot;)'>机构详情</button>" + "</td></tr>";
+                "    font-size:13px;' onclick='orgClick(&quot;"+ org[0] +"&quot;)'>机构详情</button>" + "</td></tr>";
         }
         $('#org-list').html(orgInfo);
     }

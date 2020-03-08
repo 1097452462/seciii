@@ -23,6 +23,13 @@ public class OrgController {
         Response response= orgService.orderOrganizations();
         return  response;
     }
+    @ResponseBody
+    @RequestMapping(value = "/getByName",method = RequestMethod.GET)
+    public Response getSimplePaperByOrg(@RequestParam("name")String name){System.out.println(28);
+        //Response flag=paperService.plugPapers();System.out.println(flag);
+        Response response= orgService.getSimplePaperByOrg(name);
+        return  response;
+    }
 
 
     @ResponseBody

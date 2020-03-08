@@ -26,8 +26,12 @@
         SELECT * FROM simplepaper
     </select>
 
-    <select id="getSimplePapersByOrg"  resultType="SimplePaper" parameterType="java.lang.String">
-        SELECT * FROM simplepaper where Author_Affiliations=#{name}
+    <select id="getSimplePaperByOrg"  resultType="SimplePaper" parameterType="java.lang.String">
+        SELECT * FROM simplepaper where Author_Affiliations=#{name} GROUP BY paper_id
+    </select>
+
+    <select id="getSimplePaperByAuthor"  resultType="SimplePaper" parameterType="java.lang.String">
+        SELECT * FROM simplepaper where Authors=#{name} GROUP BY paper_id
     </select>
 
 

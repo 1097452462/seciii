@@ -1,6 +1,7 @@
 package com.example.studysystem.service.author;
 
 import com.example.studysystem.dao.AuthorDao;
+import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,18 @@ import java.util.List;
 public class AuthorServiceImpl implements AuthorService{
     @Autowired
     private AuthorDao authorDao;
+    @Autowired
+    private SimplePaperDao simplePaperDao;
+
+    @Override
+    public Response getSimplePaperByOrg(String name) {
+        try{
+            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
 
     @Override
     public Response orderAuthors() {

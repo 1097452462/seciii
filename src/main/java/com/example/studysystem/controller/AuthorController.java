@@ -23,6 +23,15 @@ public class AuthorController {
         Response response= authorService.orderAuthors();
         return  response;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getByName",method = RequestMethod.GET)
+    public Response getSimplePaperByOrg(@RequestParam("name")String name){System.out.println(28);
+        //Response flag=paperService.plugPapers();System.out.println(flag);
+        Response response= authorService.getSimplePaperByOrg(name);
+        return  response;
+    }
+
     @ResponseBody
     @RequestMapping(value = "/search",method = RequestMethod.GET)
     public Response searchAuthors(@RequestParam("name") String name, @RequestParam("num") String num){
