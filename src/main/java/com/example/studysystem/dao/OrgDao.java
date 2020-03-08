@@ -22,7 +22,7 @@ public class OrgDao {
             con = MySQLconnection.getConnection();
             if(!con.isClosed()){
                 Statement statement = con.createStatement();
-                String sql="SELECT * FROM simplepaper";
+                String sql="SELECT * FROM simplepaper  GROUP BY paper_id";
                 ResultSet rs=statement.executeQuery(sql);
                 while(rs.next()){
                     SimplePaper sp=new SimplePaper();
@@ -60,7 +60,7 @@ public class OrgDao {
             }
         });
         List<List<String>> orgs=new ArrayList<>();
-        for(int i=0;i<list.size();i++){
+        for(int i=0;i<list.size();i++){//System.out.println(list.get(i).getKey()+"  "+list.get(i).getValue());
             if(list.get(i).getKey().isEmpty())continue;
             List<String> temp=new ArrayList<>();
             temp.add(list.get(i).getKey());

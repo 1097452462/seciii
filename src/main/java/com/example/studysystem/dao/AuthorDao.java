@@ -22,7 +22,7 @@ public class AuthorDao {
             con = MySQLconnection.getConnection();
             if (!con.isClosed()) {
                 Statement statement = con.createStatement();
-                String sql = "SELECT * FROM simplepaper";
+                String sql = "SELECT * FROM simplepaper ";
                 ResultSet rs = statement.executeQuery(sql);
                 while (rs.next()) {
                     SimplePaper sp = new SimplePaper();
@@ -48,6 +48,10 @@ public class AuthorDao {
                 yyy.put(s, 1);
             }
         }
+        for(String key:yyy.keySet())
+        {
+            System.out.println(key+" : "+yyy.get(key));
+        }
         List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(yyy.entrySet());
         list.sort(new Comparator<Map.Entry<String, Integer>>() {
             @Override
@@ -55,12 +59,15 @@ public class AuthorDao {
                 return o2.getValue().compareTo(o1.getValue());
             }
         });
+
+
+
         List<List<String>> ans=new ArrayList<>();
         for(int i=0;i<list.size();i++){
             if(list.get(i).getKey().isEmpty())continue;
             List<String> temp=new ArrayList<>();
             temp.add(list.get(i).getKey());
-            temp.add(list.get(i).getValue().toString());
+            temp.add(list.get(i).getValue().toString());//System.out.println(list.get(i).getKey()+"  "+list.get(i).getValue());
             ans.add(temp);
         }
 

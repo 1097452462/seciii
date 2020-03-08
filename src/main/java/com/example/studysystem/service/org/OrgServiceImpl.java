@@ -32,6 +32,7 @@ public class OrgServiceImpl implements OrgService{
     @Override
     public Response orderOrganizations() {
         try{
+            //System.out.println(orgDao.sortByAffiliation().size());
             return Response.buildSuccess(orgDao.sortByAffiliation());
         }catch (Exception e){
             e.printStackTrace();

@@ -25,7 +25,7 @@ public class OrgController {
     }
     @ResponseBody
     @RequestMapping(value = "/getByName",method = RequestMethod.GET)
-    public Response getSimplePaperByOrg(@RequestParam("name")String name){System.out.println(28);
+    public Response getSimplePaperByOrg(@RequestParam("name")String name){//System.out.println(28);
         //Response flag=paperService.plugPapers();System.out.println(flag);
         Response response= orgService.getSimplePaperByOrg(name);
         return  response;
