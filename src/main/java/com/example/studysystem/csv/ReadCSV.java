@@ -14,7 +14,6 @@ import java.util.*;
 @Mapper
 @Component
 public class ReadCSV {
-    //用与记录哪些文件以及插入到数据库，避免重复
     ArrayList<String> allreadyUpdate=new ArrayList<>();
 
     private boolean alreadyPlus(String name){
