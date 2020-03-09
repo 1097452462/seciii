@@ -36,7 +36,7 @@ public class ReadCSV {
                 //检查是否该文件已经更新
                 if(alreadyPlus(f.getName()))continue;
                 if(!f.isDirectory()&&f.getName().substring(f.getName().length()-4).equals(".csv")){
-                    String s=f.getPath();//System.out.println(s);
+                    String s=f.getPath();
                     readCSV_to_MySQL(s);
                     allreadyUpdate.add(f.getName());
                 }
@@ -53,62 +53,77 @@ public class ReadCSV {
         try{
             BufferedReader reader1=new BufferedReader(new FileReader(file_address1));
             readCSV(reader1);
-//            for(int i=0;i<ase.size();i++){
-//                Paper p=ase.get(i);
-//                Add(p);
-//            }
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
 
-
-    public static List<Paper> Select(String stuid) {
-        ArrayList<Paper> stu = new ArrayList<>();
-        Connection con;//声明一个连接对象
-        //遍历查询结果集
+    public static void insert(List<Paper> pList){
+        Long start=System.currentTimeMillis();
         try {
-            con = MySQLconnection.getConnection();//1.调用方法返回连接
+            Connection con = MySQLconnection.getConnection();
             if(!con.isClosed()) {
-//                System.out.println("Succeeded connecting to the Database!");
-                Statement statement = con.createStatement(); //2.创建statement类对象，用来执行SQL语句！！
-                String sql = "SELECT * FROM paper WHERE PDF_Link = \"%s\"";//要执行的SQL语句
-                ResultSet rs = statement.executeQuery(String.format(sql, stuid));
-                while (rs.next()) {
-                    Paper p = new Paper();
-                    p.setPDF_Link(rs.getString("PDF_Link"));
-                    stu.add(p);
-                    //stu.add(rs.getString("stuid").trim());
-                    // stu.add(rs.getString("name").trim());
+                Statement statement = con.createStatement();
+                String selectSQL="SELECT * FROM paper WHERE PDF_Link = \"%s\"";
+                String addPaperSQL = "insert into paper(Document_title,Authors,Author_Affiliations,Publication_Title,Date_Added_To_Xplore,Publication_Year,Volume,Issue,Start_Page,End_Page,Abstract,ISSN,ISBNs,DOI,Funding_Information,PDF_Link,Author_Keywords,IEEE_Terms,INSPEC_Controlled_Terms,INSPEC_Non_Controlled_Terms,Mesh_Terms,Article_Citation_Count,Reference_Count,License,Online_Date,Issue_Date,Meeting_Date,Publisher,Document_Identifier) values (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
+                String addSimplePaperSQL="insert into simplepaper(paper_id,Document_title,Authors,Author_Affiliations,Publication_Title,Publication_Year,Author_Keywords) values (\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
+                for(int i=0;i<pList.size();i++){
+                    Paper temp=pList.get(i);
+                    String sql1=String.format(selectSQL, temp.getPDF_Link());
+                    ResultSet rs1 = statement.executeQuery(sql1);
+                    if(rs1.next()){
+                        System.out.println("Repeat!");
+                    }
+                    else {
+                        int key = 0;
+                        String sql2 = String.format(addPaperSQL, temp.getDocument_title(), temp.getAuthors(), temp.getAuthor_Affiliations(), temp.getPublication_Title(), temp.getDate_Added_To_Xplore(), temp.getPublication_Year(), temp.getVolume(), temp.getIssue(), temp.getStart_Page(), temp.getEnd_Page(), temp.getAbstract(), temp.getISSN(), temp.getISBNs(), temp.getDOI(), temp.getFunding_Information(), temp.getPDF_Link(), temp.getAuthor_Keywords(), temp.getIEEE_Terms(), temp.getINSPEC_Controlled_Terms(), temp.getINSPEC_Non_Controlled_Terms(), temp.getMesh_Terms(), temp.getArticle_Citation_Count(), temp.getReference_Count(), temp.getLicense(), temp.getOnline_Date(), temp.getIssue_Date(), temp.getMeeting_Date(), temp.getPublisher(), temp.getDocument_Identifier());
+                        if (statement.executeUpdate(sql2, statement.RETURN_GENERATED_KEYS) != 0) {
+                            ResultSet rs2 = statement.getGeneratedKeys();
+                            if (rs2.next()) {
+                                key = rs2.getInt(1);
+                                System.out.println(key);
+                                System.out.println("Paper插入成功");
+                                String[] authorList = deleteQuotes(temp.getAuthors()).split("; ");
+                                String[] affiliationList = deleteQuotes(temp.getAuthor_Affiliations()).split("; ");
+                                for (int j = 0; j < Math.min(authorList.length, affiliationList.length); j++) {
+                                    String sql3 = String.format(addSimplePaperSQL, key, temp.getDocument_title(), authorList[j], affiliationList[j], temp.getPublication_Title(), temp.getPublication_Year(), temp.getAuthor_Keywords());
+                                    if (statement.executeUpdate(sql3) != 0) {
+                                        System.out.println("SimplePaper插入成功");
+                                    } else {
+                                        System.out.println("SimplePaper插入失败");
+                                    }
+                                }
+                            }
+                            MySQLconnection.close(rs2);
+                        } else {
+                            System.out.println("Paper插入失败");
+                        }
+                    }
+                    MySQLconnection.close(rs1);
                 }
-                MySQLconnection.close(rs);
                 MySQLconnection.close(statement);
                 MySQLconnection.close(con);
-            /*for(int i=0;i<stu.size();i++){
-                System.out.print("id:");
-                System.out.println(stu.get(i).getId());
-            }*/
-                return stu;
             }
-        }	catch (Exception e) {
-            // TODO: handle exception
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        return stu;
+        Long end=System.currentTimeMillis();
+        System.out.println(end-start+"ms");
     }
+
     public static void readCSV(BufferedReader reader){
+        List<Paper> pList=new ArrayList<>();
         try {
             reader.readLine();
             String line;
-            int ik=0;
             while((line=reader.readLine())!=null){
                 Paper p=new Paper();
                 String[] info = line.substring(1,line.length()-1).split("\",\"");
                 for(int i=0;i<info.length;i++){
                     info[i]=info[i]+"";
                 }
-                ik++;
                 p.setDocument_title(deleteQuotes(info[0]));
                 p.setAuthors(deleteQuotes(info[1]));
                 p.setAuthor_Affiliations(deleteQuotes(info[2]));
@@ -138,95 +153,16 @@ public class ReadCSV {
                 p.setMeeting_Date(deleteQuotes(info[26]));
                 p.setPublisher(deleteQuotes(info[27]));
                 p.setDocument_Identifier(deleteQuotes(info[28]));
-                List<Paper> papers=Select(p.getPDF_Link());
-                int key=0;
-                if(papers.size()>0){
-                    System.out.println("重复");
-                }
-                else{
-                    key=Add(p);
-                    String[] authorList=deleteQuotes(info[1]).split("; ");
-                    String[] affiliationList=deleteQuotes(info[2]).split("; ");
-                    for(int i=0;i<Math.min(authorList.length,affiliationList.length);i++){
-                        SimplePaper sp=new SimplePaper();
-                        sp.setPaper_id(key);
-                        sp.setDocument_title(deleteQuotes(info[0]));
-                        sp.setPublication_Year(deleteQuotes(info[5]));
-                        sp.setPublication_Title(deleteQuotes(info[3]));
-                        sp.setAuthor_Keywords(deleteQuotes(info[16]));
-                        sp.setAuthors(authorList[i]);
-                        sp.setAuthor_Affiliations(affiliationList[i]);
-                        AddAdd(sp);
-                    }
-                }
+                pList.add(p);
             }
-
-//上面一行做测试用要删掉
+            insert(pList);
         }
         catch (Exception e){
             e.printStackTrace();
         }
     }
-    public static void AddAdd(SimplePaper sp){
-        Connection con;
-        try{
-            con = MySQLconnection.getConnection();
-            if(!con.isClosed()){
-                Statement statement = con.createStatement();
-                String sql="insert into simplepaper(paper_id,Document_title,Authors,Author_Affiliations,Publication_Title,Publication_Year,Author_Keywords) values (\"%d\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
-                String sss=String.format(sql,sp.getPaper_id(),sp.getDocument_title(),sp.getAuthors(),sp.getAuthor_Affiliations(),sp.getPublication_Title(),sp.getPublication_Year(),sp.getAuthor_Keywords());
-                if(statement.executeUpdate(sss)!=0){
-                    System.out.println("simplepaper插入成功");
-                }
-                else{System.out.println("simplepaper插入失败");}
-                MySQLconnection.close(statement);
-                MySQLconnection.close(con);
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    public static int Add(Paper p) {
-        Connection con;//声明一个连接对象
-        int key=0;
-        //遍历查询结果集
-        try {
-            con = MySQLconnection.getConnection();//1.调用方法返回连接
-            if(!con.isClosed()) {
-//                System.out.println("Succeeded connecting to the Database!");
-                Statement statement = con.createStatement(); //2.创建statement类对象，用来执行SQL语句！！
-                String sql = "insert into paper(Document_title,Authors,Author_Affiliations,Publication_Title,Date_Added_To_Xplore,Publication_Year,Volume,Issue,Start_Page,End_Page,Abstract,ISSN,ISBNs,DOI,Funding_Information,PDF_Link,Author_Keywords,IEEE_Terms,INSPEC_Controlled_Terms,INSPEC_Non_Controlled_Terms,Mesh_Terms,Article_Citation_Count,Reference_Count,License,Online_Date,Issue_Date,Meeting_Date,Publisher,Document_Identifier) values (\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\",\"%s\")";
-                //要执行的SQL语句
-                String sss = String.format(sql, p.getDocument_title(), p.getAuthors(), p.getAuthor_Affiliations(), p.getPublication_Title(), p.getDate_Added_To_Xplore(), p.getPublication_Year(), p.getVolume(), p.getIssue(), p.getStart_Page(), p.getEnd_Page(), p.getAbstract(), p.getISSN(), p.getISBNs(), p.getDOI(), p.getFunding_Information(), p.getPDF_Link(), p.getAuthor_Keywords(), p.getIEEE_Terms(), p.getINSPEC_Controlled_Terms(), p.getINSPEC_Non_Controlled_Terms(), p.getMesh_Terms(), p.getArticle_Citation_Count(), p.getReference_Count(), p.getLicense(), p.getOnline_Date(), p.getIssue_Date(), p.getMeeting_Date(), p.getPublisher(), p.getDocument_Identifier());
-                if (statement.executeUpdate(sss, statement.RETURN_GENERATED_KEYS) != 0) {
-                    ResultSet rs=statement.getGeneratedKeys();
-                    if(rs.next()){key=rs.getInt(1);System.out.println(key);}
-                    MySQLconnection.close(rs);
-                    System.out.println("paper插入成功");
-                }
-                else {
-                    System.out.println("paper插入失败");
-                }
-                MySQLconnection.close(statement);
-                MySQLconnection.close(con);
-            }
-            return key;
-        }	catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            return key;
-        }
-    }
+
     public static String deleteQuotes(String s){
-//        for(int i=0;i<s.length()-1;i++){
-//            if(s.charAt(i)=='"'&&s.charAt(i+1)=='"'){
-//                String s1=s.substring(0,i+1);
-//                String s2=s.substring(i+2);
-//                s=s1+s2;
-//                i--;
-//            }
-//        }
         for(int i=0;i<s.length()-1;i++){
             if(s.charAt(i)=='"'){
                 String s1=s.substring(0,i);
@@ -236,134 +172,5 @@ public class ReadCSV {
         }
         return s;
     }
-/*
-    public static List<Integer> sortByAuthor(){
-        List<Integer> sort=new ArrayList<>();
-        List<SimplePaper> kkk=new ArrayList<>();
-        Connection con;
-        try{
-            con = MySQLconnection.getConnection();
-            if(!con.isClosed()){
-                Statement statement = con.createStatement();
-                String sql="SELECT * FROM simplepaper";
-                ResultSet rs=statement.executeQuery(sql);
-                while(rs.next()){
-                    SimplePaper sp=new SimplePaper();
-                    sp.setPaper_id(rs.getInt("paper_id"));
-//                    System.out.println(rs.getInt("paper_id"));
-                    sp.setAuthors(rs.getString("Authors"));
-                    kkk.add(sp);
-                }
-                MySQLconnection.close(rs);
-                MySQLconnection.close(statement);
-                MySQLconnection.close(con);
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        HashMap<String, Integer>yyy=new HashMap<>();
-        for(int i=0;i<kkk.size();i++){
-            String s=kkk.get(i).getAuthors();
-            if(yyy.containsKey(s)){
-                int value=yyy.get(s);
-                yyy.put(s,value+1);
-            }
-            else{
-                yyy.put(s,1);
-            }
-        }
-        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(yyy.entrySet());
-        list.sort(new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-//        System.out.println(list.get(0).getKey().equals(""));
-//        for(int i=0;i<3;i++){
-//            System.out.println(list.get(i).getKey()+" "+list.get(i).getValue());
-//        }
-        for(int i=0;i<list.size();i++){
-            String s=list.get(i).getKey();
-            if(!s.equals("")){
-                for(int j=0;j<kkk.size();j++){
-                    if(kkk.get(j).getAuthors().equals(s)){
-//                        System.out.print(kkk.get(j).getPaper_id()+" ");
-//                        System.out.println();
-                        sort.add(kkk.get(j).getPaper_id());
-                    }
-                }
-            }
-        }
-        return sort;
-    }
 
-    public static List<Integer> sortByAffiliation(){
-        List<Integer> sort=new ArrayList<>();
-        List<SimplePaper> kkk=new ArrayList<>();
-        Connection con;
-        try{
-            con = MySQLconnection.getConnection();
-            if(!con.isClosed()){
-                Statement statement = con.createStatement();
-                String sql="SELECT * FROM simplepaper";
-                ResultSet rs=statement.executeQuery(sql);
-                while(rs.next()){
-                    SimplePaper sp=new SimplePaper();
-                    sp.setPaper_id(rs.getInt("paper_id"));
-//                    System.out.println(rs.getInt("paper_id"));
-                    sp.setAuthor_Affiliations(rs.getString("Author_Affiliations"));
-                    kkk.add(sp);
-                }
-                MySQLconnection.close(rs);
-                MySQLconnection.close(statement);
-                MySQLconnection.close(con);
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        HashMap<String, Integer>yyy=new HashMap<>();
-
-        for(int i=0;i<kkk.size();i++){
-            String s=kkk.get(i).getAuthor_Affiliations();
-            if(yyy.containsKey(s)){
-                int value=yyy.get(s);
-                yyy.put(s,value+1);
-            }
-            else{
-                yyy.put(s,1);
-            }
-        }System.out.println("163");
-        for(String key:yyy.keySet())
-        {
-            System.out.println("Key: "+key+" Value: "+yyy.get(key));
-        }
-        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(yyy.entrySet());
-        list.sort(new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-//        System.out.println(list.get(0).getKey().equals(""));
-//        for(int i=0;i<3;i++){
-//            System.out.println(list.get(i).getKey()+" "+list.get(i).getValue());
-//        }
-        for(int i=0;i<list.size();i++){
-            String s=list.get(i).getKey();
-            if(!s.equals("")){
-                for(int j=0;j<kkk.size();j++){
-                    if(kkk.get(j).getAuthor_Affiliations().equals(s)){
-//                        System.out.print(kkk.get(j).getPaper_id()+" ");
-//                        System.out.println();
-                        sort.add(kkk.get(j).getPaper_id());
-                    }
-                }
-            }
-        }
-        return sort;
-    }
-*/
 }
