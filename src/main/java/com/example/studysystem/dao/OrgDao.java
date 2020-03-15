@@ -15,61 +15,30 @@ import java.util.*;
 public class OrgDao {
 
     public  List<List<String>> sortByAffiliation(){
-
-        List<SimplePaper> kkk=new ArrayList<>();
+        List<List<String>> result=new ArrayList<>();
         Connection con;
-        try{
+        try {
             con = MySQLconnection.getConnection();
-            if(!con.isClosed()){
+            if (!con.isClosed()) {
                 Statement statement = con.createStatement();
-                String sql="SELECT * FROM simplepaper  GROUP BY paper_id";
-                ResultSet rs=statement.executeQuery(sql);
-                while(rs.next()){
-                    SimplePaper sp=new SimplePaper();
-                    sp.setPaper_id(rs.getInt("paper_id"));
-//                    System.out.println(rs.getInt("paper_id"));
-                    sp.setAuthor_Affiliations(rs.getString("Author_Affiliations"));
-                    kkk.add(sp);
+                String sql2="SELECT Author_Affiliations, count(*) AS num from simplepaper group by Author_Affiliations order by num DESC";
+                ResultSet rs = statement.executeQuery(sql2);
+                while (rs.next()) {
+                    List<String> temp=new ArrayList<>();
+                    if(!rs.getString(1).equals("")) {
+                        temp.add(rs.getString(1));
+                        temp.add(Integer.toString(rs.getInt(2)));
+                        result.add(temp);
+                    }
                 }
                 MySQLconnection.close(rs);
                 MySQLconnection.close(statement);
-                MySQLconnection.close(con);
             }
+            MySQLconnection.close(con);
         }
-        catch(Exception e){
+        catch (Exception e) {
             e.printStackTrace();
         }
-        HashMap<String, Integer> yyy=new HashMap<>();
-
-        for(int i=0;i<kkk.size();i++){
-            String s=kkk.get(i).getAuthor_Affiliations();
-            if(yyy.containsKey(s)){
-                int value=yyy.get(s);
-                yyy.put(s,value+1);
-            }
-            else{
-                yyy.put(s,1);
-            }
-        }
-
-        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(yyy.entrySet());
-        list.sort(new Comparator<Map.Entry<String, Integer>>() {
-            @Override
-            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                return o2.getValue().compareTo(o1.getValue());
-            }
-        });
-        List<List<String>> orgs=new ArrayList<>();
-        for(int i=0;i<list.size();i++){//System.out.println(list.get(i).getKey()+"  "+list.get(i).getValue());
-            if(list.get(i).getKey().isEmpty())continue;
-            List<String> temp=new ArrayList<>();
-            temp.add(list.get(i).getKey());
-            temp.add(list.get(i).getValue().toString());
-            orgs.add(temp);
-        }
-
-        return orgs;
+        return result;
     }
-
-
 }
