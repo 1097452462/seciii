@@ -49,10 +49,19 @@ CREATE TABLE simplepaper(
 
 CREATE TABLE author(
     id  INT AUTO_INCREMENT PRIMARY KEY,
-    Author_name     VARCHAR(50)，
+    Author_name     VARCHAR(50),
     Org_list        TEXT,
     Paper_list      TEXT,
     Paper_num       INT
 )ENGINE=InnoDB;
+
+CREATE TABLE org(
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    Org_name     TEXT,
+    Author_list        TEXT,
+    Paper_list      TEXT,
+    Paper_num       INT
+)ENGINE=InnoDB;
+
 
 COMMIT;

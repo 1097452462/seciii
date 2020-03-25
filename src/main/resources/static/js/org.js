@@ -1,4 +1,4 @@
-var simplePapers=[];
+
 var orgs=[];
 $(document).ready(function() {
     getRequest(
@@ -11,15 +11,7 @@ $(document).ready(function() {
             alert(JSON.stringify(error));
         }
     );
-    getRequest(
-        '/paper/getSimple',
-        function (res) {
-            simplePapers = res.content;
-        },
-        function (error) {
-            alert(JSON.stringify(error));
-        }
-    );
+
 
     $("#org-search").click(function () {
         var name=$('#org_1').val();
@@ -40,8 +32,8 @@ $(document).ready(function() {
     function display(orgList) {
         var orgInfo = "";
         for (let org of orgList) {
-            orgInfo += "<tr></tr><td>" + org[0] + "</td>" +
-                "<td >" + org[1]+ "</td>" ;
+            orgInfo += "<tr></tr><td>" + org.org_name + "</td>" +
+                "<td >" + org.paper_num+ "</td>" ;
 
             orgInfo +=
                 "<td><button type='button' style='background-color: #4CAF50; /* Green */\n" +
@@ -52,7 +44,7 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='orgClick(&quot;"+ org[0] +"&quot;)'>机构详情</button>" + "</td></tr>";
+                "    font-size:13px;' onclick='orgClick(&quot;"+ org.org_name +"&quot;)'>机构详情</button>" + "</td></tr>";
         }
         $('#org-list').html(orgInfo);
     }

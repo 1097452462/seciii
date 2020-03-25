@@ -20,7 +20,7 @@ public class OrgController {
     @RequestMapping(value = "/get",method = RequestMethod.GET)
     public Response getOrgs(){
         //Response flag=paperService.plugPapers();System.out.println(flag);
-        Response response= orgService.orderOrganizations();
+        Response response= orgService.getOrgs();
         return  response;
     }
     @ResponseBody
@@ -36,7 +36,7 @@ public class OrgController {
     @RequestMapping(value = "/search",method = RequestMethod.GET)
     public Response searchOrgs(@RequestParam("name") String name,@RequestParam("num") String num){
         //Response flag=paperService.plugPapers();System.out.println(flag);
-        Response response= orgService.searchOrg(name,num);
+        Response response= orgService.searchOrgs(name,num);
         return  response;
     }
 

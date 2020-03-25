@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface OrgService {
      Response getSimplePaperByOrg(String name);
-     Response orderOrganizations();
-     Response searchOrg(String name,String num);
+     Response getOrgs();
+     Response searchOrgs(String name,String num);
 }

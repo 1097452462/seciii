@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AuthorService  {
-    public Response getSimplePaperByOrg(String name);
-    Response orderAuthors();
+    Response getSimplePaperByAuthor(String name);
+    Response getAuthors();
     Response searchAuthors(String name,String num);
 }

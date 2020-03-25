@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.studysystem.dao.AuthorDao" >
+    <resultMap id="BaseResultMap" type="com.example.studysystem.entity.Author" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <id column="Author_name" property="Author_name" jdbcType="VARCHAR" />
+        <id column="Org_list" property="Org_list" jdbcType="LONGVARCHAR" />
+        <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
+        <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id,
+    Author_name,
+    Org_list,
+    Paper_list,
+    Paper_num
+    </sql>
+
+
+    <select id="getAuthors"  resultType="Author">
+        SELECT * FROM author order by Paper_num desc
+    </select>
+
+    <select id="searchAuthors"  resultType="Author" >
+        <bind name="pattern" value="'%' + name + '%'" />
+        SELECT * FROM author where upper(Author_name) like upper(#{pattern}) and Paper_num >= #{num} order by Paper_num desc
+    </select>
+    <select id="getPaperIdByAuthor"  resultType="java.lang.String">
+        SELECT Paper_list FROM author where Author_name = #{name}
+    </select>
+
+</mapper>

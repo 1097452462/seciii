@@ -34,5 +34,15 @@
         SELECT * FROM simplepaper where Authors=#{name} GROUP BY paper_id
     </select>
 
+    <select id="getSimplePapersByIds"  resultType="SimplePaper" parameterType="java.util.List">
+        select * from simplepaper
+        where id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+
+    </select>
+
 
 </mapper>

@@ -2,8 +2,10 @@ package com.example.studysystem.service.author;
 
 import com.example.studysystem.dao.AuthorDao;
 import com.example.studysystem.dao.SimplePaperDao;
+import com.example.studysystem.entity.Author;
 import com.example.studysystem.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,9 +19,12 @@ public class AuthorServiceImpl implements AuthorService{
     private SimplePaperDao simplePaperDao;
 
     @Override
-    public Response getSimplePaperByOrg(String name) {
+    public Response getSimplePaperByAuthor(String name) {
         try{
-            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
+            String[] temp=authorDao.getPaperIdByAuthor(name).split(";");
+            List<Integer> paperId=new ArrayList<>();
+            for(String d:temp)paperId.add(Integer.parseInt(d));
+            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
@@ -27,9 +32,9 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public Response orderAuthors() {
+    public Response getAuthors() {
         try{
-            return Response.buildSuccess(authorDao.sortByAuthor());
+            return Response.buildSuccess(authorDao.getAuthors());
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
@@ -39,35 +44,10 @@ public class AuthorServiceImpl implements AuthorService{
     @Override
     public Response searchAuthors(String name, String num) {
         try {
-            List<List<String>> authors = authorDao.sortByAuthor();
-            List<List<String>> ans = new ArrayList<>();
-            for (List<String> t : authors) {
-                boolean flag1 = true, flag2 = true;
-                if (!name.isEmpty()) {
-                    //System.out.println(t.get(0).toLowerCase() +"   "+name.toLowerCase());
-                    /*if (!t.get(0).toLowerCase().contains(name.toLowerCase())) {
-                        flag1 = false;
-                    }*/
-                    if (!name.isEmpty()) {
-                        String temp = name.toLowerCase();
-                        temp.replaceAll(";", " ");
-                        String list[] = temp.split(" ");
-                        for (String x : list) {
-                            if (!t.get(0).toLowerCase().contains(x)) {
-                                flag1 = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (!flag1) continue;
-                if (!num.isEmpty()) {
-                    if (Integer.parseInt(t.get(1)) < Integer.parseInt(num)) flag2 = false;
-                }
-                if (flag2) ans.add(t);
-
-            }System.out.println(ans.size());
-            return Response.buildSuccess(ans);
+            int d=0;
+            if(!num.isEmpty())d=Integer.parseInt(num);
+            List<Author> authors=authorDao.searchAuthors(name,d);
+            return Response.buildSuccess(authors);
         } catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));

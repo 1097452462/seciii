@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.studysystem.dao.OrgDao" >
+    <resultMap id="BaseResultMap" type="com.example.studysystem.entity.Org" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <id column="Org_name" property="Org_name" jdbcType="LONGVARCHAR" />
+        <id column="Author_list" property="Author_list" jdbcType="LONGVARCHAR" />
+        <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
+        <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id,
+    Org_name,
+    Author_list,
+    Paper_list,
+    Paper_num
+    </sql>
+
+
+    <select id="getOrgs"  resultType="Org">
+        SELECT * FROM org order by Paper_num desc
+    </select>
+
+    <select id="searchOrgs"  resultType="Org" >
+        <bind name="pattern" value="'%' + name + '%'" />
+        SELECT * FROM org where upper(Org_name) like upper(#{pattern}) and Paper_num >= #{num} order by Paper_num desc
+    </select>
+    <select id="getPaperIdByOrg"  resultType="java.lang.String">
+        SELECT Paper_list FROM org where Org_name = #{name}
+    </select>
+
+</mapper>
