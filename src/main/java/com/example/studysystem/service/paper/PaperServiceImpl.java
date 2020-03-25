@@ -173,7 +173,7 @@ public class PaperServiceImpl implements PaperService {
             }
 
 
-            List newList = num.stream().distinct().collect(Collectors.toList());System.out.println(newList.size());
+            List newList = num.stream().distinct().collect(Collectors.toList());//System.out.println(newList.size());
             List<Paper> papers=new ArrayList<>();
             if(newList.size()>0)papers=paperDao.getPapersByIds(newList);
             //System.out.println(papers.size());

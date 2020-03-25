@@ -48,10 +48,10 @@ public class AuthorDao {
                 yyy.put(s, 1);
             }
         }
-        for(String key:yyy.keySet())
+        /*for(String key:yyy.keySet())
         {
             System.out.println(key+" : "+yyy.get(key));
-        }
+        }*/
         List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(yyy.entrySet());
         list.sort(new Comparator<Map.Entry<String, Integer>>() {
             @Override

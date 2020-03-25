@@ -47,5 +47,12 @@ CREATE TABLE simplepaper(
     Author_Keywords TEXT
 )ENGINE=InnoDB;
 
+CREATE TABLE author(
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    Author_name     VARCHAR(50)，
+    Org_list        TEXT,
+    Paper_list      TEXT,
+    Paper_num       INT
+)ENGINE=InnoDB;
 
 COMMIT;

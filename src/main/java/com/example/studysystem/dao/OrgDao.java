@@ -21,7 +21,7 @@ public class OrgDao {
             con = MySQLconnection.getConnection();
             if (!con.isClosed()) {
                 Statement statement = con.createStatement();
-                String sql2="SELECT Author_Affiliations, count(*) AS num from simplepaper group by Author_Affiliations order by num DESC";
+                String sql2="SELECT Author_Affiliations, count(distinct paper_id) AS num from simplepaper group by Author_Affiliations order by num DESC";
                 ResultSet rs = statement.executeQuery(sql2);
                 while (rs.next()) {
                     List<String> temp=new ArrayList<>();

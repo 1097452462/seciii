@@ -8,7 +8,7 @@ $(document).ready(function() {
         function (res) {
             var papers= res.content;
             var num=papers.length;
-            //$('#orgDetail-num').text(num+"  total papers");
+            $('#orgDetail-num').text(num+"  total papers");
             display(papers);
         },
         function (error) {

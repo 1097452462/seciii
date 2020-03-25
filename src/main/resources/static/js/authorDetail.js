@@ -6,7 +6,7 @@ $(document).ready(function() {
         function (res) {
             var papers= res.content;
             var num=papers.length;
-            //$('#authorDetail-num').text(num+"  total papers");
+            $('#authorDetail-num').text(num+"  total papers");
             display(papers);
         },
         function (error) {

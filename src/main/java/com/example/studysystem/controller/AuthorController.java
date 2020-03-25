@@ -27,7 +27,7 @@ public class AuthorController {
 
     @ResponseBody
     @RequestMapping(value = "/getByName",method = RequestMethod.GET)
-    public Response getSimplePaperByOrg(@RequestParam("name")String name){System.out.println(28);
+    public Response getSimplePaperByOrg(@RequestParam("name")String name){//System.out.println(28);
         //Response flag=paperService.plugPapers();System.out.println(flag);
         Response response= authorService.getSimplePaperByOrg(name);
         return  response;

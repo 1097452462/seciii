@@ -14,7 +14,7 @@ import java.util.*;
 @Mapper
 @Component
 public class ReadCSV {
-    ArrayList<String> allreadyUpdate=new ArrayList<>();
+    private ArrayList<String> allreadyUpdate=new ArrayList<>();
 
     private boolean alreadyPlus(String name){
         if(allreadyUpdate.size()==0)return false;
