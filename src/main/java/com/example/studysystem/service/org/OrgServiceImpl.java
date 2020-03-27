@@ -3,6 +3,7 @@ import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Org;
 import com.example.studysystem.entity.Response;
+import com.example.studysystem.entity.SimplePaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,11 @@ public class OrgServiceImpl implements OrgService{
     @Override
     public Response getSimplePaperByOrg(String name) {
         try{
-            String[] temp=orgDao.getPaperIdByOrg(name).split(";");
-            List<Integer> paperId=new ArrayList<>();
-            for(String d:temp)paperId.add(Integer.parseInt(d));
-            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+//            String[] temp=orgDao.getPaperIdByOrg(name).split(";");
+//            List<Integer> paperId=new ArrayList<>();
+//            for(String d:temp)paperId.add(Integer.parseInt(d));
+//            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+            return Response.buildSuccess(simplePaperDao.getSimplePaperByOrg(name));
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));

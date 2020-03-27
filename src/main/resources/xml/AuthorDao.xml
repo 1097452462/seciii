@@ -4,21 +4,21 @@
     <resultMap id="BaseResultMap" type="com.example.studysystem.entity.Author" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <id column="Author_name" property="Author_name" jdbcType="VARCHAR" />
-        <id column="Org_list" property="Org_list" jdbcType="LONGVARCHAR" />
+        <id column="Org_list" property="Org_list" jdbcType="VARCHAR" />
         <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
     id,
     Author_name,
-    Org_list,
+    Org,
     Paper_list,
     Paper_num
     </sql>
 
 
-    <select id="getAuthors"  resultType="Author">
-        SELECT * FROM author order by Paper_num desc
+    <select id="getAuthors"  resultType="Author" >
+        SELECT * FROM author group by Author_name order by Paper_num desc
     </select>
 
     <select id="searchAuthors"  resultType="Author" >
