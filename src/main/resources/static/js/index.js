@@ -5,7 +5,7 @@ $(document).ready(function() {
         '/paper/get',
         function (res) {
             papers = res.content;
-            display(papers);
+            //display(papers);
         },
         function (error) {
             alert(JSON.stringify(error));
