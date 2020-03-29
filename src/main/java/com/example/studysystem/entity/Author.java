@@ -3,7 +3,7 @@ package com.example.studysystem.entity;
 public class Author {
     private int id=0;
     private String Author_name;
-    private String Org_list;
+    private String Org;
     private String Paper_list;
     private int Paper_num;
 
@@ -23,12 +23,12 @@ public class Author {
         Author_name = author_name;
     }
 
-    public String getOrg_list() {
-        return Org_list;
+    public String getOrg() {
+        return Org;
     }
 
-    public void setOrg_list(String org_list) {
-        Org_list = org_list;
+    public void setOrg(String org_name) {
+        Org = org_name;
     }
 
     public String getPaper_list() {

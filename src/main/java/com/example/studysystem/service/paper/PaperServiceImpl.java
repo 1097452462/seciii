@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -94,12 +92,86 @@ public class PaperServiceImpl implements PaperService {
         }
     }
 
-    @Override
-    public Response searchPapers(SimplePaper simplePaper){
-        try{
-            List<SimplePaper> simplePapers= simplePaperDao.getSimplePapers();
-            List<Integer> num=new ArrayList<>();
 
+
+    @Override
+    public Response searchPapers(SimplePaper simplePaper) {
+        try {
+            Long start = System.currentTimeMillis();
+            List<Integer> num = new ArrayList<>();
+            Map<Integer, Integer> map = new HashMap<>();
+            String[] title_list = simplePaper.getDocument_title().split(" ");
+            String[] author_list = simplePaper.getAuthors().split(" ");
+            String[] org_list = simplePaper.getAuthor_Affiliations().split(" ");
+            String[] meeting_list = simplePaper.getPublication_Title().split(" ");
+            String[] keyword_list = simplePaper.getAuthor_Keywords().split(" ");
+            int y=0;
+
+            for (String s : title_list) {
+                List<Integer> temp = simplePaperDao.simpleSelect_title(s);
+                for (int d : temp) {
+                    if (map.containsKey(d)) map.put(d, map.get(d) + 1);
+                    else map.put(d, 1);
+                }
+            }
+            for (String s : author_list) {
+                List<Integer> temp = simplePaperDao.simpleSelect_author(s);
+                for (int d : temp) {
+                    if (map.containsKey(d)) map.put(d, map.get(d) + 1);
+                    else map.put(d, 1);
+                }
+            }
+            if(!simplePaper.getPublication_Year().isEmpty()) {
+                y=1;
+                List<Integer> temp = simplePaperDao.simpleSelect_year(simplePaper.getPublication_Year());
+                for (int d : temp) {
+                    if (map.containsKey(d)) map.put(d, map.get(d) + 1);
+                    else map.put(d, 1);
+                }
+            }
+            for (String s : org_list) {
+                List<Integer> temp2 = simplePaperDao.simpleSelect_org(s);
+                for (int d : temp2) {
+                    if (map.containsKey(d)) map.put(d, map.get(d) + 1);
+                    else map.put(d, 1);
+                }
+            }
+            for (String s : meeting_list) {
+                List<Integer> temp2 = simplePaperDao.simpleSelect_meeting(s);
+                for (int d : temp2) {
+                    if (map.containsKey(d)) map.put(d, map.get(d) + 1);
+                    else map.put(d, 1);
+                }
+            }
+            for (String s : keyword_list) {
+                List<Integer> temp2 = simplePaperDao.simpleSelect_keyword(s);
+                for (int d : temp2) {
+                    if (map.containsKey(d)) map.put(d, map.get(d) + 1);
+                    else map.put(d, 1);
+                }
+            }
+
+
+            int n = title_list.length + author_list.length + org_list.length + y + meeting_list.length + keyword_list.length;
+            for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+                if (m.getValue() == n) num.add(m.getKey());
+            }
+
+            List newList = num.stream().distinct().collect(Collectors.toList());//System.out.println(newList.size());
+            List<Paper> papers = new ArrayList<>();
+            if (newList.size() > 0) papers = paperDao.getPapersByIds(newList);
+
+            Long end = System.currentTimeMillis();
+            System.out.println("用时" + (end - start) + "ms");
+            return Response.buildSuccess(papers);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+}
+/*  老的破烂搜索方法，必须全部拿出来再一个一个搜
             for(SimplePaper p:simplePapers) {
                 boolean flag00=true,flag0=true,flag1=true, flag2=true, flag3=true, flag4 = true;
 
@@ -171,17 +243,4 @@ public class PaperServiceImpl implements PaperService {
                 }
                 if(flag4)num.add(p.getPaper_id());
             }
-
-
-            List newList = num.stream().distinct().collect(Collectors.toList());//System.out.println(newList.size());
-            List<Paper> papers=new ArrayList<>();
-            if(newList.size()>0)papers=paperDao.getPapersByIds(newList);
-            //System.out.println(papers.size());
-            return Response.buildSuccess(papers);
-
-        }catch (Exception e){
-        e.printStackTrace();
-        return (Response.buildFailure("失败"));
-    }
-    }
-}
+            */

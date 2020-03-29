@@ -41,8 +41,35 @@
                  separator="," close=")">
             #{item}
         </foreach>
-
     </select>
 
+    <select id="simpleSelect_title" resultType="java.lang.Integer" parameterType="java.lang.String">
+        <bind name="pattern" value="'%' + name + '%'" />
+        select distinct paper_id from simplepaper where upper(Document_title) like upper(#{pattern})
+    </select>
+
+    <select id="simpleSelect_author" resultType="java.lang.Integer" parameterType="java.lang.String">
+        <bind name="pattern" value="'%' + name + '%'" />
+        select distinct paper_id from simplepaper where upper(Authors) like upper(#{pattern})
+    </select>
+
+    <select id="simpleSelect_year" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select distinct paper_id from simplepaper where Publication_Year = #{year}
+    </select>
+
+    <select id="simpleSelect_org" resultType="java.lang.Integer" parameterType="java.lang.String">
+        <bind name="pattern" value="'%' + name + '%'" />
+        select distinct paper_id from simplepaper where upper(Author_Affiliations) like upper(#{pattern})
+    </select>
+
+    <select id="simpleSelect_meeting" resultType="java.lang.Integer" parameterType="java.lang.String">
+        <bind name="pattern" value="'%' + name + '%'" />
+        select distinct paper_id from simplepaper where upper(Publication_Title) like upper(#{pattern})
+    </select>
+
+    <select id="simpleSelect_keyword" resultType="java.lang.Integer" parameterType="java.lang.String">
+        <bind name="pattern" value="'%' + name + '%'" />
+        select distinct paper_id from simplepaper where upper(Author_Keywords) like upper(#{pattern})
+    </select>
 
 </mapper>

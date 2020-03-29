@@ -154,7 +154,7 @@ public class ReadCSV {
                 String[] r=new String[2];
                 r[0]=authors[j];
                 r[1]=orgs[j];
-                if(!relation.contains(r)){
+                if(!r[0].isEmpty()&&!relation.contains(r)){
                     relation.add(r);
                 }
             }
@@ -167,7 +167,7 @@ public class ReadCSV {
         for(int i=0;i<paperList.size();i++){
             String[] orgs=paperList.get(i).getAuthor_Affiliations().split("; ");
             for(int j=0;j<orgs.length;j++){
-                if(!orgList.contains(orgs[j])){
+                if(!orgs[j].isEmpty()&&!orgList.contains(orgs[j])){
                     orgList.add(orgs[j]);
                 }
             }

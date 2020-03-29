@@ -14,4 +14,10 @@ public interface SimplePaperDao {
     List<SimplePaper> getSimplePapers();
     List<Paper> getSimplePapersByIds(List<Integer> id);
     List<SimplePaper> getSimplePaperByAuthor(String name);
+    List<Integer> simpleSelect_title(String name);
+    List<Integer> simpleSelect_author(String name);
+    List<Integer> simpleSelect_year(String year);
+    List<Integer> simpleSelect_org(String name);
+    List<Integer> simpleSelect_meeting(String name);
+    List<Integer> simpleSelect_keyword(String name);
 }
