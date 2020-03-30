@@ -18,7 +18,7 @@
 
 
     <select id="getAuthors"  resultType="Author" >
-        SELECT * FROM author group by Author_name order by Paper_num desc
+        SELECT * FROM author order by Paper_num desc
     </select>
 
     <select id="searchAuthors"  resultType="Author" >

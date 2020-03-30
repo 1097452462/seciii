@@ -21,11 +21,11 @@ public class AuthorServiceImpl implements AuthorService{
     @Override
     public Response getSimplePaperByAuthor(String name) {
         try{
-//            String[] temp=authorDao.getPaperIdByAuthor(name).split(";");
-//            List<Integer> paperId=new ArrayList<>();
-//            for(String d:temp)paperId.add(Integer.parseInt(d));
-//            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
-            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
+            String[] temp=authorDao.getPaperIdByAuthor(name).split(";");
+            List<Integer> paperId=new ArrayList<>();
+            for(String d:temp)paperId.add(Integer.parseInt(d));
+            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+//            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
