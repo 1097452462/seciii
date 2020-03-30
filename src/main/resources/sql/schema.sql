@@ -43,7 +43,7 @@ CREATE TABLE simplepaper(
     paper_id  INT,
     Authors VARCHAR(50),
     INDEX author (Authors(25)),
-    Author_Affiliations VARCHAR(200),
+    Author_Affiliations TEXT,
     INDEX org (Author_Affiliations(100)),
     Publication_Title TEXT,
     Publication_Year TEXT,
@@ -54,7 +54,7 @@ CREATE TABLE author(
     id  INT AUTO_INCREMENT PRIMARY KEY,
     Author_name     VARCHAR(50),
     INDEX author (Author_name(25)),
-    Org VARCHAR(200),
+    Org TEXT,
     INDEX org (Org(100)),
     Paper_list      TEXT,
     Paper_num       INT
@@ -62,7 +62,7 @@ CREATE TABLE author(
 
 CREATE TABLE org(
     id  INT AUTO_INCREMENT PRIMARY KEY,
-    Org_name     VARCHAR(200),
+    Org_name     TEXT,
     INDEX orgname (Org_name(100)),
     Author_list        TEXT,
     Paper_list      TEXT,
