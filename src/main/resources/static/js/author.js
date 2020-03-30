@@ -33,6 +33,7 @@ $(document).ready(function() {
         var Info = "";
         for (let a of List) {
             Info += "<tr></tr><td>" + a.author_name + "</td>" +
+                "<td >" + a.org+ "</td>"+
                 "<td >" + a.paper_num+ "</td>" ;
 
             Info +=
