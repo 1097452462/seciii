@@ -21,12 +21,16 @@
         SELECT * FROM author order by Paper_num desc
     </select>
 
+    <select id="getAuthorById"  resultType="Author" >
+        SELECT * FROM author where id=#{id}
+    </select>
+
     <select id="searchAuthors"  resultType="Author" >
         <bind name="pattern" value="'%' + name + '%'" />
         SELECT * FROM author where upper(Author_name) like upper(#{pattern}) and Paper_num >= #{num} order by Paper_num desc
     </select>
     <select id="getPaperIdByAuthor"  resultType="java.lang.String">
-        SELECT Paper_list FROM author where Author_name = #{name}
+        SELECT Paper_list FROM author where id = #{id}
     </select>
 
 </mapper>

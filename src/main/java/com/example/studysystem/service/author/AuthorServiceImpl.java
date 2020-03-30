@@ -18,14 +18,11 @@ public class AuthorServiceImpl implements AuthorService{
     @Autowired
     private SimplePaperDao simplePaperDao;
 
+
     @Override
-    public Response getSimplePaperByAuthor(String name) {
+    public Response getAuthors() {
         try{
-            String[] temp=authorDao.getPaperIdByAuthor(name).split(";");
-            List<Integer> paperId=new ArrayList<>();
-            for(String d:temp)paperId.add(Integer.parseInt(d));
-            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
-//            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
+            return Response.buildSuccess(authorDao.getAuthors());
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
@@ -33,9 +30,23 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public Response getAuthors() {
+    public Response getAuthorById(int id) {
         try{
-            return Response.buildSuccess(authorDao.getAuthors());
+            return Response.buildSuccess(authorDao.getAuthorById(id));
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getSimplePaperByAuthor(int id) {
+        try{
+            String[] temp=authorDao.getPaperIdByAuthor(id).split(";");
+            List<Integer> paperId=new ArrayList<>();
+            for(String d:temp)paperId.add(Integer.parseInt(d));
+            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+//            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));

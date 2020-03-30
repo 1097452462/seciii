@@ -21,12 +21,16 @@
         SELECT * FROM org order by Paper_num desc
     </select>
 
+    <select id="getOrgById"  resultType="Org">
+        SELECT * FROM org where id=#{id}
+    </select>
+
     <select id="searchOrgs"  resultType="Org" >
         <bind name="pattern" value="'%' + name + '%'" />
         SELECT * FROM org where upper(Org_name) like upper(#{pattern}) and Paper_num >= #{num} order by Paper_num desc
     </select>
     <select id="getPaperIdByOrg"  resultType="java.lang.String">
-        SELECT Paper_list FROM org where Org_name = #{name}
+        SELECT Paper_list FROM org where id = #{id}
     </select>
 
 </mapper>

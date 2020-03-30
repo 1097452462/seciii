@@ -1,18 +1,34 @@
+var author;
+var papers=[];
 $(document).ready(function() {
-    var name=getUrlParameter('author-name');//alert(name);
-    $('#authorDetail-name').text(decodeURI(name));
+    var id=getUrlParameter('author-id');//alert(name);
+
     getRequest(
-        '/author/getByName?name='+name,
+        '/author/getById?id='+id,
         function (res) {
-            var papers= res.content;
-            var num=papers.length;
-            $('#authorDetail-num').text(num+"  total papers");
-            display(papers);
+            author= res.content;
+            $('#authorDetail-name').text(decodeURI(author.author_name));
+            $('#authorDetail-org').text(decodeURI(author.org));
+            $('#authorDetail-num').text(author.paper_num+"  total papers");
         },
         function (error) {
             alert(JSON.stringify(error));
         }
     );
+
+    $("#author-detail-paper").click(function () {
+        getRequest(
+            '/author/getSimplepaperById?id='+id,
+            function (res) {
+                papers= res.content;
+                display(papers);
+                document.getElementById("author-detail-table").style.display="block";
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    })
 
 });
 function getUrlParameter(name){

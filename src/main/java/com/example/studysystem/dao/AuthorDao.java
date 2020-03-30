@@ -11,6 +11,7 @@ import java.util.List;
 @Component
 public interface AuthorDao {
     List<Author> getAuthors();
+    Author getAuthorById(@Param("id")int id);
     List<Author> searchAuthors(@Param("name") String name,@Param("num") int num);
-    String  getPaperIdByAuthor(@Param("name") String name);
+    String  getPaperIdByAuthor(@Param("id") int id);
 }
