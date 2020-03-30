@@ -1,4 +1,5 @@
 var papers=[];
+var n=0;
 $(document).ready(function() {
 
     getRequest(
@@ -49,15 +50,16 @@ $(document).ready(function() {
 
     function display(paperList) {
         var paperInfo = "";
+        n=0;
         for (let paper of paperList) {
-            paperInfo += "<tr></tr><td>" + paper.document_title + "</td>" +
-                "<td >" + paper.authors.substr(0, 30)+"..." + "</td>" +
-                "<td >" + paper.publication_Year+ "</td>" +
-                "<td >" + paper.author_Affiliations.substr(0, 50)+"..." + "</td>" +
-                "<td>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
-                "<td >" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
+            paperInfo += "<tr></tr><td width='25%'>" + paper.document_title + "</td>" +
+                "<td width='10%'>" + paper.authors.substr(0, 30)+"..." + "</td>" +
+                "<td width='4%'>" + paper.publication_Year+ "</td>" +
+                "<td width='17%'>" + paper.author_Affiliations.substr(0, 50)+"..." + "</td>" +
+                "<td width='15%'>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
+                "<td width='24%'>" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
             paperInfo +=
-                "<td><button type='button' style='background-color: #4CAF50; /* Green */\n" +
+                "<td><button  type='button' style='background-color: #4CAF50; /* Green */\n" +
                 "border: 2px solid #4CAF50;" +
                 "color: white;\n" +
                 "    padding: 7px 15px;\n" +
@@ -66,12 +68,23 @@ $(document).ready(function() {
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
                 "    font-size:13px;' onclick='paperClick(" + paper.id + ")'>论文详情</button>" + "</td></tr>";
+            paperInfo +=
+            "<td>"+"<button id=\"flip\" onclick='detailClick("+n+")'>查看详情</button>"+
+            "<p id=\"panel\" hidden>"+"<br>"+paper.author_Affiliations.substr(0, 50)+"</p>"
+            "</td></tr>";
+            n+=1;
         }
         $('#paper-list').html(paperInfo);
     }
 
 
 });
+
+function detailClick(id){
+    //id=id-2;
+    //id=len(list)-1-id;
+    $("p").eq(id).slideToggle("slow");
+}
 
 function paperClick(id){
     window.open("/view/paper-detail?paper-id="+id);

@@ -123,14 +123,14 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
                 <includes>
+                    <include>**/*.yml</include>
                     <include>**/*.xml</include>
+                    <include>static/**</include>
+                    <include>templates/**</include>
                 </includes>
+                <filtering>false</filtering>
             </resource>
-
         </resources>
     </build>
     <pluginRepositories>
