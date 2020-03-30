@@ -9,8 +9,6 @@ import java.util.List;
 
 @Service
 public interface PaperService {
-    Response addFile(MultipartFile file);
-    Response plugPapers();
     Response getSimplePapers();
     Response getPapers();
     Response getPapersById(int id);

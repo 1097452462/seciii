@@ -41,14 +41,32 @@
     <hr>
     <h1>学术图谱系统</h1>
     <hr>
-    <br><br><hr><br><br>
+    <table class="table" align="center" border="1px" style="border: #1c196e" >
+        <thead>
+            已有数据文件
+        </thead>
+        <div  style="overflow-y:scroll">
+            <tbody id="file-list" style="border: #8ae292">
+        </div>
+    </table>
+
+    <br><hr>
     <div >新增数据库文件(csv格式)
         <input type="file" id="newFile"  width="30%">
         <button class="myBtn" id="uploadFile">
-            更新数据库
+            上传文件
         </button>
     </div>
-    <br><br>
+    <br><hr>
+    <button id="updateDB" type='button' style='background-color: #4CAF50;
+            border: 2px solid #4CAF50;
+            color: white;
+            padding: 7px 15px;
+            text-align: center;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-block;
+            font-size:13px;'>更新数据库</button>
 </div>
 </body>
 </html>

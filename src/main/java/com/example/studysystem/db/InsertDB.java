@@ -1,4 +1,4 @@
-package com.example.studysystem.csv;
+package com.example.studysystem.db;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,7 @@ import java.util.*;
 
 @Mapper
 @Component
-public class ReadCSV {
+public class InsertDB {
 
     private ArrayList<String> allreadyUpdate=new ArrayList<>();
 
@@ -69,6 +69,7 @@ public class ReadCSV {
             }
             Long start=System.currentTimeMillis();
             paperList=ignoreRepeat(paperList);/*查重*/
+
             relation=dealRelation(paperList);
             orgs=dealOrg(paperList);
             insertPaperAndSimplePaper(paperList);/*插入paper和simplepaper*/

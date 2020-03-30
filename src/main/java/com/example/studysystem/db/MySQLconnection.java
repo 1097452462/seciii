@@ -1,4 +1,4 @@
-package com.example.studysystem.csv;
+package com.example.studysystem.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -8,7 +8,7 @@ spring:
     username: root
     password: XIAhz990306
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #initialization-mode: always
+    initialization-mode: always
     schema: classpath*:sql/schema.sql
 
 
