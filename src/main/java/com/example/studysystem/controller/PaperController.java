@@ -14,7 +14,6 @@ public class PaperController {
     private PaperService paperService;
 
 
-
     //获得所有论文信息
     @ResponseBody
     @RequestMapping(value = "/get",method = RequestMethod.GET)
@@ -50,14 +49,6 @@ public class PaperController {
         return  response;
     }
 
-    //新增文件并更新数据库
-    @ResponseBody
-    @RequestMapping(value = "/addFile",method = RequestMethod.POST)
-    @PostMapping(value = "/file2")
-    public Response uploadFile(@RequestParam("file") MultipartFile file){//System.out.println("49");
-        Response a=paperService.addFile(file);
-        if(a.getSuccess())return paperService.plugPapers();
-        return a;
-    }
+
 
 }

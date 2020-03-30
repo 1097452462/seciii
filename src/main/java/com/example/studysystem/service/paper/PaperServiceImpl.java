@@ -1,6 +1,6 @@
 package com.example.studysystem.service.paper;
 
-import com.example.studysystem.csv.ReadCSV;
+import com.example.studysystem.db.InsertDB;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Paper;
@@ -8,9 +8,7 @@ import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SimplePaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,42 +19,7 @@ public class PaperServiceImpl implements PaperService {
     @Autowired
     private SimplePaperDao simplePaperDao;
     @Autowired
-    private ReadCSV readCSV;
-
-    @Override
-    public Response addFile(MultipartFile file) {//System.out.println("26");
-       try{
-           String fileName = file.getOriginalFilename();
-           String suffix = fileName.substring(fileName.lastIndexOf('.'));
-           String newFileName = new Date().getTime() + suffix;//System.out.println(newFileName);
-           File directory = new File("./");
-           String path2=directory.getAbsolutePath();
-           path2=path2.substring(0,path2.length()-1);
-           File newFile = new File(path2 + "src/main/resources/excel/" + newFileName);
-           try {
-               file.transferTo(newFile);
-           }
-           catch (Exception e){
-               e.printStackTrace();
-               return (Response.buildFailure("失败"));
-           }
-           return Response.buildSuccess();
-       }catch (Exception e){
-           e.printStackTrace();
-           return (Response.buildFailure("失败"));
-       }
-    }
-
-    @Override
-    public Response plugPapers(){
-        try{
-            readCSV.tranfData();
-            return Response.buildSuccess(simplePaperDao.getSimplePapers());
-        }catch (Exception e){
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
+    private InsertDB insertDB;
 
     @Override
     public Response getSimplePapers() {
