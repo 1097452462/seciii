@@ -155,7 +155,13 @@ public class InsertDB {
                 String[] r=new String[2];
                 r[0]=authors[j];
                 r[1]=orgs[j];
-                if(!r[0].isEmpty()&&!relation.contains(r)){
+                boolean exist=false;
+                for(int k=0;k<relation.size();k++){
+                    if(relation.get(k)[0].equals(r[0])&&relation.get(k)[1].equals(r[1])){
+                        exist=true;
+                    }
+                }
+                if(!r[0].isEmpty()&&!exist){
                     relation.add(r);
                 }
             }
@@ -232,7 +238,7 @@ public class InsertDB {
             con.setAutoCommit(false);
             if(!con.isClosed()) {
                 Statement statement = con.createStatement();
-                String selectSql1="select Document_title from simplepaper where Authors=\"%s\" and Author_Affiliations=\"%s\"";
+                String selectSql1="select paper_id from simplepaper where Authors=\"%s\" and Author_Affiliations=\"%s\"";
                 String selectSql2="select id from author where Author_name=\"%s\" and Org=\"%s\"";
 //                String insertSql="insert into author(Author_name,Org,Paper_list,Paper_num) values (\"%s\",\"%s\",\"%s\",\"%d\")";
 //                String updateSql="update author set Paper_list=\"%s\",Paper_num=\"%d\" where id=\"%d\"";
@@ -302,7 +308,7 @@ public class InsertDB {
             con.setAutoCommit(false);
             if(!con.isClosed()) {
                 Statement statement = con.createStatement();
-                String selectSql1="select distinct Document_title from simplepaper where Author_Affiliations=\"%s\"";
+                String selectSql1="select distinct paper_id from simplepaper where Author_Affiliations=\"%s\"";
                 String selectSql2="select Authors from simplepaper where Author_Affiliations=\"%s\"";
                 String selectSql3="select id from org where Org_name=\"%s\"";
 //                String insertSql="insert into org(Org_name,Author_list,Paper_list,Paper_num,Author_num)values(\"%s\",\"%s\",\"%s\",\"%d\",\"%d\")";
