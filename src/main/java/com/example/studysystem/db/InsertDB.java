@@ -132,7 +132,7 @@ public class InsertDB {
                     String sql = String.format(selectSQL, p.getPDF_Link());
                     ResultSet rs = statement.executeQuery(sql);
                     if (rs.next()) {
-                        System.out.println("Repeat!");
+                        System.out.println("重复!");
                         paperList.remove(i);
                     }
                 }
