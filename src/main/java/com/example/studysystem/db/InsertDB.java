@@ -122,6 +122,15 @@ public class InsertDB {
     }
 
     public static List<Paper> ignoreRepeat(List<Paper> paperList){
+        List<Paper> temp=paperList;
+        for(int i=0;i<temp.size()-1;i++){
+            for(int j=i+1;j<temp.size();j++){
+                if(temp.get(i).getPDF_Link().equals(temp.get(j).getPDF_Link())){
+                    paperList.remove(i);
+                    break;
+                }
+            }
+        }
         try{
             Connection con = MySQLconnection.getConnection();
             if(!con.isClosed()) {
