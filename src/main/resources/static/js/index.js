@@ -22,21 +22,34 @@ $(document).ready(function() {
             publication_Title: $('#index_4').val(),
             author_Keywords: $('#index_5').val()
         };
-
-        postRequest(
-            '/paper/search',
-            searchform,
-            function (res) {
-                papers = res.content;
-                display(papers);
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
-
+        if(!isValid(searchform))
+            alert("You can not search for nothing! Please input at least one identity");
+        else {
+            postRequest(
+                '/paper/search',
+                searchform,
+                function (res) {
+                    papers = res.content;
+                    display(papers);
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
+                }
+            );
+        }
     });
 
+    function isValid(data){
+        var cnt=0;
+        if(data.document_title.length==0)cnt++;
+        if(data.authors.length==0)cnt++;
+        if(data.publication_Year.length==0)cnt++;
+        if(data.author_Affiliations.length==0)cnt++;
+        if(data.publication_Title.length==0)cnt++;
+        if(data.author_Keywords.length==0)cnt++;
+        if(cnt==6)return false;
+        return true;
+    }
 
     $('.close').click(function () {
         $('.box-mask, .box-modal').css('display', 'none');
@@ -53,7 +66,7 @@ $(document).ready(function() {
         n=0;
         for (let paper of paperList) {
             paperInfo += "<tr>" +
-                "<td width='95%' style='font-size: 140%'>" + paper.document_title + "</td>" ;
+                "<td width='95%' style='font-size: 125%;text-align: left'>" + paper.document_title + "</td>" ;
                 // +"<td width='10%'>" + paper.authors.substr(0, 30)+"..." + "</td>" +
                 // "<td width='4%'>" + paper.publication_Year+ "</td>" +
                 // "<td width='17%'>" + paper.author_Affiliations.substr(0, 50)+"..." + "</td>" +

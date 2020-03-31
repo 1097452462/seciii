@@ -1,6 +1,7 @@
 
 var orgs=[];
 $(document).ready(function() {
+    /*
     getRequest(
         '/org/get',
         function (res) {
@@ -11,22 +12,25 @@ $(document).ready(function() {
             alert(JSON.stringify(error));
         }
     );
-
+*/
 
     $("#org-search").click(function () {
         var name=$('#org_1').val();
         var num=$('#org_2').val();
-        getRequest(
-            '/org/search?name='+name+'&num='+num,
-            function (res) {
-                orgs= res.content;
-                display(orgs);
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
-
+        if(name.length==0&&num.length==0)
+            alert("You can not search for nothing! Please input at least one identity");
+        else {
+            getRequest(
+                '/org/search?name=' + name + '&num=' + num,
+                function (res) {
+                    orgs = res.content;
+                    display(orgs);
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
+                }
+            );
+        }
     })
 
     function display(orgList) {

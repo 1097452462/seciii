@@ -1,6 +1,7 @@
 
 var authors=[];
 $(document).ready(function() {
+    /*
     getRequest(
         '/author/get',
         function (res) {
@@ -11,22 +12,25 @@ $(document).ready(function() {
             alert(JSON.stringify(error));
         }
     );
-
+*/
 
     $("#author-search").click(function () {
         var name=$('#author_1').val();
         var num=$('#author_2').val();
-        getRequest(
-            '/author/search?name='+name+'&num='+num,
-            function (res) {
-                authors= res.content;
-                display(authors);
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
-
+        if(name.length==0&&num.length==0)
+            alert("You can not search for nothing! Please input at least one identity");
+        else {
+            getRequest(
+                '/author/search?name=' + name + '&num=' + num,
+                function (res) {
+                    authors = res.content;
+                    display(authors);
+                },
+                function (error) {
+                    alert(JSON.stringify(error));
+                }
+            );
+        }
     })
 
     function display(List) {
