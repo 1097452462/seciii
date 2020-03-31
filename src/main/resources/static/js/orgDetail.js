@@ -1,21 +1,33 @@
+var org;
+var papers=[];
 $(document).ready(function() {
-    var name=getUrlParameter('org-name');//alert(name);
-
-    $('#orgDetail-name').text(decodeURI(name));
+    var id=getUrlParameter('org-id');//alert(name);
 
     getRequest(
-        '/org/getByName?name='+name,
+        '/org/getById?id='+id,
         function (res) {
-            var papers= res.content;
-            var num=papers.length;
-            $('#orgDetail-num').text(num+"  total papers");
-            display(papers);
+            org= res.content;
+            $('#orgDetail-name').text(decodeURI(org.org_name));
+            $('#orgDetail-num').text(org.paper_num+"  total papers");
         },
         function (error) {
             alert(JSON.stringify(error));
         }
     );
 
+    $("#org-detail-paper").click(function () {
+        getRequest(
+            '/org/getSimplepaperById?id='+id,
+            function (res) {
+                papers= res.content;
+                display(papers);
+                document.getElementById("org-detail-table").style.display="block";
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
+    })
 });
 function getUrlParameter(name){
     name = name.replace(/[]/,"\[").replace(/[]/,"\[").replace(/[]/,"\\\]");

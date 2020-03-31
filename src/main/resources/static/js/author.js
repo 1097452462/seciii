@@ -45,11 +45,11 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='authorClick(&quot;"+ a.author_name + "&quot;)'>作者详情</button>" + "</td></tr>";
+                "    font-size:13px;' onclick='authorClick("+ a.id + ")'>作者详情</button>" + "</td></tr>";
         }
         $('#author-list').html(Info);
     }
 });
-function authorClick(name){
-    window.open("/view/author-detail?author-name="+name);
+function authorClick(id){
+    window.open("/view/author-detail?author-id="+id);
 }

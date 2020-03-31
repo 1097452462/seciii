@@ -26,10 +26,17 @@ public class AuthorController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/getByName",method = RequestMethod.GET)
-    public Response getSimplePaperByOrg(@RequestParam("name")String name){//System.out.println(28);
+    @RequestMapping(value = "/getById",method = RequestMethod.GET)
+    public Response getOrgs(@RequestParam("id")int id){//System.out.println(21);
+        Response response= authorService.getAuthorById(id);
+        return  response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getSimplepaperById",method = RequestMethod.GET)
+    public Response getSimplePaperByOrg(@RequestParam("id")int id){//System.out.println(28);
         //Response flag=paperService.plugPapers();System.out.println(flag);
-        Response response= authorService.getSimplePaperByAuthor(name);
+        Response response= authorService.getSimplePaperByAuthor(id);
         return  response;
     }
 

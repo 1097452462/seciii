@@ -23,11 +23,19 @@ public class OrgController {
         Response response= orgService.getOrgs();
         return  response;
     }
+
     @ResponseBody
-    @RequestMapping(value = "/getByName",method = RequestMethod.GET)
-    public Response getSimplePaperByOrg(@RequestParam("name")String name){//System.out.println(28);
+    @RequestMapping(value = "/getById",method = RequestMethod.GET)
+    public Response getOrgById(@RequestParam("id")int id){
+        Response response= orgService.getOrgById(id);
+        return  response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getSimplepaperById",method = RequestMethod.GET)
+    public Response getSimplePaperByOrg(@RequestParam("id")int id){//System.out.println(28);
         //Response flag=paperService.plugPapers();System.out.println(flag);
-        Response response= orgService.getSimplePaperByOrg(name);
+        Response response= orgService.getSimplePaperByOrg(id);
         return  response;
     }
 

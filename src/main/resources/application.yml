@@ -1,14 +1,14 @@
 server:
-  port: 2800
+  port: 2809
 
 spring:
   datasource:
     name: docs
-    url: jdbc:mysql://localhost:3306/docs?serverTimezone=UTC&rewriteBatchedStatements=true
+    url: jdbc:mysql://127.0.0.1:3306/docs?serverTimezone=UTC
     username: root
-    password: 123456
+    password: XIAhz990306
     driver-class-name: com.mysql.cj.jdbc.Driver
-    initialization-mode: always
+    #initialization-mode: always
     schema: classpath*:sql/schema.sql
 
 
@@ -20,3 +20,4 @@ spring:
 mybatis:
   mapper-locations: classpath:xml/*.xml #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.example.studysystem.entity  # 注意：对应实体类的路径
+

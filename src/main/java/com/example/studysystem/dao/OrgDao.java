@@ -10,7 +10,8 @@ import java.util.List;
 @Mapper
 @Component
 public interface OrgDao {
+    Org getOrgById(@Param("id") int id);
     List<Org> getOrgs();
     List<Org> searchOrgs(@Param("name") String name, @Param("num") int num);
-    String  getPaperIdByOrg(@Param("name") String name);
+    String  getPaperIdByOrg(@Param("id") int id);
 }

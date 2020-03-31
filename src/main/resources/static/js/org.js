@@ -44,11 +44,11 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='orgClick(&quot;"+ org.org_name +"&quot;)'>机构详情</button>" + "</td></tr>";
+                "    font-size:13px;' onclick='orgClick("+ org.id +")'>机构详情</button>" + "</td></tr>";
         }
         $('#org-list').html(orgInfo);
     }
 });
-function orgClick(name){
-    window.open("/view/org-detail?org-name="+name);
+function orgClick(id){
+    window.open("/view/org-detail?org-id="+id);
 }

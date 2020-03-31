@@ -11,7 +11,7 @@ public class MySQLconnection {
     private static final String DBDRIVER = "com.mysql.cj.jdbc.Driver";									//驱动程序名
     private static final String DBURL = "jdbc:mysql://localhost:3306/docs?serverTimezone=UTC&rewriteBatchedStatements=true";		//URL指向要访问的数据库名mydata
     private static final String DBUSER = "root";													//MySQL配置时的用户名
-    private static final String DBPASSWORD = "123456"; 												//MySQL配置时的密码
+    private static final String DBPASSWORD = "XIAhz990306"; 												//MySQL配置时的密码
 
     public static Connection getConnection(){
         Connection conn = null;													//声明一个连接对象

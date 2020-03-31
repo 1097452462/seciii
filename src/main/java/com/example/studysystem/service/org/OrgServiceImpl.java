@@ -17,21 +17,6 @@ public class OrgServiceImpl implements OrgService{
     @Autowired
     private SimplePaperDao simplePaperDao;
 
-
-    @Override
-    public Response getSimplePaperByOrg(String name) {
-        try{
-            String[] temp=orgDao.getPaperIdByOrg(name).split(";");
-            List<Integer> paperId=new ArrayList<>();
-            for(String d:temp)paperId.add(Integer.parseInt(d));
-            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
-//            return Response.buildSuccess(simplePaperDao.getSimplePaperByOrg(name));
-        }catch (Exception e){
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
-
     @Override
     public Response getOrgs() {
         try{
@@ -41,6 +26,31 @@ public class OrgServiceImpl implements OrgService{
             return (Response.buildFailure("失败"));
         }
     }
+
+    @Override
+    public Response getOrgById(int id) {
+       try{
+           return Response.buildSuccess(orgDao.getOrgById(id));
+       }catch (Exception e){
+           e.printStackTrace();
+           return (Response.buildFailure("失败"));
+       }
+    }
+
+    @Override
+    public Response getSimplePaperByOrg(int id) {
+        try{
+            String[] temp=orgDao.getPaperIdByOrg(id).split(";");
+            List<Integer> paperId=new ArrayList<>();
+            for(String d:temp)paperId.add(Integer.parseInt(d));
+            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+
 
     @Override
     public Response searchOrgs(String name, String num) {
