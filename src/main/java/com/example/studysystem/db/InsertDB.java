@@ -71,7 +71,7 @@ public class InsertDB {
             paperList=ignoreRepeat(paperList);/*查重*/
 
             relation=dealRelation(paperList);
-            orgs=dealOrg(paperList);
+            orgs=dealOrg(relation);
             insertPaperAndSimplePaper(paperList);/*插入paper和simplepaper*/
             insertAuthor(relation);/*插入author*/
             insertOrg(orgs);/*插入orgs*/
@@ -126,6 +126,7 @@ public class InsertDB {
         for(int i=0;i<temp.size()-1;i++){
             for(int j=i+1;j<temp.size();j++){
                 if(temp.get(i).getPDF_Link().equals(temp.get(j).getPDF_Link())){
+                    System.out.println("repeat!");
                     paperList.remove(i);
                     break;
                 }
@@ -178,14 +179,11 @@ public class InsertDB {
         return relation;
     }
 
-    public static List<String> dealOrg(List<Paper> paperList){
+    public static List<String> dealOrg(List<String[]> relation){
         List<String> orgList=new ArrayList<>();
-        for(int i=0;i<paperList.size();i++){
-            String[] orgs=paperList.get(i).getAuthor_Affiliations().split("; ");
-            for(int j=0;j<orgs.length;j++){
-                if(!orgs[j].isEmpty()&&!orgList.contains(orgs[j])){
-                    orgList.add(orgs[j]);
-                }
+        for(int i=0;i<relation.size();i++){
+            if(!orgList.contains(relation.get(i)[1])){
+                orgList.add(relation.get(i)[1]);
             }
         }
         return orgList;
