@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.studysystem.dao.SimplePaperDao" >
     <resultMap id="BaseResultMap" type="com.example.studysystem.entity.SimplePaper" >
-
         <id column="id" property="id" jdbcType="INTEGER" />
         <id column="paper_id" property="paper_id" jdbcType="INTEGER" />
         <id column="Document_title" property="Document_title" jdbcType="LONGVARCHAR" />

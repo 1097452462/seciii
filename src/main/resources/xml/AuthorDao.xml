@@ -29,8 +29,29 @@
         <bind name="pattern" value="'%' + name + '%'" />
         SELECT * FROM author where upper(Author_name) like upper(#{pattern}) and Paper_num >= #{num} order by Paper_num desc
     </select>
+
     <select id="getPaperIdByAuthor"  resultType="java.lang.String">
         SELECT Paper_list FROM author where id = #{id}
+    </select>
+
+    <select id="getCitationSum"  resultType="java.lang.String" >
+        SELECT Article_Citation_Count FROM paper where id in(
+            SELECT distinct paper_id from simplepaper where Authors=(
+                SELECT Author_name from author where id=#{id}
+            )
+        )
+    </select>
+
+    <select id="getTopSimplePaperId"  resultType="java.lang.Integer">
+        SELECT  p.id FROM simplepaper s,paper p,author a where
+           a.id=#{id} and a.Author_name=s.Authors and s.paper_id=p.id order by p.Article_Citation_Count desc limit 5
+
+    </select>
+
+    <select id="getKeywords"  resultType="java.lang.String">
+        SELECT distinct Author_Keywords FROM simplepaper where Authors in (
+            SELECT Author_name from author where id=#{id}
+        )
     </select>
 
 </mapper>

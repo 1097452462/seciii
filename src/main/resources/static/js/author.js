@@ -49,7 +49,7 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='authorClick("+ a.id + ")'>作者详情</button>" + "</td></tr>";
+                "    font-size:16px;' onclick='authorClick("+ a.id + ")'>作者详情</button>" + "</td></tr>";
         }
         $('#author-list').html(Info);
     }

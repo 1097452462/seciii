@@ -9,4 +9,7 @@ public interface AuthorService  {
     Response getAuthorById(int id);
     Response getSimplePaperByAuthor(int id);
     Response searchAuthors(String name,String num);
+    Response getCitationSum(int id);
+    Response getTopSimplePaper(int id);
+    Response getTopKeyword(int id);
 }

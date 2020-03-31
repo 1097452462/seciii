@@ -29,6 +29,8 @@ public class InsertDB {
 
     public Response tranfData() {
         try{
+            List<List<Paper>> allPapers=new ArrayList<>();
+            Map<String,String> paperField=new HashMap<>();
             String path="src/main/resources/excel/";
             File file=new File(path);
             File[] fs=file.listFiles();
@@ -37,10 +39,13 @@ public class InsertDB {
                 if(alreadyPlus(f.getName()))continue;
                 if(!f.isDirectory()&&f.getName().substring(f.getName().length()-4).equals(".csv")){
                     String s=f.getPath();
-                    readCSV_to_MySQL(s);
+                    readCSV_to_MySQL(s,allPapers);
                     allreadyUpdate.add(f.getName());
                 }
             }
+            resolveField(allPapers,paperField,10);
+            insertFields(paperField);
+
             System.out.println("插入完成！");
             return Response.buildSuccess();
         }catch (Exception e){
@@ -49,7 +54,91 @@ public class InsertDB {
         }
     }
 
-    public static void readCSV_to_MySQL(String file_address1){
+    private static void insertFields(Map<String,String> paperField){
+        try{
+            Connection con = MySQLconnection.getConnection();
+            con.setAutoCommit(false);
+            if(!con.isClosed()) {
+                Statement statement = con.createStatement();
+                PreparedStatement p1=con.prepareStatement("insert into field(Field_name,Paper_list,Paper_num)values(?,?,?)");
+                for(Map.Entry<String,String> a:paperField.entrySet()){
+                    p1.setString(1,a.getKey());
+                    p1.setString(2,a.getValue());
+                    int n=a.getValue().length()-a.getValue().replaceAll(";","").length();
+                    p1.setInt(3,n);
+                    p1.addBatch();
+                }
+                p1.executeBatch();
+                MySQLconnection.close(p1);
+                MySQLconnection.close(statement);
+            }
+            con.commit();
+            con.setAutoCommit(true);
+            MySQLconnection.close(con);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("field插入成功");
+    }
+
+    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
+        List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<K, V>>()
+        {
+            @Override
+            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2)
+            {
+                int compare = (o1.getValue()).compareTo(o2.getValue());
+                return -compare;
+            }
+        });
+
+        Map<K, V> result = new LinkedHashMap<K, V>();
+        for (Map.Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
+    private static void resolveField(List<List<Paper>> allPapers, Map<String,String> paperField,int cnt){
+        List<String> fields=new ArrayList<>();
+        Map<String,Integer> map=new TreeMap<>();
+        for(List<Paper> papers:allPapers){
+            for(Paper p:papers){
+                for(String s:p.getAuthor_Keywords().split(" ")){
+                    if(s.isEmpty())continue;
+                    s=s.toUpperCase();
+                    if(map.containsKey(s))map.put(s,map.get(s)+1);
+                    else map.put(s,1);
+                }
+            }
+        }
+        map=sortByValueDescending(map);
+        int n=0;
+        for(Map.Entry<String,Integer> a:map.entrySet()){
+            fields.add(a.getKey());
+            paperField.put(a.getKey(),"");
+            n++;
+            if(n==cnt)break;
+        }
+        for(List<Paper> papers:allPapers){
+            for(Paper p:papers){
+                for(String s:p.getAuthor_Keywords().split(" ")){
+                    s=s.toUpperCase();
+                    for(Map.Entry<String,String> a:paperField.entrySet()){
+                        if(a.getKey().equals(s)){
+                            String value=a.getValue();
+                            value+=Integer.toString(p.getId())+";";
+                            paperField.put(a.getKey(),value);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private static void readCSV_to_MySQL(String file_address1,List<List<Paper>> allPapers){
         try{
             BufferedReader reader=new BufferedReader(new FileReader(file_address1));
             List<Paper> paperList=new ArrayList<>();
@@ -69,7 +158,7 @@ public class InsertDB {
             }
             Long start=System.currentTimeMillis();
             paperList=ignoreRepeat(paperList);/*查重*/
-
+            allPapers.add(paperList);
             relation=dealRelation(paperList);
             orgs=dealOrg(relation);
             insertPaperAndSimplePaper(paperList);/*插入paper和simplepaper*/
@@ -83,7 +172,7 @@ public class InsertDB {
         }
     }
 
-    public static Paper dealPaper(String[] info){
+    private static Paper dealPaper(String[] info){
         Paper p=new Paper();
         p.setDocument_title(deleteQuotes(info[0]));
         p.setAuthors(deleteQuotes(info[1]));
@@ -117,11 +206,11 @@ public class InsertDB {
         return p;
     }
 
-    public static String deleteQuotes(String s){
+    private static String deleteQuotes(String s){
         return s.replace('"','/');
     }
 
-    public static List<Paper> ignoreRepeat(List<Paper> paperList){
+    private static List<Paper> ignoreRepeat(List<Paper> paperList){
         List<Paper> temp=paperList;
         for(int i=0;i<temp.size()-1;i++){
             for(int j=i+1;j<temp.size();j++){
@@ -156,7 +245,7 @@ public class InsertDB {
         return paperList;
     }
 
-    public static List<String[]> dealRelation(List<Paper> paperList){
+    private static List<String[]> dealRelation(List<Paper> paperList){
         List<String[]> relation=new ArrayList<>();
         for(int i=0;i<paperList.size();i++){
             String[] authors=paperList.get(i).getAuthors().split("; ");
@@ -179,7 +268,7 @@ public class InsertDB {
         return relation;
     }
 
-    public static List<String> dealOrg(List<String[]> relation){
+    private static List<String> dealOrg(List<String[]> relation){
         List<String> orgList=new ArrayList<>();
         for(int i=0;i<relation.size();i++){
             if(!orgList.contains(relation.get(i)[1])){
@@ -189,7 +278,7 @@ public class InsertDB {
         return orgList;
     }
 
-    public static void insertPaperAndSimplePaper(List<Paper> paperList){
+    private static void insertPaperAndSimplePaper(List<Paper> paperList){
         int paper_id = 0;
         try {
             Connection con = MySQLconnection.getConnection();
@@ -207,6 +296,7 @@ public class InsertDB {
                         ResultSet rs = statement.getGeneratedKeys();
                         if (rs.next()) {
                             key = rs.getInt(1);
+                            p.setId(key);
                             String[] authorList = deleteQuotes(p.getAuthors()).split("; ");
                             String[] affiliationList = deleteQuotes(p.getAuthor_Affiliations()).split("; ");
                             for (int j = 0; j < Math.min(authorList.length, affiliationList.length); j++) {
@@ -239,7 +329,7 @@ public class InsertDB {
         System.out.println("paper插入成功"+System.lineSeparator()+"simplepaper插入成功");
     }
 
-    public static void insertAuthor(List<String[]> relation){
+    private static void insertAuthor(List<String[]> relation){
         try{
             Connection con = MySQLconnection.getConnection();
             con.setAutoCommit(false);
@@ -309,7 +399,7 @@ public class InsertDB {
         System.out.println("author插入成功");
     }
 
-    public static void insertOrg(List<String> orgList){
+    private static void insertOrg(List<String> orgList){
         try{
             Connection con = MySQLconnection.getConnection();
             con.setAutoCommit(false);

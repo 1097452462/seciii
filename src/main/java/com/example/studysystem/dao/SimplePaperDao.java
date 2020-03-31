@@ -12,7 +12,7 @@ import java.util.List;
 public interface SimplePaperDao {
     List<SimplePaper> getSimplePaperByOrg(String name);
     List<SimplePaper> getSimplePapers();
-    List<Paper> getSimplePapersByIds(List<Integer> id);
+    List<SimplePaper> getSimplePapersByIds(List<Integer> id);
     List<SimplePaper> getSimplePaperByAuthor(String name);
     List<Integer> simpleSelect_title(String name);
     List<Integer> simpleSelect_author(String name);

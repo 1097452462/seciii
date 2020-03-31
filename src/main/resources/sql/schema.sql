@@ -70,5 +70,11 @@ CREATE TABLE org(
     Author_num INT
 )ENGINE=InnoDB;
 
+CREATE TABLE field(
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    Field_name      VARCHAR(50),
+    Paper_list      TEXT,
+    Paper_num       INT
+)ENGINE=InnoDB;
 
 COMMIT;
