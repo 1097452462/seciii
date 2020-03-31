@@ -52,14 +52,15 @@ $(document).ready(function() {
         var paperInfo = "";
         n=0;
         for (let paper of paperList) {
-            paperInfo += "<tr></tr><td width='25%'>" + paper.document_title + "</td>" +
-                "<td width='10%'>" + paper.authors.substr(0, 30)+"..." + "</td>" +
-                "<td width='4%'>" + paper.publication_Year+ "</td>" +
-                "<td width='17%'>" + paper.author_Affiliations.substr(0, 50)+"..." + "</td>" +
-                "<td width='15%'>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
-                "<td width='24%'>" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
+            paperInfo += "<tr>" +
+                "<td width='95%' style='font-size: 140%'>" + paper.document_title + "</td>" ;
+                // +"<td width='10%'>" + paper.authors.substr(0, 30)+"..." + "</td>" +
+                // "<td width='4%'>" + paper.publication_Year+ "</td>" +
+                // "<td width='17%'>" + paper.author_Affiliations.substr(0, 50)+"..." + "</td>" +
+                // "<td width='15%'>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
+                // "<td width='24%'>" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
             paperInfo +=
-                "<td><button  type='button' style='background-color: #4CAF50; /* Green */\n" +
+                "<td><button id=\"flip\" style='background-color: #4CAF50; /* Green */\n" +
                 "border: 2px solid #4CAF50;" +
                 "color: white;\n" +
                 "    padding: 7px 15px;\n" +
@@ -67,11 +68,23 @@ $(document).ready(function() {
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:13px;' onclick='paperClick(" + paper.id + ")'>论文详情</button>" + "</td></tr>";
-            paperInfo +=
-            "<td>"+"<button id=\"flip\" onclick='detailClick("+n+")'>查看详情</button>"+
-            "<p id=\"panel\" hidden>"+"<br>"+paper.author_Affiliations.substr(0, 50)+"</p>"
-            "</td></tr>";
+                "    font-size:13px;' onclick='detailClick("+n+")'>更多</button>"+"</td></tr>";
+            paperInfo +="<tr><td><p id=\"panel\" hidden>"+
+            "<br>" + "<a style='color: #ff3e31;'>Authors:"+"&nbsp; "+"</a>"+ paper.authors+
+            "<br>" + "<a style='color: #ff3e31;'>Publication_Year:"+"&nbsp;"+"</a>"+paper.publication_Year+
+            "<br>" + "<a style='color: #ff3e31;'>Author_Affiliations:"+"&nbsp; "+"</a>"+paper.author_Affiliations+
+            "<br>" + "<a style='color: #ff3e31;'>Publication_Title:"+"&nbsp;   "+"</a>"+paper.publication_Title+
+            "<br>" + "<a style='color: #ff3e31;'>Author_Keywords: "+"&nbsp;    "+"</a>"+paper.author_Keywords+
+            "<br>" + "<a style='color: #ff3e31;'>Author_Affiliations:"+"&nbsp; "+"</a>"+paper.author_Affiliations+ "<br>"+
+            "<br><button type='button'  style='background-color: #4CAF50; /* Green */\n" +
+                "border: 2px solid #4CAF50;" +
+                "color: white;\n" +
+                "    padding: 7px 15px;\n" +
+                "    text-align: center;\n" +
+                " border-radius: 6px;\n" +
+                "    text-decoration: none;\n" +
+                "    display: inline-block;\n" +
+                "    font-size:13px;' onclick='paperClick(" + paper.id + ")' >论文详情</button>" + "</p>"+ "</td></tr>";
             n+=1;
         }
         $('#paper-list').html(paperInfo);
@@ -81,8 +94,6 @@ $(document).ready(function() {
 });
 
 function detailClick(id){
-    //id=id-2;
-    //id=len(list)-1-id;
     $("p").eq(id).slideToggle("slow");
 }
 
@@ -91,3 +102,18 @@ function paperClick(id){
 }
 
 
+
+//a链接点击变色，再点其他回复原色
+function changCss(obj) {
+    var arr = document.getElementsByTagName("a");
+    for (var i = 0; i < arr.length; i++) {
+        if (obj == arr[i]) {       //当前页样式
+            obj.style.backgroundColor = "#006B00";
+            obj.style.color = "#ffffff";
+        }
+        else {
+            arr[i].style.color = "";
+            arr[i].style.backgroundColor = "";
+        }
+    }
+}

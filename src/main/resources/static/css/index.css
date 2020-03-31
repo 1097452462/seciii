@@ -10,3 +10,27 @@
     padding:20px;
     display:none;
 }
+
+#pageStyle{
+    display:inline-block;
+    width:32px;
+    height:32px;
+    border:1px solid #CCC;
+    line-height:32px;
+    text-align:center;
+    color:#999;
+    margin-top:20px;
+    text-decoration:none;
+
+}
+#pageStyle:hover{
+    background-color:#CCC;
+}
+#pageStyle .active{
+    background-color:#0CF;
+    color:#ffffff;
+    }
+    .style1
+    {
+        font-size: 12pt;
+    }
