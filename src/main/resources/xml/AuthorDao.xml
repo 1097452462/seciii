@@ -49,7 +49,7 @@
     </select>
 
     <select id="getKeywords"  resultType="java.lang.String">
-        SELECT distinct Author_Keywords FROM simplepaper where Authors in (
+        SELECT distinct lower(Author_Keywords) FROM simplepaper where Authors in (
             SELECT Author_name from author where id=#{id}
         )
     </select>
