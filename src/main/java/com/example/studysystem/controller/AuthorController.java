@@ -33,6 +33,25 @@ public class AuthorController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getCitationSum",method = RequestMethod.GET)
+    public Response getCitationSum(@RequestParam("id")int id){
+        Response response= authorService.getCitationSum(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getTopSimplePaper",method = RequestMethod.GET)
+    public Response getTopSimplePaper(@RequestParam("id")int id){
+        Response response= authorService.getTopSimplePaper(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getTopKeyword",method = RequestMethod.GET)
+    public Response getTopKeyword(@RequestParam("id")int id){
+        Response response= authorService.getTopKeyword(id);
+        return  response;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/getSimplepaperById",method = RequestMethod.GET)
     public Response getSimplePaperByOrg(@RequestParam("id")int id){//System.out.println(28);
         //Response flag=paperService.plugPapers();System.out.println(flag);
@@ -47,5 +66,6 @@ public class AuthorController {
         Response response= authorService.searchAuthors(name,num);
         return  response;
     }
+
 
 }

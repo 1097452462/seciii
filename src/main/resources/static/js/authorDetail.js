@@ -14,8 +14,48 @@ $(document).ready(function() {
         function (error) {
             alert(JSON.stringify(error));
         }
-    );
 
+
+    );
+    getRequest(
+        '/author/getCitationSum?id='+id,
+        function (res) {
+            var CitationSum=res.content;
+            $('#authorCitationSum').text(decodeURI(CitationSum));
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/author/getTopKeyword?id='+id,
+        function (res) {
+            var TopKeyword=res.content;
+            var words="";
+
+            for(let word of TopKeyword){
+                words+=word+" ; ";
+            }
+            $('#Top5keyword').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/author/getTopSimplePaper?id='+id,
+        function (res) {
+            papers= res.content;
+            var names="";
+            for(let p of papers){
+                names+=p.document_title+";"+"<br>";
+            }
+            $('#Top5paper').html(names);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
     $("#author-detail-paper").click(function () {
         getRequest(
             '/author/getSimplepaperById?id='+id,
@@ -29,6 +69,7 @@ $(document).ready(function() {
             }
         );
     })
+
 
 });
 function getUrlParameter(name){
@@ -63,6 +104,7 @@ function display(paperList) {
     }
 
     $('#authorDetail-list').html(paperInfo);
+
 }
 function paperClick(id){
     window.open("/view/paper-detail?paper-id="+id);
