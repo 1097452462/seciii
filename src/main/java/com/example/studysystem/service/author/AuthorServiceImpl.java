@@ -1,6 +1,7 @@
 package com.example.studysystem.service.author;
 
 import com.example.studysystem.dao.AuthorDao;
+import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Author;
 import com.example.studysystem.entity.Response;
@@ -17,7 +18,8 @@ public class AuthorServiceImpl implements AuthorService{
     private AuthorDao authorDao;
     @Autowired
     private SimplePaperDao simplePaperDao;
-
+    @Autowired
+    private PaperDao paperDao;
 
     @Override
     public Response getAuthors() {
@@ -45,7 +47,7 @@ public class AuthorServiceImpl implements AuthorService{
             String[] temp=authorDao.getPaperIdByAuthor(id).split(";");
             List<Integer> paperId=new ArrayList<>();
             for(String d:temp)paperId.add(Integer.parseInt(d));
-            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+            return Response.buildSuccess(paperDao.getPapersByIds(paperId));
 //            return Response.buildSuccess(simplePaperDao.getSimplePaperByAuthor(name));
         }catch (Exception e){
             e.printStackTrace();

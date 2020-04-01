@@ -34,7 +34,7 @@
     </select>
 
     <select id="getSimplePapersByIds"  resultType="SimplePaper" parameterType="java.util.List">
-        select * from paper
+        select * from simplepaper
         where id in
         <foreach collection="list" index="index" item="item" open="("
                  separator="," close=")">
