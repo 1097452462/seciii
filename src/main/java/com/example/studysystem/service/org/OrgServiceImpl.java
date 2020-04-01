@@ -1,5 +1,6 @@
 package com.example.studysystem.service.org;
 import com.example.studysystem.dao.OrgDao;
+import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Org;
 import com.example.studysystem.entity.Response;
@@ -15,7 +16,7 @@ public class OrgServiceImpl implements OrgService{
     @Autowired
     private OrgDao orgDao;
     @Autowired
-    private SimplePaperDao simplePaperDao;
+    private PaperDao paperDao;
 
     @Override
     public Response getOrgs() {
@@ -43,7 +44,7 @@ public class OrgServiceImpl implements OrgService{
             String[] temp=orgDao.getPaperIdByOrg(id).split(";");
             List<Integer> paperId=new ArrayList<>();
             for(String d:temp)paperId.add(Integer.parseInt(d));
-            return Response.buildSuccess(simplePaperDao.getSimplePapersByIds(paperId));
+            return Response.buildSuccess(paperDao.getPapersByIds(paperId));
         }catch (Exception e){
             e.printStackTrace();
             return (Response.buildFailure("失败"));
