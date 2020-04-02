@@ -6,12 +6,16 @@
         <id column="Field_name" property="Field_name" jdbcType="LONGVARCHAR" />
         <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
+        <id column="Citation_sum" property="Citation_sum" jdbcType="INTEGER" />
+        <id column="Point" property="Point" jdbcType="FLOAT" />
     </resultMap>
     <sql id="Base_Column_List" >
     id,
     Field_name,
     Paper_list,
-    Paper_num
+    Paper_num,
+    Citation_sum,
+    Point
     </sql>
 
 
@@ -19,6 +23,31 @@
         SELECT * FROM field
     </select>
 
+    <select id="getPaperNum"  resultType="java.lang.Integer" >
+        SELECT Paper_num from field where id=#{id}
+    </select>
+
+    <select id="getCitationSum"  resultType="java.lang.Integer" >
+        SELECT Citation_sum from field where id=#{id}
+    </select>
+
+    <select id="getTopPaperIds"  resultType="java.lang.Integer">
+
+    </select>
+
+
+
+    <select id="getTopField_paperNum"  resultType="Field" >
+        SELECT * FROM field order by Paper_num desc limit 10
+    </select>
+
+    <select id="getTopField_citationSum"  resultType="Field" >
+        SELECT * FROM field order by Citation_sum desc limit 10
+    </select>
+
+    <select id="getTopField_point"  resultType="Field" >
+        SELECT * FROM field order by Point desc limit 10
+    </select>
 
 
 </mapper>

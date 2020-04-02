@@ -7,13 +7,17 @@
         <id column="Org_list" property="Org_list" jdbcType="VARCHAR" />
         <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
+        <id column="Citation_sum" property="Citation_sum" jdbcType="INTEGER" />
+        <id column="Point" property="Point" jdbcType="FLOAT" />
     </resultMap>
     <sql id="Base_Column_List" >
     id,
     Author_name,
     Org,
     Paper_list,
-    Paper_num
+    Paper_num,
+    Citation_sum,
+    Point
     </sql>
 
 
@@ -34,15 +38,15 @@
         SELECT Paper_list FROM author where id = #{id}
     </select>
 
-    <select id="getCitationSum"  resultType="java.lang.String" >
-        SELECT Article_Citation_Count FROM paper where id in(
-            SELECT distinct paper_id from simplepaper where Authors=(
-                SELECT Author_name from author where id=#{id}
-            )
-        )
+    <select id="getPaperNum"  resultType="java.lang.Integer" >
+        SELECT Paper_Num from author where id=#{id}
     </select>
 
-    <select id="getTopSimplePaperId"  resultType="java.lang.Integer">
+    <select id="getCitationSum"  resultType="java.lang.Integer" >
+        SELECT Citation_sum from author where id=#{id}
+    </select>
+
+    <select id="getTopPaperIds"  resultType="java.lang.Integer">
         SELECT  p.id FROM simplepaper s,paper p,author a where
            a.id=#{id} and a.Author_name=s.Authors and s.paper_id=p.id order by p.Article_Citation_Count desc limit 5
 
@@ -52,6 +56,18 @@
         SELECT distinct lower(Author_Keywords) FROM simplepaper where Authors in (
             SELECT Author_name from author where id=#{id}
         )
+    </select>
+
+    <select id="getTopAuthor_paperNum"  resultType="Author" >
+        SELECT * FROM author order by Paper_num desc limit 10
+    </select>
+
+    <select id="getTopAuthor_citationSum"  resultType="Author" >
+        SELECT * FROM author order by Citation_sum desc limit 10
+    </select>
+
+    <select id="getTopAuthor_point"  resultType="Author" >
+        SELECT * FROM author order by Point desc limit 10
     </select>
 
 </mapper>

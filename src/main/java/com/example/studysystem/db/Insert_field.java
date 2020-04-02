@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class Insert_field {
         Map<String,String> paperField=resolveField(paperList,map, (int) (0.1*paperList.size()));
         insertFields(paperField);
         Long end=System.currentTimeMillis();
+        System.out.print("field插入完成  ");
         System.out.println(end-start+"  ms");
     }
 
@@ -45,16 +47,49 @@ public class Insert_field {
             con.setAutoCommit(false);
             if(!con.isClosed()) {
                 Statement statement = con.createStatement();
-                PreparedStatement p1=con.prepareStatement("insert into field(Field_name,Paper_list,Paper_num)values(?,?,?)");
+                String selectSql="SELECT Article_Citation_Count FROM paper where id =\"%d\"";
+                String selectSql2="select id,Paper_num,Citation_sum from field";
+                PreparedStatement p1=con.prepareStatement("insert into field(Field_name,Paper_list,Paper_num,Citation_sum)values(?,?,?,?)");
+                PreparedStatement p2=con.prepareStatement("update field set Point=? where id=?");
+
                 for(Map.Entry<String,String> a:paperField.entrySet()){//System.out.println(a.getKey()+" "+a.getValue());
                     p1.setString(1,a.getKey());
                     p1.setString(2,a.getValue());
                     int n=a.getValue().length()-a.getValue().replaceAll(";","").length();
                     p1.setInt(3,n);
+
+                    List<Integer> num=new ArrayList<>();
+                    String[] temp=a.getValue().split(";");
+                    for(String s:temp)if(!s.isEmpty())num.add(Integer.parseInt(s));
+                    int citation=0;
+                    for(int d:num) {
+                        String sql = String.format(selectSql, d);
+                        ResultSet rs = statement.executeQuery(sql);
+                        while (rs.next()) {
+                            citation += rs.getInt(1);
+                        }
+                    }
+                    p1.setInt(4,citation);
+
                     p1.addBatch();
                 }
                 p1.executeBatch();
                 MySQLconnection.close(p1);
+
+                String sql2 = String.format(selectSql2);
+                ResultSet rs = statement.executeQuery(sql2);
+                while(rs.next()){
+                    int id=rs.getInt(1);
+                    int num=rs.getInt(2);
+                    int citation=rs.getInt(3);
+                    float p= (float) (0.7*num+0.3*citation);
+                    p2.setInt(2,id);
+                    p2.setDouble(1,p);
+                    p2.addBatch();
+                }
+                p2.executeBatch();
+                MySQLconnection.close(p2);
+
                 MySQLconnection.close(statement);
             }
             con.commit();
@@ -64,7 +99,6 @@ public class Insert_field {
         catch(Exception e){
             e.printStackTrace();
         }
-        System.out.println("field插入成功");
     }
 
     private static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {

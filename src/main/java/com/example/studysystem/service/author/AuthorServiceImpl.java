@@ -70,15 +70,20 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
+    public Response getPaperNum(int id) {
+        try{
+            return Response.buildSuccess(authorDao.getPaperNum(id));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
     public Response getCitationSum(int id) {  //返回某作者的文章被引用数总和
         try{
-            List<String> temp=authorDao.getCitationSum(id);
-            int n=0;
-            for(String s:temp){
-                if(!s.isEmpty())
-                    n+=Integer.parseInt(s);
-            }
-            return Response.buildSuccess(n);
+            return Response.buildSuccess(authorDao.getCitationSum(id));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -89,9 +94,9 @@ public class AuthorServiceImpl implements AuthorService{
     @Override
     public Response getTopPaper(int id) { //根据作者id获得被引用数最多的前5个paper
         try{
-            List<Integer> paperIds=authorDao.getTopSimplePaperId(id);
-            List<Paper> simplePapers=paperDao.getPapersByIds(paperIds);
-            return Response.buildSuccess(simplePapers);
+            List<Integer> paperIds=authorDao.getTopPaperIds(id);
+            List<Paper> Papers=paperDao.getPapersByIds(paperIds);
+            return Response.buildSuccess(Papers);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -124,6 +129,23 @@ public class AuthorServiceImpl implements AuthorService{
             return Response.buildSuccess(ans);
         }
         catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    public Response getTop10Author(int mode){
+        try{
+            List<Author> authors=new ArrayList<>();
+            switch (mode){
+                case 1:authors=authorDao.getTopAuthor_paperNum();  // 论文总数排名
+                    break;
+                case 2:authors=authorDao.getTopAuthor_citationSum(); //引用总数排名
+                    break;
+                case 3:authors=authorDao.getTopAuthor_point();// 7 3 开
+            }
+            return Response.buildSuccess(authors);
+        }catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));
         }

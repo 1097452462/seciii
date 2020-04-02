@@ -57,7 +57,9 @@ CREATE TABLE author(
     Org TEXT,
     INDEX org (Org(100)),
     Paper_list      TEXT,
-    Paper_num       INT
+    Paper_num       INT,
+    Citation_sum    INT,
+    Point           FLOAT
 )ENGINE=InnoDB;
 
 CREATE TABLE org(
@@ -67,7 +69,9 @@ CREATE TABLE org(
     Author_list        TEXT,
     Paper_list      TEXT,
     Paper_num       INT,
-    Author_num INT
+    Author_num      INT,
+    Citation_sum    INT,
+    Point           FLOAT
 )ENGINE=InnoDB;
 
 CREATE TABLE field(

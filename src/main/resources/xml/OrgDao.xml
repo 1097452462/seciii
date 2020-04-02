@@ -7,13 +7,17 @@
         <id column="Author_list" property="Author_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
+        <id column="Citation_sum" property="Citation_sum" jdbcType="INTEGER" />
+        <id column="Point" property="Point" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
     id,
     Org_name,
     Author_list,
     Paper_list,
-    Paper_num
+    Paper_num,
+    Citation_sum,
+    Point
     </sql>
 
 
@@ -29,8 +33,41 @@
         <bind name="pattern" value="'%' + name + '%'" />
         SELECT * FROM org where upper(Org_name) like upper(#{pattern}) and Paper_num >= #{num} order by Paper_num desc
     </select>
+
     <select id="getPaperIdByOrg"  resultType="java.lang.String">
         SELECT Paper_list FROM org where id = #{id}
+    </select>
+
+    <select id="getPaperNum"  resultType="java.lang.Integer" >
+        SELECT Paper_num from org where id=#{id}
+    </select>
+
+    <select id="getCitationSum"  resultType="java.lang.Integer" >
+        SELECT Citation_sum from org where id=#{id}
+    </select>
+
+    <select id="getTopPaperIds"  resultType="java.lang.Integer">
+        SELECT  p.id FROM simplepaper s,paper p,org o where
+           o.id=#{id} and o.Org=s.Author_Affiliations and s.paper_id=p.id order by p.Article_Citation_Count desc limit 5
+
+    </select>
+
+    <select id="getKeywords"  resultType="java.lang.String">
+        SELECT distinct lower(Author_Keywords) FROM simplepaper where Author_Affiliations in (
+            SELECT Org from org where id=#{id}
+        )
+    </select>
+
+    <select id="getTopOrg_paperNum"  resultType="Org" >
+        SELECT * FROM org order by Paper_num desc limit 10
+    </select>
+
+    <select id="getTopOrg_citationSum"  resultType="Org" >
+        SELECT * FROM org order by Citation_sum desc limit 10
+    </select>
+
+    <select id="getTopOrg_point"  resultType="Org" >
+        SELECT * FROM org order by Point desc limit 10
     </select>
 
 </mapper>
