@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class OrgController {
     @Autowired
     private OrgService orgService;
+    public void set(OrgService orgService){this.orgService=orgService;}
 
     @ResponseBody
     @RequestMapping(value = "/get",method = RequestMethod.GET)

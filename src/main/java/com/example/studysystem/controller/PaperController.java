@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PaperController {
     @Autowired
     private PaperService paperService;
-
+    public void set(PaperService paperService){this.paperService=paperService;}
 
     //获得所有论文信息
     @ResponseBody
