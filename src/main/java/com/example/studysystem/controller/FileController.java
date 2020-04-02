@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
     @Autowired
     private FileService fileService;
+    public void set(FileService fileService){this.fileService=fileService;}
 
     @ResponseBody
     @RequestMapping(value = "/getFiles",method = RequestMethod.GET)

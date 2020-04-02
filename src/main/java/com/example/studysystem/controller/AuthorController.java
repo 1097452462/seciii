@@ -16,6 +16,9 @@ public class AuthorController {
 //    aaa
     @Autowired
     private AuthorService authorService;
+    public void set(AuthorService authorService){
+        this.authorService=authorService;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/get",method = RequestMethod.GET)
