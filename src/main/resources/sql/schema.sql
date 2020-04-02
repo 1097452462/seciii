@@ -72,7 +72,7 @@ CREATE TABLE org(
 
 CREATE TABLE field(
     id  INT AUTO_INCREMENT PRIMARY KEY,
-    Field_name      VARCHAR(50),
+    Field_name      TEXT,
     Paper_list      TEXT,
     Paper_num       INT
 )ENGINE=InnoDB;

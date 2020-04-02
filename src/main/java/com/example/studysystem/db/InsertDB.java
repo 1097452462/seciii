@@ -2,6 +2,7 @@ package com.example.studysystem.db;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ public class InsertDB {
 
     private ArrayList<String> allreadyUpdate=new ArrayList<>();
 
+    @Autowired
     private Insert_field insert_field;
 
     private boolean alreadyPlus(String name){
@@ -31,8 +33,6 @@ public class InsertDB {
 
     public Response tranfData() {
         try{
-            List<List<Paper>> allPapers=new ArrayList<>();
-            Map<String,String> paperField=new HashMap<>();
             String path="src/main/resources/excel/";
             File file=new File(path);
             File[] fs=file.listFiles();
@@ -41,7 +41,7 @@ public class InsertDB {
                 if(alreadyPlus(f.getName()))continue;
                 if(!f.isDirectory()&&f.getName().substring(f.getName().length()-4).equals(".csv")){
                     String s=f.getPath();
-                    readCSV_to_MySQL(s,allPapers);
+                    readCSV_to_MySQL(s);
                     allreadyUpdate.add(f.getName());
                 }
             }
@@ -57,7 +57,7 @@ public class InsertDB {
 
 
 
-    private static void readCSV_to_MySQL(String file_address1,List<List<Paper>> allPapers){
+    private static void readCSV_to_MySQL(String file_address1){
         try{
             BufferedReader reader=new BufferedReader(new FileReader(file_address1));
             List<Paper> paperList=new ArrayList<>();
@@ -77,7 +77,6 @@ public class InsertDB {
             }
             Long start=System.currentTimeMillis();
             paperList=ignoreRepeat(paperList);/*查重*/
-            allPapers.add(paperList);
             relation=dealRelation(paperList);
             orgs=dealOrg(relation);
             insertPaperAndSimplePaper(paperList);/*插入paper和simplepaper*/

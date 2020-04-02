@@ -65,7 +65,7 @@ public class FileServiceImpl implements FileService{
 
     @Override
     public Response updateDB(){
-        try{
+        try{//insert_field.excute();
             insertDB.tranfData();
             return Response.buildSuccess("数据库更新成功");
         }catch (Exception e){

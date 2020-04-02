@@ -92,7 +92,7 @@ public class Insert_field {
 
         for (Paper p : papers) {
             for (String s : p.getAuthor_Keywords().split(";")) {
-                if(s.isEmpty())continue;
+                if(s.isEmpty()||s.length()>60)continue;
                 s=s.substring(0,1).toUpperCase().concat(s.substring(1).toLowerCase());
                 if (boringWord(s)) continue;
                 if (map.containsKey(s)) map.put(s, map.get(s) + 1);
