@@ -10,6 +10,6 @@ public interface AuthorService  {
     Response getSimplePaperByAuthor(int id);
     Response searchAuthors(String name,String num);
     Response getCitationSum(int id);
-    Response getTopSimplePaper(int id);
+    Response getTopPaper(int id);
     Response getTopKeyword(int id);
 }

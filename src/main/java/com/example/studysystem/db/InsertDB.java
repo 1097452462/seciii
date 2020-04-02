@@ -16,6 +16,8 @@ public class InsertDB {
 
     private ArrayList<String> allreadyUpdate=new ArrayList<>();
 
+    private Insert_field insert_field;
+
     private boolean alreadyPlus(String name){
         if(allreadyUpdate.size()==0) {
             return false;
@@ -43,8 +45,7 @@ public class InsertDB {
                     allreadyUpdate.add(f.getName());
                 }
             }
-            resolveField(allPapers,paperField,10);
-            insertFields(paperField);
+            insert_field.excute();
 
             System.out.println("插入完成！");
             return Response.buildSuccess();
@@ -54,89 +55,7 @@ public class InsertDB {
         }
     }
 
-    private static void insertFields(Map<String,String> paperField){
-        try{
-            Connection con = MySQLconnection.getConnection();
-            con.setAutoCommit(false);
-            if(!con.isClosed()) {
-                Statement statement = con.createStatement();
-                PreparedStatement p1=con.prepareStatement("insert into field(Field_name,Paper_list,Paper_num)values(?,?,?)");
-                for(Map.Entry<String,String> a:paperField.entrySet()){
-                    p1.setString(1,a.getKey());
-                    p1.setString(2,a.getValue());
-                    int n=a.getValue().length()-a.getValue().replaceAll(";","").length();
-                    p1.setInt(3,n);
-                    p1.addBatch();
-                }
-                p1.executeBatch();
-                MySQLconnection.close(p1);
-                MySQLconnection.close(statement);
-            }
-            con.commit();
-            con.setAutoCommit(true);
-            MySQLconnection.close(con);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        System.out.println("field插入成功");
-    }
 
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>()
-        {
-            @Override
-            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2)
-            {
-                int compare = (o1.getValue()).compareTo(o2.getValue());
-                return -compare;
-            }
-        });
-
-        Map<K, V> result = new LinkedHashMap<K, V>();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
-    }
-
-    private static void resolveField(List<List<Paper>> allPapers, Map<String,String> paperField,int cnt){
-        List<String> fields=new ArrayList<>();
-        Map<String,Integer> map=new TreeMap<>();
-        for(List<Paper> papers:allPapers){
-            for(Paper p:papers){
-                for(String s:p.getAuthor_Keywords().split(" ")){
-                    if(s.isEmpty())continue;
-                    s=s.toUpperCase();
-                    if(map.containsKey(s))map.put(s,map.get(s)+1);
-                    else map.put(s,1);
-                }
-            }
-        }
-        map=sortByValueDescending(map);
-        int n=0;
-        for(Map.Entry<String,Integer> a:map.entrySet()){
-            fields.add(a.getKey());
-            paperField.put(a.getKey(),"");
-            n++;
-            if(n==cnt)break;
-        }
-        for(List<Paper> papers:allPapers){
-            for(Paper p:papers){
-                for(String s:p.getAuthor_Keywords().split(" ")){
-                    s=s.toUpperCase();
-                    for(Map.Entry<String,String> a:paperField.entrySet()){
-                        if(a.getKey().equals(s)){
-                            String value=a.getValue();
-                            value+=Integer.toString(p.getId())+";";
-                            paperField.put(a.getKey(),value);
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     private static void readCSV_to_MySQL(String file_address1,List<List<Paper>> allPapers){
         try{
@@ -260,7 +179,7 @@ public class InsertDB {
                         exist=true;
                     }
                 }
-                if(!r[0].isEmpty()&&!exist){
+                if(!r[0].isEmpty()&&!r[1].isEmpty()&&!exist){
                     relation.add(r);
                 }
             }
@@ -296,7 +215,6 @@ public class InsertDB {
                         ResultSet rs = statement.getGeneratedKeys();
                         if (rs.next()) {
                             key = rs.getInt(1);
-                            p.setId(key);
                             String[] authorList = deleteQuotes(p.getAuthors()).split("; ");
                             String[] affiliationList = deleteQuotes(p.getAuthor_Affiliations()).split("; ");
                             for (int j = 0; j < Math.min(authorList.length, affiliationList.length); j++) {

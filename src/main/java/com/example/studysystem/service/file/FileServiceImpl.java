@@ -3,6 +3,7 @@ package com.example.studysystem.service.file;
 import com.example.studysystem.db.InsertDB;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
+import com.example.studysystem.db.Insert_field;
 import com.example.studysystem.entity.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ import java.util.List;
 public class FileServiceImpl implements FileService{
     @Autowired
     private InsertDB insertDB;
-
+    @Autowired
+    private Insert_field insert_field;
 
     @Override
     public Response getFiles() {

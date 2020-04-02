@@ -4,6 +4,7 @@ import com.example.studysystem.dao.AuthorDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Author;
+import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SimplePaper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,10 +87,10 @@ public class AuthorServiceImpl implements AuthorService{
     }
 
     @Override
-    public Response getTopSimplePaper(int id) { //根据作者id获得被引用数最多的前5个simplepaper（不是paper）
+    public Response getTopPaper(int id) { //根据作者id获得被引用数最多的前5个paper
         try{
             List<Integer> paperIds=authorDao.getTopSimplePaperId(id);
-            List<SimplePaper> simplePapers=simplePaperDao.getSimplePapersByIds(paperIds);
+            List<Paper> simplePapers=paperDao.getPapersByIds(paperIds);
             return Response.buildSuccess(simplePapers);
         }
         catch (Exception e) {

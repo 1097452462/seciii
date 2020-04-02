@@ -18,8 +18,7 @@ public class PaperServiceImpl implements PaperService {
     private PaperDao paperDao;
     @Autowired
     private SimplePaperDao simplePaperDao;
-    @Autowired
-    private InsertDB insertDB;
+
 
     @Override
     public Response getSimplePapers() {

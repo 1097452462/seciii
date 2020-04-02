@@ -39,9 +39,9 @@ public class AuthorController {
         return  response;
     }
     @ResponseBody
-    @RequestMapping(value = "/getTopSimplePaper",method = RequestMethod.GET)
-    public Response getTopSimplePaper(@RequestParam("id")int id){
-        Response response= authorService.getTopSimplePaper(id);
+    @RequestMapping(value = "/getTopPaper",method = RequestMethod.GET)
+    public Response getTopPaper(@RequestParam("id")int id){
+        Response response= authorService.getTopPaper(id);
         return  response;
     }
     @ResponseBody

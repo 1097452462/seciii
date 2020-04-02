@@ -43,7 +43,7 @@ $(document).ready(function() {
         }
     );
     getRequest(
-        '/author/getTopSimplePaper?id='+id,
+        '/author/getTopPaper?id='+id,
         function (res) {
             papers= res.content;
             var names="";
