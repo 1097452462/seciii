@@ -17,6 +17,7 @@ public class OrgServiceImpl implements OrgService{
     private OrgDao orgDao;
     @Autowired
     private PaperDao paperDao;
+    public void set(OrgDao orgDao,PaperDao paperDao){this.orgDao=orgDao;this.paperDao=paperDao;}
 
     @Override
     public Response getOrgs() {
@@ -67,7 +68,7 @@ public class OrgServiceImpl implements OrgService{
     }
 
     @Override
-    public Response getPaerNum(int id) {
+    public Response getPaperNum(int id) {
         try{
             return Response.buildSuccess(orgDao.getPaperNum(id));
         }catch (Exception e) {
@@ -145,7 +146,7 @@ public class OrgServiceImpl implements OrgService{
         }
     }
 
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
+    public <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>()
         {

@@ -9,7 +9,7 @@ public interface OrgService {
      Response getOrgById(int id);
      Response getSimplePaperByOrg(int id);
      Response searchOrgs(String name,String num);
-     Response getPaerNum(int id);
+     Response getPaperNum(int id);
      Response getCitationSum(int id);
      Response getTopPaper(int id);
      Response getTopKeyword(int id);

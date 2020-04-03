@@ -6,21 +6,25 @@ import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Author;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
-import com.example.studysystem.entity.SimplePaper;
+import com.example.studysystem.service.author.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class AuthorServiceImpl implements AuthorService{
+public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorDao authorDao;
     @Autowired
     private SimplePaperDao simplePaperDao;
     @Autowired
     private PaperDao paperDao;
+    public void set(AuthorDao a,SimplePaperDao s,PaperDao p){
+        this.authorDao=a;
+        this.simplePaperDao=s;
+        this.paperDao=p;
+    }
 
     @Override
     public Response getAuthors() {
@@ -151,7 +155,7 @@ public class AuthorServiceImpl implements AuthorService{
         }
     }
 
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
+    public <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>()
         {
