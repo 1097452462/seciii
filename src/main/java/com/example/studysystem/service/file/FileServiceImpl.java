@@ -20,7 +20,7 @@ public class FileServiceImpl implements FileService{
     private InsertDB insertDB;
     @Autowired
     private Insert_field insert_field;
-
+    public void set(InsertDB insertDB,Insert_field insert_field){this.insertDB=insertDB;this.insert_field=insert_field;}
     @Override
     public Response getFiles() {
         try{

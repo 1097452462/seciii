@@ -15,7 +15,7 @@ import java.util.*;
 public class FieldServiceImpl implements FieldService{
     @Autowired FieldDao fieldDao;
     @Autowired PaperDao paperDao;
-
+    public void set(FieldDao fieldDao,PaperDao paperDao){this.fieldDao=fieldDao;this.paperDao=paperDao;}
     @Override
     public Response getFields() {
         try{
