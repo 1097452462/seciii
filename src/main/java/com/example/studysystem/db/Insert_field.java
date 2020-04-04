@@ -19,6 +19,7 @@ public class Insert_field {
 
     @Autowired
     private PaperDao paperDao;
+    public void set(PaperDao paperDao){this.paperDao=paperDao;}
 
     public void excute(){
         Long start=System.currentTimeMillis();

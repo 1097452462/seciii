@@ -26,7 +26,11 @@ public class InsertDB {
     @Autowired
     private Insert_org insert_org;
 
-    private boolean alreadyPlus(String name){
+    public void set(ArrayList<String> a,Insert_field insert_field,Insert_paper insert_paper,Insert_author insert_author,Insert_org insert_org){
+        this.allreadyUpdate=a;this.insert_field=insert_field;this.insert_paper=insert_paper;this.insert_author=insert_author;this.insert_org=insert_org;
+    }
+
+    public boolean alreadyPlus(String name){
         if(allreadyUpdate.size()==0) {
             return false;
         }
