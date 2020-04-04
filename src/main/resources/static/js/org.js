@@ -1,4 +1,4 @@
-
+var n=0;
 var orgs=[];
 $(document).ready(function() {
     /*
@@ -35,6 +35,7 @@ $(document).ready(function() {
 
     function display(orgList) {
         var orgInfo = "";
+        n=0;
         for (let org of orgList) {
             orgInfo += "<tr></tr><td>" + org.org_name + "</td>" +
                 "<td >" + org.paper_num+ "</td>" ;
@@ -49,6 +50,8 @@ $(document).ready(function() {
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
                 "    font-size:16px;' onclick='orgClick("+ org.id +")'>机构详情</button>" + "</td></tr>";
+            n+=1;
+            if(n>1000){break}
         }
         $('#org-list').html(orgInfo);
     }
