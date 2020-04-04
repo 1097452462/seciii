@@ -143,6 +143,7 @@ public class AuthorServiceImpl implements AuthorService{
                 case 2:authors=authorDao.getTopAuthor_citationSum(); //引用总数排名
                     break;
                 case 3:authors=authorDao.getTopAuthor_point();// 7 3 开
+                    break;
             }
             return Response.buildSuccess(authors);
         }catch (Exception e) {

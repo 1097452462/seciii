@@ -38,7 +38,7 @@ public class InsertDB {
     }
 
     public Response tranfData() {
-        try{/*
+        try{
             List<Paper> papers=new ArrayList<>();
             String path="src/main/resources/excel/";
             File file=new File(path);
@@ -54,7 +54,7 @@ public class InsertDB {
             }
             insert_paper.excute(papers);
             List<String[]> relation= insert_author.excute(papers);
-            insert_org.excute(relation);*/
+            insert_org.excute(relation);
             insert_field.excute();
 
             System.out.println("插入完成！");
