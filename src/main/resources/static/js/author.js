@@ -1,6 +1,7 @@
 var methodId;
 var authors=[];
 var method=[];
+var n=0;
 $(document).ready(function() {
     /*
     getRequest(
@@ -39,6 +40,7 @@ $(document).ready(function() {
 
     function display(List) {
         var Info = "";
+        n=0;
         for (let a of List) {
             Info += "<tr></tr><td>" + a.author_name + "</td>" +
                 "<td >" + a.org+ "</td>"+
@@ -54,6 +56,8 @@ $(document).ready(function() {
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
                 "    font-size:16px;' onclick='authorClick("+ a.id + ")'>作者详情</button>" + "</td></tr>";
+            n+=1;
+            if(n>1000){break}
         }
         $('#author-list').html(Info);
     }
@@ -68,58 +72,70 @@ $(document).ready(function() {
     }
 
     function GetInit() {
-            getRequest(
-                '/author/rating?methodId='+1,
-                function (res) {
-                    method = res.content||[];
+        getRequest(
+            '/author/rating?methodId='+1,
+            function (res) {
+                method = res.content||[];
 
-                    var tableData = method.map(function (item) {
-                        return item.paper_num;
-                    });
-                    var nameList = method.map(function (item) {
-                        return item.author_name;
-                    });
+                var tableData = method.map(function (item) {
+                    return item.paper_num;
+                });
+                var nameList = method.map(function (item) {
+                    return item.author_name;
+                });
 
-                    var option = {
-                        title: {
-                            text: '作者排行',
-                            subtext: '数据来自学术网站'
-                        },
-                        tooltip: {
-                            trigger: 'axis',
-                            axisPointer: {
-                                type: 'shadow'
+                var option = {
+                    title: {
+                        text: '作者排行',
+                        subtext: '数据来自学术网站'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: nameList.reverse()
+                    },
+                    series: [
+                        {
+                            type: 'bar',
+                            data: tableData.reverse(),
+                            itemStyle: {
+                                normal: {
+                                    //这里是重点
+                                    color: function(params) {
+                                        //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                                        var colorList = ['#c23531','#2f4554', '#d48265',
+                                            '#91c7ae','#749f83', '#ca8622',
+                                            '#B5C334','#FCCE10','#E87C25','#27727B'];
+                                        return colorList[params.dataIndex]
+                                    }
+                                }
                             }
-                        },
-
-                        grid: {
-                            left: '3%',
-                            right: '4%',
-                            bottom: '3%',
-                            containLabel: true
-                        },
-                        xAxis: {
-                            type: 'value',
-                            boundaryGap: [0, 0.01]
-                        },
-                        yAxis: {
-                            type: 'category',
-                            data: nameList.reverse()
-                        },
-                        series: [
-                            {
-                                type: 'bar',
-                                data: tableData.reverse()
-                            }
-                        ]
-                    };
-                    var RateChart = echarts.init($("#author-rating")[0]);
-                    RateChart.setOption(option);
-                },
-                function (error) {
-                    alert(JSON.stringify(error));
-                }
-            );
+                        }
+                    ]
+                };
+                var RateChart = echarts.init($("#author-rating")[0]);
+                RateChart.setOption(option);
+            },
+            function (error) {
+                alert(JSON.stringify(error));
+            }
+        );
 
     }
 
@@ -162,12 +178,25 @@ $(document).ready(function() {
                     },
                     yAxis: {
                         type: 'category',
-                        data: nameList.reverse()
+                        data: nameList.reverse(),
+
                     },
                     series: [
                         {
                             type: 'bar',
-                            data: tableData.reverse()
+                            data: tableData.reverse(),
+                            itemStyle: {
+                                normal: {
+                                    //这里是重点
+                                    color: function(params) {
+                                        //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                                        var colorList = ['#c23531','#2f4554', '#d48265',
+                                            '#91c7ae','#749f83', '#ca8622',
+                                            '#B5C334','#FCCE10','#E87C25','#27727B'];
+                                        return colorList[params.dataIndex]
+                                    }
+                                }
+                            }
                         }
                     ]
                 };

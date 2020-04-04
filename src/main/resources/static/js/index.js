@@ -99,6 +99,7 @@ $(document).ready(function() {
                 "    display: inline-block;\n" +
                 "    font-size:13px;' onclick='paperClick(" + paper.id + ")' >论文详情</button>" + "</p>"+ "</td></tr>";
             n+=1;
+            if(n>1000){break}
         }
         $('#paper-list').html(paperInfo);
     }
@@ -116,17 +117,4 @@ function paperClick(id){
 
 
 
-//a链接点击变色，再点其他回复原色
-function changCss(obj) {
-    var arr = document.getElementsByTagName("a");
-    for (var i = 0; i < arr.length; i++) {
-        if (obj == arr[i]) {       //当前页样式
-            obj.style.backgroundColor = "#006B00";
-            obj.style.color = "#ffffff";
-        }
-        else {
-            arr[i].style.color = "";
-            arr[i].style.backgroundColor = "";
-        }
-    }
-}
+
