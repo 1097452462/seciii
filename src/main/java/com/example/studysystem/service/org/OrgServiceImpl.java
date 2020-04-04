@@ -145,9 +145,9 @@ public class OrgServiceImpl implements OrgService{
     public Response getTopAuthor(int id) {
         try{
             String[] temp=orgDao.getAuthors(id).split(";");
-            List<Integer> ids=new ArrayList<>();
-            for(String s:temp)if(!s.isEmpty())ids.add(Integer.parseInt(s));
-            return Response.buildSuccess(authorDao.getTopAuthor(ids));
+            List<String> names=new ArrayList<>();
+            for(String s:temp)if(!s.isEmpty())names.add(s);
+            return Response.buildSuccess(authorDao.getTopAuthor_byName(names));
         }catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));

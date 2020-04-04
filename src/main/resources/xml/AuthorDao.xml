@@ -59,7 +59,17 @@
         )
     </select>
 
-    <select id="getTopAuthor"  resultType="Author" parameterType="java.util.List">
+    <select id="getTopAuthor_byName"  resultType="Author" parameterType="java.util.List">
+        select * from author
+        where Author_name in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+        order by Point desc limit 5
+    </select>
+
+    <select id="getTopAuthor_byId"  resultType="Author" parameterType="java.util.List">
         select * from author
         where id in
         <foreach collection="list" index="index" item="item" open="("

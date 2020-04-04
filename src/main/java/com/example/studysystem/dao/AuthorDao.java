@@ -22,5 +22,6 @@ public interface AuthorDao {
     List<Author> getTopAuthor_paperNum();    // 论文数前10 作者
     List<Author> getTopAuthor_citationSum();   //引用数前10 作者
     List<Author> getTopAuthor_point();   // 综合排名前10  70%论文数 30%引用数   作者
-    List<Author> getTopAuthor(List<Integer> id);//  同上，参数不同
+    List<Author> getTopAuthor_byName(List<String> name);//  同上，参数不同
+    List<Author> getTopAuthor_byId(List<Integer> id);//  同上，参数不同
 }

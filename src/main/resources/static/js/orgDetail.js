@@ -55,8 +55,8 @@ $(document).ready(function() {
             var topauthor=res.content;
             var words="";
 
-            for(let word of topauthor){
-                words+=word+";<br>";
+            for(let author of topauthor){
+                words+=author.author_name+";<br>";
             }
             $('#TopAuthor').html(words);
         },

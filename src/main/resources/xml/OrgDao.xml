@@ -56,13 +56,13 @@
 
     <select id="getTopPaperIds"  resultType="java.lang.Integer">
         SELECT  p.id FROM simplepaper s,paper p,org o where
-           o.id=#{id} and o.Org=s.Author_Affiliations and s.paper_id=p.id order by p.Article_Citation_Count desc limit 5
+           o.id=#{id} and o.Org_name=s.Author_Affiliations and s.paper_id=p.id order by p.Article_Citation_Count desc limit 5
 
     </select>
 
     <select id="getKeywords"  resultType="java.lang.String">
         SELECT distinct lower(Author_Keywords) FROM simplepaper where Author_Affiliations in (
-            SELECT Org from org where id=#{id}
+            SELECT Org_name from org where id=#{id}
         )
     </select>
 

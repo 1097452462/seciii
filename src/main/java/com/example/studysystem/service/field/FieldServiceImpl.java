@@ -47,7 +47,7 @@ public class FieldServiceImpl implements FieldService{
                   authorIDs=  fieldDao.getAuthorId(ids);
             List<Author> authors=new ArrayList<>();
             if(authorIDs.size()>0)
-                authors= authorDao.getTopAuthor(authorIDs);
+                authors= authorDao.getTopAuthor_byId(authorIDs);
             return Response.buildSuccess(authors);
         }catch (Exception e){
             e.printStackTrace();
