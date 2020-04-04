@@ -38,8 +38,8 @@ public class InsertDB {
     }
 
     public Response tranfData() {
-        try{/*
-            List<Paper> papers=new ArrayList<>();
+        try{
+
             String path="src/main/resources/excel/";
             File file=new File(path);
             File[] fs=file.listFiles();
@@ -49,12 +49,15 @@ public class InsertDB {
                 if(!f.isDirectory()&&f.getName().substring(f.getName().length()-4).equals(".csv")){
                     String s=f.getPath();
                     allreadyUpdate.add(f.getName());
+                    System.out.println(f.getName()+" 插入中");
+                    List<Paper> papers=new ArrayList<>();
                     readCSV_to_MySQL(s,papers);
+                    insert_paper.excute(papers);
+                    List<String[]> relation= insert_author.excute(papers);
+                    insert_org.excute(relation);
                 }
             }
-            insert_paper.excute(papers);
-            List<String[]> relation= insert_author.excute(papers);
-            insert_org.excute(relation);*/
+
             insert_field.excute();
 
             System.out.println("插入完成！");
