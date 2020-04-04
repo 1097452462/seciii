@@ -24,7 +24,7 @@ public class Insert_org {
         System.out.println(end-start+"  ms");
     }
 
-    private static void insertOrg(List<String> orgList){
+    public void insertOrg(List<String> orgList){
         try{
             Connection con = MySQLconnection.getConnection();
             con.setAutoCommit(false);
@@ -135,7 +135,7 @@ public class Insert_org {
         }
     }
 
-    private static List<String> dealOrg(List<String[]> relation){
+    public List<String> dealOrg(List<String[]> relation){
         List<String> orgList=new ArrayList<>();
         for(int i=0;i<relation.size();i++){
             if(!orgList.contains(relation.get(i)[1])){

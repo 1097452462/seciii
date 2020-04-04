@@ -18,7 +18,7 @@ public class PaperServiceImpl implements PaperService {
     private PaperDao paperDao;
     @Autowired
     private SimplePaperDao simplePaperDao;
-
+    public void set(PaperDao paperDao,SimplePaperDao simplePaperDao){this.paperDao=paperDao;this.simplePaperDao=simplePaperDao;}
 
     @Override
     public Response getSimplePapers() {

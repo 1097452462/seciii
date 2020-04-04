@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping(value = {"/author"})
 public class AuthorController {
@@ -70,5 +72,10 @@ public class AuthorController {
         return  response;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/rating", method = RequestMethod.GET)
+    public Response getTop10Author(@RequestParam("methodId") int methodId){
+        return authorService.getTop10Author(methodId);
+    }
 
 }

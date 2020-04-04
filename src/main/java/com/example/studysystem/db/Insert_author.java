@@ -24,7 +24,7 @@ public class Insert_author {
         return relation;
     }
 
-    private static List<String[]> dealRelation(List<Paper> paperList){
+    public List<String[]> dealRelation(List<Paper> paperList){
         List<String[]> relation=new ArrayList<>();
         for(int i=0;i<paperList.size();i++){
             String[] authors=paperList.get(i).getAuthors().split("; ");
@@ -47,7 +47,7 @@ public class Insert_author {
         return relation;
     }
 
-    private static void insertAuthor(List<String[]> relation){
+    public void insertAuthor(List<String[]> relation){
         try{
             Connection con = MySQLconnection.getConnection();
             con.setAutoCommit(false);
