@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Field</title>
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap 核心 JavaScript 文件 -->
+    <script src="/js/bootstrap.js"></script>
+    <!-- 引入js脚本文件 -->
+    <script src="/js/request.js"></script>
+    <script src="/js/field.js"></script>
 </head>
 <body>
 <div class="headers" style="position: fixed;width: 100%">
@@ -26,9 +32,19 @@
     </div>
 </div>
 <br>
+<div align="center">
 <hr style="margin-top: 30px">
 <h1 align="center">学术图谱系统-----研究方向</h1>
 <hr>
+<table class="table" align="left" border="1px" style="border: #1c196e" width="35%">
+    <thead>
+    <tr align="center" style="width: 100% border-box" ></tr>
+    </thead>
+    <div  style="overflow-y:scroll">
+        <tbody id="field-list" style="border: #8ae292">
+    </div>
 
+</table>
+</div>
 </body>
 </html>

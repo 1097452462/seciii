@@ -23,17 +23,32 @@
         SELECT * FROM field
     </select>
 
-    <select id="getPaperNum"  resultType="java.lang.Integer" >
-        SELECT Paper_num from field where id=#{id}
+    <select id="getFieldById"  resultType="Field">
+        SELECT * FROM field where id=#{id}
     </select>
 
-    <select id="getCitationSum"  resultType="java.lang.Integer" >
-        SELECT Citation_sum from field where id=#{id}
+    <select id="getPaperId"  resultType="java.lang.String">
+        SELECT Paper_list FROM field where id=#{id}
     </select>
 
-    <select id="getTopPaperIds"  resultType="java.lang.Integer">
-
+    <select id="getAuthorId"  resultType="java.lang.Integer" parameterType="java.util.List">
+        select a.id from author a,simplepaper s where a.Author_name=s.Authors
+        and s.paper_id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
     </select>
+
+    <select id="getOrgId"  resultType="java.lang.Integer" parameterType="java.util.List">
+        select o.id from org o,simplepaper s where o.Org_name=s.Author_Affiliations
+        and s.paper_id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 
 
 

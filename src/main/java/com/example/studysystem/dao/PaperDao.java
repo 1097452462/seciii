@@ -12,5 +12,6 @@ public interface PaperDao {
     List<Paper> getPapers();
     Paper getPaperById(int id);
     List<Paper> getPapersByIds(List<Integer> id);
+    List<Paper> getTopPaper(List<Integer> id);
     //List<simplePaperDao> searchPapers(@Param("searchForm") SearchForm searchForm);
 }

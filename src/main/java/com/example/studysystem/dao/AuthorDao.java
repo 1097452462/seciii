@@ -13,7 +13,6 @@ import java.util.List;
 public interface AuthorDao {
     List<Author> getAuthors();
     Author getAuthorById(@Param("id")int id);
-    List<Author> getAuthorByIds(List<Integer> id);
     List<Author> searchAuthors(@Param("name") String name,@Param("num") int num);
     String  getPaperIdByAuthor(@Param("id") int id);
     Integer getPaperNum(@Param("id") int id);       //文章总数
@@ -23,4 +22,5 @@ public interface AuthorDao {
     List<Author> getTopAuthor_paperNum();    // 论文数前10 作者
     List<Author> getTopAuthor_citationSum();   //引用数前10 作者
     List<Author> getTopAuthor_point();   // 综合排名前10  70%论文数 30%引用数   作者
+    List<Author> getTopAuthor(List<Integer> id);//  同上，参数不同
 }

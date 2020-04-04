@@ -67,7 +67,6 @@
     </select>
 
 
-
     <select id="getTopOrg_paperNum"  resultType="Org" >
         SELECT * FROM org order by Paper_num desc limit 10
     </select>
@@ -78,6 +77,16 @@
 
     <select id="getTopOrg_point"  resultType="Org" >
         SELECT * FROM org order by Point desc limit 10
+    </select>
+
+    <select id="getTopOrg"  resultType="Org" parameterType="java.util.List">
+        select * from org
+        where id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+        order by Point desc limit 5
     </select>
 
 </mapper>

@@ -29,15 +29,6 @@
         SELECT * FROM author where id=#{id}
     </select>
 
-    <select id="getAuthorByIds"  resultType="Author" parameterType="java.util.List">
-        select * from author
-        where id in
-        <foreach collection="list" index="index" item="item" open="("
-                 separator="," close=")">
-            #{item}
-        </foreach>
-        order by Point desc limit 5
-    </select>
 
     <select id="searchAuthors"  resultType="Author" >
         <bind name="pattern" value="'%' + name + '%'" />
@@ -66,6 +57,16 @@
         SELECT distinct lower(Author_Keywords) FROM simplepaper where Authors in (
             SELECT Author_name from author where id=#{id}
         )
+    </select>
+
+    <select id="getTopAuthor"  resultType="Author" parameterType="java.util.List">
+        select * from author
+        where id in
+        <foreach collection="list" index="index" item="item" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+        order by Point desc limit 5
     </select>
 
     <select id="getTopAuthor_paperNum"  resultType="Author" >

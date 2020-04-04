@@ -1,6 +1,7 @@
 package com.example.studysystem.service.field;
 
 import com.example.studysystem.dao.FieldDao;
+import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.entity.Paper;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,8 @@ class FieldServiceImplTest {
     private FieldServiceImpl fieldService=new FieldServiceImpl();
     private FieldDao mockFieldDao=mock(FieldDao.class);
     private PaperDao mockPaperDao=mock(PaperDao.class);
-    public void prepare(){fieldService.set(mockFieldDao,mockPaperDao);}
+    private OrgDao mockOrgDao=mock(OrgDao.class);
+    public void prepare(){fieldService.set(mockFieldDao,mockPaperDao,mockOrgDao);}
     @Test
     void getFields() {
         prepare();
@@ -44,25 +46,6 @@ class FieldServiceImplTest {
         verify(mockPaperDao,times(1)).getPapersByIds(null);
     }
 
-    @Test
-    void getPaperNum() {
-        prepare();
-        mockFieldServiceImpl.getPaperNum(1);
-        verify(mockFieldServiceImpl,times(1)).getPaperNum(1);
-        when(mockFieldDao.getPaperNum(1)).thenThrow(new RuntimeException());
-        assertEquals("失败",fieldService.getPaperNum(1).getMessage());
-        verify(mockFieldDao,times(1)).getPaperNum(1);
-    }
-
-    @Test
-    void getCitationSum() {
-        prepare();
-        mockFieldServiceImpl.getCitationSum(1);
-        verify(mockFieldServiceImpl,times(1)).getCitationSum(1);
-        when(mockFieldDao.getCitationSum(1)).thenThrow(new RuntimeException());
-        assertEquals("失败",fieldService.getCitationSum(1).getMessage());
-        verify(mockFieldDao,times(1)).getCitationSum(1);
-    }
 
     @Test
     void getTop10Field() {

@@ -31,17 +31,6 @@ class FieldServiceTest {
         verify(mockFieldService,times(1)).getTopPapers(1);
     }
 
-    @Test
-    void getPaperNum() {
-        mockFieldService.getPaperNum(1);
-        verify(mockFieldService,times(1)).getPaperNum(1);
-    }
-
-    @Test
-    void getCitationSum() {
-        mockFieldService.getCitationSum(1);
-        verify(mockFieldService,times(1)).getCitationSum(1);
-    }
 
     @Test
     void getTop10Field() {

@@ -23,13 +23,7 @@ class FieldDaoTest {
         assertNotNull(fieldDao.getFields());
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    void getPaperNum() {
-        assert fieldDao!=null;
-        assertTrue(fieldDao.getPaperNum(1)==null||fieldDao.getPaperNum(1)>=0);
-    }
+
 
 //    @Test
 //    @Transactional

@@ -33,6 +33,11 @@ public class ViewController {
         return "field.html";
     }
 
+    @RequestMapping(value = "/field-detail")
+    public String jumpToFieldDetail(){
+        return "fieldDetail.html";
+    }
+
     @RequestMapping(value = "/meeting")
     public String jumpToMeeting(){
         return "meeting.html";
