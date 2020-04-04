@@ -31,7 +31,7 @@ public class Insert_field {
         System.out.println(end-start+"  ms");
     }
 
-    private static boolean boringWord(String s){
+    public boolean boringWord(String s){
         String[] list={"","And","Of","It"};
         for(String l:list) {
             if (l.equals(s)) {
@@ -41,7 +41,7 @@ public class Insert_field {
         return false;
     }
 
-    private static void insertFields(Map<String,String> paperField){
+    public void insertFields(Map<String,String> paperField){
         try{
             Connection con = MySQLconnection.getConnection();
             con.setAutoCommit(false);
@@ -101,7 +101,7 @@ public class Insert_field {
         }
     }
 
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
+    public <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>()
         {
@@ -120,7 +120,7 @@ public class Insert_field {
         return result;
     }
 
-    private static Map<String,String> resolveField(List<Paper> papers, Map<String,List<Integer>> paperField, int cnt) {
+    public Map<String,String> resolveField(List<Paper> papers, Map<String,List<Integer>> paperField, int cnt) {
         List<String> fields = new ArrayList<>();
         Map<String, Integer> map = new TreeMap<>();
 

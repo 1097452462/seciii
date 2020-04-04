@@ -22,7 +22,7 @@ public class Insert_paper {
         System.out.println(end-start+"  ms");
     }
 
-    private static List<Paper> insertPaperAndSimplePaper(List<Paper> paperList){
+    public List<Paper> insertPaperAndSimplePaper(List<Paper> paperList){
         int paper_id = 0;
         try {
             Connection con = MySQLconnection.getConnection();
@@ -73,7 +73,7 @@ public class Insert_paper {
         }
     }
 
-    private static String deleteQuotes(String s){
+    public String deleteQuotes(String s){
         return s.replace('"','/');
     }
 

@@ -55,6 +55,9 @@ public class InsertDB {
             insert_paper.excute(papers);
             List<String[]> relation= insert_author.excute(papers);
             insert_org.excute(relation);*/
+
+
+
             insert_field.excute();
 
             System.out.println("插入完成！");
@@ -67,7 +70,7 @@ public class InsertDB {
 
 
 
-    private static void readCSV_to_MySQL(String file_address1,List<Paper> papers){
+    public void readCSV_to_MySQL(String file_address1,List<Paper> papers){
         try{
             BufferedReader reader=new BufferedReader(new FileReader(file_address1));
             reader.readLine();
@@ -87,13 +90,13 @@ public class InsertDB {
         }
     }
 
-    private static boolean legalPaper(Paper paper){
+    public boolean legalPaper(Paper paper){
         if(paper.getStart_Page().length()>5||paper.getEnd_Page().length()>5)
             return false;
         return true;
     }
 
-    private static Paper dealPaper(String[] info){
+    public Paper dealPaper(String[] info){
         Paper p=new Paper();
         p.setDocument_title(deleteQuotes(info[0]));
         p.setAuthors(deleteQuotes(info[1]));
@@ -127,11 +130,11 @@ public class InsertDB {
         return p;
     }
 
-    private static String deleteQuotes(String s){
+    public String deleteQuotes(String s){
         return s.replace('"','/');
     }
 
-    private static List<Paper> ignoreRepeat(List<Paper> paperList){
+    public List<Paper> ignoreRepeat(List<Paper> paperList){
         List<Paper> temp=paperList;
         for(int i=0;i<temp.size()-1;i++){
             for(int j=i+1;j<temp.size();j++){
