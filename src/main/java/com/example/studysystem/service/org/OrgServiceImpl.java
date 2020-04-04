@@ -1,4 +1,5 @@
 package com.example.studysystem.service.org;
+import com.example.studysystem.dao.AuthorDao;
 import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
@@ -17,7 +18,9 @@ public class OrgServiceImpl implements OrgService{
     private OrgDao orgDao;
     @Autowired
     private PaperDao paperDao;
-    public void set(OrgDao orgDao,PaperDao paperDao){this.orgDao=orgDao;this.paperDao=paperDao;}
+    @Autowired
+    private AuthorDao authorDao;
+    public void set(OrgDao orgDao,PaperDao paperDao,AuthorDao authorDao){this.orgDao=orgDao;this.paperDao=paperDao;this.authorDao=authorDao;}
 
     @Override
     public Response getOrgs() {
@@ -62,6 +65,16 @@ public class OrgServiceImpl implements OrgService{
             List<Org> orgs= orgDao.searchOrgs(name,d);
             return Response.buildSuccess(orgs);
         } catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getAuthorNum(int id) {
+        try{
+            return Response.buildSuccess(orgDao.getAuthorNum(id));
+        }catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));
         }
@@ -122,6 +135,19 @@ public class OrgServiceImpl implements OrgService{
             }
 
             return Response.buildSuccess(ans);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getTopAuthor(int id) {
+        try{
+            String[] temp=orgDao.getAuthors(id).split(";");
+            List<Integer> ids=new ArrayList<>();
+            for(String s:temp)if(!s.isEmpty())ids.add(Integer.parseInt(s));
+            return Response.buildSuccess(authorDao.getAuthorByIds(ids));
         }catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));

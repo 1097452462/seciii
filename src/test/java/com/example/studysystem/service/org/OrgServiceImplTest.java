@@ -1,5 +1,6 @@
 package com.example.studysystem.service.org;
 
+import com.example.studysystem.dao.AuthorDao;
 import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,8 @@ class OrgServiceImplTest {
     private OrgServiceImpl mockOrgService=mock(OrgServiceImpl.class);
     private OrgDao mockOrgDao=mock(OrgDao.class);
     private PaperDao mockPaperDao=mock(PaperDao.class);
-    public void prepare(){orgService.set(mockOrgDao,mockPaperDao);}
+    private AuthorDao mockAuthorDao=mock(AuthorDao.class);
+    public void prepare(){orgService.set(mockOrgDao,mockPaperDao,mockAuthorDao);}
     @Test
     void getOrgs() {
         prepare();

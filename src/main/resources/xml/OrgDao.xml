@@ -42,6 +42,14 @@
         SELECT Paper_num from org where id=#{id}
     </select>
 
+    <select id="getAuthors"  resultType="java.lang.String" >
+        SELECT Author_list from org where id=#{id}
+    </select>
+
+    <select id="getAuthorNum"  resultType="java.lang.Integer" >
+        SELECT Author_num from org where id=#{id}
+    </select>
+
     <select id="getCitationSum"  resultType="java.lang.Integer" >
         SELECT Citation_sum from org where id=#{id}
     </select>
@@ -57,6 +65,8 @@
             SELECT Org from org where id=#{id}
         )
     </select>
+
+
 
     <select id="getTopOrg_paperNum"  resultType="Org" >
         SELECT * FROM org order by Paper_num desc limit 10

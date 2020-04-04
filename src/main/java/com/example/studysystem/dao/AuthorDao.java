@@ -13,6 +13,7 @@ import java.util.List;
 public interface AuthorDao {
     List<Author> getAuthors();
     Author getAuthorById(@Param("id")int id);
+    List<Author> getAuthorByIds(List<Integer> id);
     List<Author> searchAuthors(@Param("name") String name,@Param("num") int num);
     String  getPaperIdByAuthor(@Param("id") int id);
     Integer getPaperNum(@Param("id") int id);       //文章总数
