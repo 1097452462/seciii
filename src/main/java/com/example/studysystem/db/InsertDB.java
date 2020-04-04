@@ -27,7 +27,7 @@ public class InsertDB {
     private Insert_org insert_org;
 //
 
-    private boolean alreadyPlus(String name){
+    boolean alreadyPlus(String name){
         if(allreadyUpdate.size()==0) {
             return false;
         }
@@ -53,6 +53,7 @@ public class InsertDB {
                     System.out.println(f.getName()+" 插入中");
                     List<Paper> papers=new ArrayList<>();
                     readCSV_to_MySQL(s,papers);
+                    papers=ignoreRepeat(papers);
                     insert_paper.excute(papers);
                     List<String[]> relation= insert_author.excute(papers);
                     insert_org.excute(relation);
@@ -71,7 +72,7 @@ public class InsertDB {
 
 
 
-    private static void readCSV_to_MySQL(String file_address1,List<Paper> papers){
+    static void readCSV_to_MySQL(String file_address1, List<Paper> papers){
         try{
             BufferedReader reader=new BufferedReader(new FileReader(file_address1));
             reader.readLine();
@@ -91,13 +92,13 @@ public class InsertDB {
         }
     }
 
-    private static boolean legalPaper(Paper paper){
+    static boolean legalPaper(Paper paper){
         if(paper.getStart_Page().length()>5||paper.getEnd_Page().length()>5)
             return false;
         return true;
     }
 
-    private static Paper dealPaper(String[] info){
+    static Paper dealPaper(String[] info){
         Paper p=new Paper();
         p.setDocument_title(deleteQuotes(info[0]));
         p.setAuthors(deleteQuotes(info[1]));
@@ -131,11 +132,11 @@ public class InsertDB {
         return p;
     }
 
-    private static String deleteQuotes(String s){
+    static String deleteQuotes(String s){
         return s.replace('"','/');
     }
 
-    private static List<Paper> ignoreRepeat(List<Paper> paperList){
+    static List<Paper> ignoreRepeat(List<Paper> paperList){
         List<Paper> temp=paperList;
         for(int i=0;i<temp.size()-1;i++){
             for(int j=i+1;j<temp.size();j++){
@@ -168,5 +169,10 @@ public class InsertDB {
             e.printStackTrace();
         }
         return paperList;
+    }
+
+
+    public void set(ArrayList<String> a,Insert_field insert_field,Insert_paper insert_paper,Insert_author insert_author,Insert_org insert_org){
+        this.allreadyUpdate=a;this.insert_field=insert_field;this.insert_paper=insert_paper;this.insert_author=insert_author;this.insert_org=insert_org;
     }
 }

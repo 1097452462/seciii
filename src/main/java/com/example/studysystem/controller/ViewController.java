@@ -28,6 +28,16 @@ public class ViewController {
         return "org.html";
     }
 
+    @RequestMapping(value = "/field")
+    public String jumpToField(){
+        return "field.html";
+    }
+
+    @RequestMapping(value = "/meeting")
+    public String jumpToMeeting(){
+        return "meeting.html";
+    }
+
     @RequestMapping(value = "/paper-detail")
     public String jumpToPaperDetail(){
         return "paperDetail.html";
