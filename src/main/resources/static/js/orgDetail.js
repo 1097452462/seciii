@@ -14,7 +14,70 @@ $(document).ready(function() {
             alert(JSON.stringify(error));
         }
     );
+    getRequest(
+        '/org/authorNum?id='+id,
+        function (res) {
+            var authorNum=res.content;
+            $('#authorNum').text(decodeURI(authorNum));
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/author/getCitationSum?id='+id,
+        function (res) {
+            var CitationSum=res.content;
+            $('#authorCitationSum').text(decodeURI(CitationSum));
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/org/topKeyword?id='+id,
+        function (res) {
+            var topKeyword=res.content;
+            var words="";
 
+            for(let word of topKeyword){
+                words+=word+";<br>";
+            }
+            $('#Top5keyword').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/org/topAuthor?id='+id,
+        function (res) {
+            var topauthor=res.content;
+            var words="";
+
+            for(let word of topauthor){
+                words+=word+";<br>";
+            }
+            $('#TopAuthor').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/org/getTopPaper?id='+id,
+        function (res) {
+            papers= res.content;
+            var names="";
+            for(let p of papers){
+                names+=p.document_title+";<br>";
+            }
+            $('#Top5paper').html(names);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
     $("#org-detail-paper").click(function () {
         getRequest(
             '/org/getSimplepaperById?id='+id,
@@ -27,7 +90,10 @@ $(document).ready(function() {
                 alert(JSON.stringify(error));
             }
         );
-    })
+    });
+    $("#org-detail-paper-close").click(function () {
+        document.getElementById("org-detail-table").style.display="none";
+    });
 });
 function getUrlParameter(name){
     name = name.replace(/[]/,"\[").replace(/[]/,"\[").replace(/[]/,"\\\]");
@@ -37,7 +103,7 @@ function getUrlParameter(name){
     if( results == null ) return ""; else {
         return results[1];
     }
-};
+}
 
 function display(paperList) {
     var paperInfo = "";

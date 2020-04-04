@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>org-Detail</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/uniform.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <script src="/js/jquery.js"></script>
     <!-- Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.js"></script>
@@ -13,12 +13,35 @@
 </head>
 <body>
 <div align="center">
+    <div id="orgDetail-name"style="font-size: 300%;"></div>
 
-    <h1 id="orgDetail-name"></h1>
-    <br><hr>
-    <h1>六边形</h1><hr>
-    <h2 id="orgDetail-num" >Total Papers:</h2>
+    <hr>
+</div>
+<div>
+    <div style="width: 50%;float:left;height: auto;">
+        <div style="font-size: 220%;">Top Research Fields :</div><br>
+        <div style="font-size: 150%;margin-left: 50px;color: #2994af;" id="Top5keyword" ></div>
+        <div style="font-size: 220%;">Top Author :</div><br>
+        <div style="font-size: 150%;margin-left: 50px;color: #2994af;" id="TopAuthor" ></div>
+    </div>
+    <div style="width: 50%;float:left;height: auto;">
+        <div style="font-size: 220%;display: inline;">CitationSum:    </div><div  style="font-size: 200%;
+        display: inline;" id="authorCitationSum" ></div>
+        <br><br>
+        <div style="font-size: 220%;" >Top Paper :</div><br>
+        <div style="font-size: 150%;margin-left: 50px; color: #2994af;" id="Top5paper" ></div>
+
+    </div>
+</div>
+<hr style="margin-top: 500px">
+
+<div align="center">
+    <div id="orgDetail-num" style="font-size: 200%">Total Papers:</div>
     <button id="org-detail-paper">All Papers</button>
+    <button id="org-detail-paper-close">Close</button>
+</div>
+
+
     <table id="org-detail-table"  class="table" align="center" border="1px" style="border: #152067;display: none">
         <thead>
         <tr align="center" style="width: 100% border-box" >
@@ -31,6 +54,5 @@
         </thead>
         <tbody id="orgDetail-list" style="border: #8ae292">
     </table>
-</div>
 </body>
 </html>

@@ -86,7 +86,7 @@ $(document).ready(function() {
 
                 var option = {
                     title: {
-                        text: '作者排行',
+                        text: '作者活跃度排行',
                         subtext: '数据来自学术网站'
                     },
                     tooltip: {
@@ -156,7 +156,7 @@ $(document).ready(function() {
 
                 var option = {
                     title: {
-                        text: '作者排行',
+                        text: '作者活跃度排行',
                         subtext: '数据来自学术网站'
                     },
                     tooltip: {

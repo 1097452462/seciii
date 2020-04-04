@@ -49,4 +49,48 @@ public class OrgController {
         return  response;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/authorNum",method = RequestMethod.GET)
+    public Response getAuthorNum(@RequestParam("id") int id){
+        Response response= orgService.getAuthorNum(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/paperNum",method = RequestMethod.GET)
+    public Response getPaperNum(@RequestParam("id") int id){
+        Response response= orgService.getPaperNum(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getCitationSum",method = RequestMethod.GET)
+    public Response getCitationSum(@RequestParam("id") int id){
+        Response response= orgService.getCitationSum(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getTopPaper",method = RequestMethod.GET)
+    public Response getTopPaper(@RequestParam("id") int id){
+        Response response= orgService.getTopPaper(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/topKeyword",method = RequestMethod.GET)
+    public Response getTopKeyword(@RequestParam("id") int id){
+        Response response= orgService.getTopKeyword(id);
+        return  response;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/topAuthor",method = RequestMethod.GET)
+    public Response getTopAuthor(@RequestParam("id") int id){
+        Response response= orgService.getTopAuthor(id);
+        return  response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/rating", method = RequestMethod.GET)
+    public Response getTop10Author(@RequestParam("methodId") int methodId){
+        return orgService.getTop10Org(methodId);
+    }
 }
