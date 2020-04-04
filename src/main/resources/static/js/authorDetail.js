@@ -34,7 +34,7 @@ $(document).ready(function() {
             var words="";
 
             for(let word of TopKeyword){
-                words+=word+" ; ";
+                words+=word+";<br><br>";
             }
             $('#Top5keyword').html(words);
         },
@@ -48,7 +48,7 @@ $(document).ready(function() {
             papers= res.content;
             var names="";
             for(let p of papers){
-                names+=p.document_title+";"+"<br>";
+                names+=p.document_title+";<br>";
             }
             $('#Top5paper').html(names);
         },
@@ -68,8 +68,10 @@ $(document).ready(function() {
                 alert(JSON.stringify(error));
             }
         );
-    })
-
+    });
+    $("#author-detail-paper-close").click(function () {
+        document.getElementById("author-detail-table").style.display="none";
+    });
 
 });
 function getUrlParameter(name){

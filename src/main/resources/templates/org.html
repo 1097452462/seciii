@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>organization</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/uniform.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/Statistic.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <script src="/js/jquery.js"></script>
+    <script src="/js/echarts.js"></script>
     <!-- Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.js"></script>
     <!-- 引入js脚本文件 -->
@@ -24,22 +26,22 @@
 <div align="center">
     <div class="headers" style="position: fixed;width: 100%">
         <div style=" background-color: #b10d12;font-size: 22px;float:left;width: 16.6%;height: 40px;text-align: center">
-            <a href="/view/home" >总览</a>
+            <a href="/view/home" style="color: #000">总览</a>
         </div>
         <div style=" background-color: #b1671f; font-size: 22px;  float:left;width: 16.6%;height: 40px;text-align: center">
-            <a href="/view/author" >作者</a>
+            <a href="/view/author" style="color: #000">作者</a>
         </div>
         <div style=" background-color: #abb123;font-size: 22px;float:left;width: 16.6%;height: 40px;text-align: center">
-            <a href="/view/org" >机构</a>
+            <a href="/view/org" style="color: #000">机构</a>
         </div>
         <div style=" background-color: #6e76b1;font-size: 22px;float:left;width: 16.6%;height: 40px;text-align: center">
-            <a href="/view/field" >研究方向</a>
+            <a href="/view/field" style="color: #000">研究方向</a>
         </div>
         <div style=" background-color: #339db1;font-size: 22px;float:left;width: 16.6%;height: 40px;text-align: center">
-            <a href="/view/meeting" >会议</a>
+            <a href="/view/meeting"style="color: #000">会议</a>
         </div>
         <div style=" background-color: #5db12f;font-size: 22px;float:left;width:17%;height: 40px;text-align: center">
-            <a href="/view/manage" >数据源</a>
+            <a href="/view/manage" style="color: #000">数据源</a>
         </div>
     </div>
     <br>
@@ -47,35 +49,52 @@
     <h1>学术图谱系统------机构</h1>
     <hr>
 </div>
-<table class="table" align="center" border="1px" style="border: #1c196e" width="50%">
-    <thead>
-    <tr align="center" style="width: 100% border-box" >
 
-        <th width="70%">
-            <input id="org_1" type="txt" placeholder="Affiliations" style="width: 99%; background-color:transparent;border:0">
-        </th>
-        <th width="10%" >
-            <input id="org_2" type="txt"  placeholder="Num" style="width: 99%; background-color:transparent;border:0" >
-        </th>
-
-        <th align="left" width="11.5%">
-            <button id="org-search" type='button' style="  background-color: #cbff64;border: 2px solid #2994af;color: #2616ff;
-               padding: 0px 10px;text-align: center;border-radius: 6px;text-decoration: none;display: inline-block;
-                font-size:15px">搜索</button>
-        </th>
-
-
-    </tr>
-    </thead>
-   <div  style="overflow-y:scroll">
-    <tbody id="org-list" style="border: #8ae292">
-   </div>
-
-</table>
-<div class="box-mask"></div>
-<div class="box-modal" style="display: none">机构详情<span class="close">X</span>
-    <h1> title</h1>
-    <p>content</p>
+<div class="first"  style="width: 50%;
+            float:left;
+            height: auto;">
+    <div style="float: left;
+            margin-bottom: 20px;
+            margin-left: 20px;">
+        <span>选择排行  </span>
+        <select id="method-select" class="form-control" style="display: inline-block;width:auto;">
+            <option value="1">论文总数排名</option>
+            <option value="2">引用总数排名</option>
+            <option value="3">综合排名</option>
+        </select>
+    </div>
+    <div class="card table-container" id="author-rating" style=""></div>
 </div>
+
+<div class="second" style="width: 50%;
+            float:left;
+            height: auto;">
+    <table class="table" align="center" border="1px" style="border: #1c196e" width="50%">
+        <thead>
+        <tr align="center" style="width: 100% border-box" >
+
+            <th width="70%">
+                <input id="org_1" type="txt" placeholder="Affiliations" style="width: 99%; background-color:transparent;border:0">
+            </th>
+            <th width="10%" >
+                <input id="org_2" type="txt"  placeholder="Num" style="width: 99%; background-color:transparent;border:0" >
+            </th>
+
+            <th align="left" width="11.5%">
+                <button id="org-search" type='button' style="  background-color: #cbff64;border: 2px solid #2994af;color: #2616ff;
+                   padding: 0px 10px;text-align: center;border-radius: 6px;text-decoration: none;display: inline-block;
+                    font-size:15px">搜索</button>
+            </th>
+
+
+        </tr>
+        </thead>
+       <div  style="overflow-y:scroll">
+        <tbody id="org-list" style="border: #8ae292">
+       </div>
+
+    </table>
+</div>
+
 </body>
 </html>
