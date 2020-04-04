@@ -25,6 +25,7 @@ public class InsertDB {
     private Insert_author insert_author;
     @Autowired
     private Insert_org insert_org;
+//
 
     private boolean alreadyPlus(String name){
         if(allreadyUpdate.size()==0) {
