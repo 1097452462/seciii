@@ -50,6 +50,36 @@ $(document).ready(function() {
         }
     );
     getRequest(
+        '/org/getRelatedAuthors?id='+id,
+        function (res) {
+            var RelatedAuthors=res.content;
+            var words="";
+
+            for(let word of RelatedAuthors){
+                words+=word+";<br>";
+            }
+            $('#RelatedAuthors').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/org/getRelatedOrgs?id='+id,
+        function (res) {
+            var RelatedOrgs=res.content;
+            var words="";
+
+            for(let word of RelatedOrgs){
+                words+=word+";<br>";
+            }
+            $('#RelatedOrgs').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
         '/org/topAuthor?id='+id,
         function (res) {
             var topauthor=res.content;

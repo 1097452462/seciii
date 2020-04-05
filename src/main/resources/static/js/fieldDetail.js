@@ -16,31 +16,49 @@ $(document).ready(function() {
         function (error) {
             alert(JSON.stringify(error));
         }
-    )
+    );
 
     getRequest(
         '/field/getTopAuthors?id=' + id,
         function (res) {
             topAuthor = res.content;
+            var words="";
+
+            for(let word of topAuthor){
+                words+=word.author_name+";<br><br>";
+            }
+            $('#TopAuthor').html(words);
         },
         function (error) {
             alert(JSON.stringify(error));
         }
-    )
+    );
 
     getRequest(
         '/field/getTopOrgs?id=' + id,
         function (res) {
             topOrg = res.content;
+            var words="";
+
+            for(let word of topOrg){
+                words+=word.org_name+";<br><br>";
+            }
+            $('#TopOrgs').html(words);
         },
         function (error) {
             alert(JSON.stringify(error));
         }
-    )
+    );
     getRequest(
         '/field/getTopPapers?id=' + id,
         function (res) {
             topPaper = res.content;
+            var words="";
+
+            for(let word of topPaper){
+                words+=word.document_title+";<br><br>";
+            }
+            $('#Top5paper').html(words);
         },
         function (error) {
             alert(JSON.stringify(error));

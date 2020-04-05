@@ -73,6 +73,19 @@ public class AuthorController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/getRelatedAuthors",method = RequestMethod.GET)
+    public Response getRelatedAuthors(@RequestParam("id")int id){
+        Response response= authorService.getRelatedAuthors(id);
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getRelatedOrgs",method = RequestMethod.GET)
+    public Response getRelatedOrgs(@RequestParam("id")int id){
+        Response response= authorService.getRelatedOrgs(id);
+        return  response;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/rating", method = RequestMethod.GET)
     public Response getTop10Author(@RequestParam("methodId") int methodId){
         return authorService.getTop10Author(methodId);
