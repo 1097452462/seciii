@@ -47,4 +47,16 @@ class AuthorServiceTest {
         mockAuthorService.getTopKeyword(1);
         verify(mockAuthorService,times(1)).getTopKeyword(1);
     }
+
+    @Test
+    void getPaperNum() {
+        mockAuthorService.getPaperNum(1);
+        verify(mockAuthorService,times(1)).getPaperNum(1);
+    }
+
+    @Test
+    void getTop10Author() {
+        mockAuthorService.getTop10Author(1);
+        verify(mockAuthorService,times(1)).getTop10Author(1);
+    }
 }

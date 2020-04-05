@@ -45,4 +45,67 @@ class OrgControllerTest {
         orgController.searchOrgs("Hello world!","1");
         verify(mockOrgService,times(1)).searchOrgs("Hello world!","1");
     }
+
+    @Test
+    void getAuthorNum() {
+        prepare();
+        mockOrgController.getAuthorNum(1);
+        verify(mockOrgController,times(1)).getAuthorNum(1);
+        orgController.getAuthorNum(1);
+        verify(mockOrgService,times(1)).getAuthorNum(1);
+    }
+
+    @Test
+    void getPaperNum() {
+        prepare();
+        mockOrgController.getPaperNum(1);
+        verify(mockOrgController,times(1)).getPaperNum(1);
+        orgController.getPaperNum(1);
+        verify(mockOrgService,times(1)).getPaperNum(1);
+    }
+
+    @Test
+    void getCitationSum() {
+        prepare();
+        mockOrgController.getCitationSum(1);
+        verify(mockOrgController,times(1)).getCitationSum(1);
+        orgController.getCitationSum(1);
+        verify(mockOrgService,times(1)).getCitationSum(1);
+    }
+
+    @Test
+    void getTopPaper() {
+        prepare();
+        mockOrgController.getTopPaper(1);
+        verify(mockOrgController,times(1)).getTopPaper(1);
+        orgController.getTopPaper(1);
+        verify(mockOrgService,times(1)).getTopPaper(1);
+    }
+
+    @Test
+    void getTopKeyword() {
+        prepare();
+        mockOrgController.getTopKeyword(1);
+        verify(mockOrgController,times(1)).getTopKeyword(1);
+        orgController.getTopKeyword(1);
+        verify(mockOrgService,times(1)).getTopKeyword(1);
+    }
+
+    @Test
+    void getTopAuthor() {
+        prepare();
+        mockOrgController.getTopAuthor(1);
+        verify(mockOrgController,times(1)).getTopAuthor(1);
+        orgController.getTopAuthor(1);
+        verify(mockOrgService,times(1)).getTopAuthor(1);
+    }
+
+    @Test
+    void getTop10Author() {
+        prepare();
+        mockOrgController.getTop10Author(1);
+        verify(mockOrgController,times(1)).getTop10Author(1);
+        orgController.getTop10Author(1);
+        verify(mockOrgService,times(1)).getTop10Org(1);
+    }
 }

@@ -57,4 +57,16 @@ class OrgServiceTest {
         mockOrgService.getTop10Org(anyInt());
         verify(mockOrgService,times(1)).getTop10Org(anyInt());
     }
+
+    @Test
+    void getAuthorNum() {
+        mockOrgService.getAuthorNum(1);
+        verify(mockOrgService,times(1)).getAuthorNum(1);
+    }
+
+    @Test
+    void getTopAuthor() {
+        mockOrgService.getTopAuthor(1);
+        verify(mockOrgService,times(1)).getTopAuthor(1);
+    }
 }

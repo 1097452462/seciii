@@ -71,4 +71,13 @@ class AuthorControllerTest {
         authorController.searchAuthors("Hello world!","1");
         verify(mockAuthorService,times(1)).searchAuthors("Hello world!","1");
     }
+
+    @Test
+    void getTop10Author() {
+        prepare();
+        mockAuthorController.getTop10Author(1);
+        verify(mockAuthorController,times(1)).getTop10Author(1);
+        authorController.getTop10Author(1);
+        verify(mockAuthorService,times(1)).getTop10Author(1);
+    }
 }

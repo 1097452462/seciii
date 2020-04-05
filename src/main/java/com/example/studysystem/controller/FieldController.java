@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FieldController {
     @Autowired
     private FieldService fieldService;
+    public void set(FieldService f){this.fieldService=f;}
 
     @ResponseBody
     @RequestMapping(value = "/getById",method = RequestMethod.GET)

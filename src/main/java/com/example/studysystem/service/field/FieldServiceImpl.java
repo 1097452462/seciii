@@ -16,7 +16,7 @@ public class FieldServiceImpl implements FieldService{
     @Autowired PaperDao paperDao;
     @Autowired AuthorDao authorDao;
     @Autowired OrgDao orgDao;
-    public void set(FieldDao fieldDao,PaperDao paperDao,OrgDao orgDao){this.fieldDao=fieldDao;this.paperDao=paperDao;this.orgDao=orgDao;}
+    public void set(FieldDao fieldDao,PaperDao paperDao,OrgDao orgDao,AuthorDao authorDao){this.fieldDao=fieldDao;this.paperDao=paperDao;this.orgDao=orgDao;this.authorDao=authorDao;}
     @Override
     public Response getFields() {
         try{

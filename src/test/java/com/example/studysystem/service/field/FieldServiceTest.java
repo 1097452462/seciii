@@ -37,4 +37,10 @@ class FieldServiceTest {
         mockFieldService.getTop10Field(anyInt());
         verify(mockFieldService,times(1)).getTop10Field(anyInt());
     }
+
+    @Test
+    void getFieldById() {
+        mockFieldService.getFieldById(1);
+        verify(mockFieldService,times(1)).getFieldById(1);
+    }
 }

@@ -18,15 +18,16 @@ import static org.mockito.Mockito.*;
 class InsertDBTest {
     InsertDB insertDB=new InsertDB();
     InsertDB spyInsertDB;
-    Insert_field spyInsert_field= Mockito.spy(new Insert_field());
-    Insert_author spyInsert_author=Mockito.spy(new Insert_author());
-    Insert_paper spyInsert_paper=Mockito.spy(new Insert_paper());
-    Insert_org spyInsert_org=Mockito.spy(new Insert_org());
+    Insert_field spyInsert_field= spy(new Insert_field());
+    Insert_author spyInsert_author=spy(new Insert_author());
+    Insert_paper spyInsert_paper=spy(new Insert_paper());
+    Insert_org spyInsert_org=spy(new Insert_org());
     ArrayList<String> a=new ArrayList<>();
-    public void prepare(){
-        insertDB.set(a,spyInsert_field,spyInsert_paper,spyInsert_author,spyInsert_org);
-        spyInsertDB=Mockito.spy(insertDB);
+    public void prepare() {
+        insertDB.set(a, spyInsert_field, spyInsert_paper, spyInsert_author, spyInsert_org);
+        spyInsertDB = Mockito.spy(insertDB);
     }
+
 
     @Test
     void alreadyPlus() {
@@ -42,6 +43,22 @@ class InsertDBTest {
 
     @Test
     void tranfData() {
+        Insert_paper mp=mock(Insert_paper.class);
+        Insert_org mo=mock(Insert_org.class);
+        Insert_author ma=mock(Insert_author.class);
+        Insert_field mf=mock(Insert_field.class);
+        InsertDB md=mock(InsertDB.class);
+        InsertDB i=new InsertDB();i.set(a,mf,mp,ma,mo);
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        md.tranfData();
+        verify(md,times(1)).tranfData();
+//        i.tranfData();
+//        verify(mp,atLeastOnce()).excute(anyList());
+//        verify(ma,atLeastOnce()).excute(anyList());
+//        verify(mo,atLeastOnce()).excute(anyList());
+//        verify(mf,atLeastOnce()).excute();
+//        assertThat(outContent.toString(),containsString("插入完成！"));
     }
 
     @Test

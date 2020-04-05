@@ -49,7 +49,7 @@ class AuthorDaoTest {
     @Rollback
     void getPaperIdByAuthor() {
         assert authorDao!=null;
-        assertTrue(authorDao.getPaperIdByAuthor(1)==null||Integer.parseInt(authorDao.getPaperIdByAuthor(1))>0);
+        assertTrue(authorDao.getPaperIdByAuthor(1)==null||authorDao.getPaperIdByAuthor(1).length()>=1);
     }
 
     @Test
@@ -106,5 +106,23 @@ class AuthorDaoTest {
     void getTopAuthor_point() {
         assert authorDao!=null;
         assertNotNull(authorDao.getTopAuthor_point());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getTopAuthor_byName() {
+        assert authorDao!=null;
+        List<String> l=new ArrayList<>();l.add("Hello world!");
+        assertNotNull(authorDao.getTopAuthor_byName(l));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getTopAuthor_byId() {
+        assert authorDao!=null;
+        List<Integer> l=new ArrayList<>();l.add(1);
+        assertNotNull(authorDao.getTopAuthor_byId(l));
     }
 }
