@@ -103,4 +103,10 @@ public class AuthorController {
         return authorService.getRelatedOrgs(id);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
+    public Response getHistory(@RequestParam("id") int id){
+        return authorService.getHistory(id);
+    }
+
 }

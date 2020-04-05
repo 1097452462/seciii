@@ -10,6 +10,10 @@
         <id column="Citation_sum" property="Citation_sum" jdbcType="INTEGER" />
         <id column="Point" property="Point" jdbcType="FLOAT" />
     </resultMap>
+    <resultMap id="BaseResultMap2" type="com.example.studysystem.entity.History" >
+        <id column="year" property="year" jdbcType="VARCHAR" />
+        <id column="num" property="num" jdbcType="INTEGER" />
+    </resultMap>
     <sql id="Base_Column_List" >
     id,
     Author_name,
@@ -113,6 +117,15 @@
                 )
             ) u group by Authors order by num desc
 		) v
+    </select>
+
+    <select id="getHistory"  resultType="History" >
+        SELECT Publication_Year as year,count( distinct paper_id)as num FROM docs.simplepaper  where Authors in(
+            SELECT Author_name from docs.author where id=#{id}
+        ) and Author_Affiliations in (
+			select org from docs.author where id=#{id}
+        )
+        group by Publication_Year;
     </select>
 
 </mapper>

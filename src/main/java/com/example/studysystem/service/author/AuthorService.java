@@ -16,4 +16,5 @@ public interface AuthorService  {
     Response getTop10Author(int mode);
     Response getRelatedAuthors(int id);
     Response getRelatedOrgs(int id);
+    Response getHistory(int id);
 }

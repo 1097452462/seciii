@@ -5,6 +5,7 @@ import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Author;
+import com.example.studysystem.entity.History;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.service.author.AuthorService;
@@ -171,6 +172,25 @@ public class AuthorServiceImpl implements AuthorService {
     public Response getRelatedOrgs(int id) {// 和这个作者一起发过论文的机构，前五，根据一起发过的论文数量降序
         try{
             return Response.buildSuccess(orgDao.getRelatedOrg_byAuthorId(id));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getHistory(int id){
+        try{
+            List<History> histories=authorDao.getHistory(id);
+            List<Integer> ans=new ArrayList<>();
+            for(int i=1988;i<=2020;i++) {
+                for (History h : histories) {
+                    if(h.getYear().isEmpty())continue;
+                    if(Integer.parseInt(h.getYear())==i)    ans.add(h.getNum());
+                    else ans.add(0);
+                }
+            }
+            return Response.buildSuccess(ans);
         }catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));

@@ -16,12 +16,7 @@ $(document).ready(function() {
         function (error) {
             alert(JSON.stringify(error));
         }
-
-
     );
-
-
-
 
     getRequest(
         '/author/getTopKeyword?id='+id,
@@ -84,7 +79,7 @@ $(document).ready(function() {
                 if(i>10)break;
                 names+=p;
                 if(i%2==1)
-                    names+="&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;";
+                    names+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                 else
                     names+="<br>";
             }
@@ -111,6 +106,20 @@ $(document).ready(function() {
     $("#author-detail-paper-close").click(function () {
         document.getElementById("author-detail-table").style.display="none";
     });
+
+
+    getRequest(
+        '/author/history?id='+id,
+        function (res) {
+           var dd=res.content;
+           drawBar(dd);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+
+
 
 });
 function getUrlParameter(name){
@@ -149,4 +158,58 @@ function display(paperList) {
 }
 function paperClick(id){
     window.open("/view/paper-detail?paper-id="+id);
+}
+
+function drawBar(dd) {
+
+
+    option = {
+        color: ['#3398DB'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '2%',
+            right: '2%',
+            bottom: '1%',
+            top:'5%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['1988', '1989', '1990', '1991', '1992', '1993', '1993','1995','1996','1997','1998','1999','2000',
+                        '2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014',
+                        '2015','2016','2017','2018','2019','2020'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                min: 0,
+                max: 20,
+                interval: 5,
+            }
+        ],
+        series: [
+            {
+                type: 'bar',
+                barWidth: '60%',
+                data: dd
+            }
+        ]
+    };
+
+
+    var myChart = echarts.init(document.getElementById("authorDetail-bar"));
+    //var RateChart = echarts.init($("#authorDetail-bar")[0]);
+    myChart.setOption(option);
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.studysystem.dao;
 import com.example.studysystem.entity.Author;
+import com.example.studysystem.entity.History;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.SimplePaper;
 import org.apache.ibatis.annotations.Mapper;
@@ -7,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Component
@@ -26,4 +28,5 @@ public interface AuthorDao {
     List<Author> getTopAuthor_byId(List<Integer> id);//  同上，参数不同
     List<String> getRelatedAuthor_byAuthorId(int id); // 和这个作者一起发过论文的作者，前五，根据一起发过的论文数量降序
     List<String> getRelatedAuthor_byOrgId(int id);// 和这个作者一起发过论文的机构，前五，根据一起发过的论文数量降序
+    List<History> getHistory(int id);  //某个作者 按照年份发的论文数  {2015，5}，{2019，8}。。。
 }
