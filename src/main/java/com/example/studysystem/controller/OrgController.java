@@ -79,7 +79,17 @@ public class OrgController {
         Response response= orgService.getTopKeyword(id);
         return  response;
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/getRelatedAuthors",method = RequestMethod.GET)
+    public Response getRelatedAuthors(@RequestParam("id") int id){
+        Response response= orgService.getRelatedAuthors(id);
+        return  response;
+    }    @ResponseBody
+    @RequestMapping(value = "/getRelatedOrgs",method = RequestMethod.GET)
+    public Response getRelatedOrgs(@RequestParam("id") int id){
+        Response response= orgService.getRelatedOrgs(id);
+        return  response;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/topAuthor",method = RequestMethod.GET)

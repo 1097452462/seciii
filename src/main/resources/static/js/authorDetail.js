@@ -14,8 +14,6 @@ $(document).ready(function() {
         function (error) {
             alert(JSON.stringify(error));
         }
-
-
     );
     getRequest(
         '/author/getCitationSum?id='+id,
@@ -34,9 +32,39 @@ $(document).ready(function() {
             var words="";
 
             for(let word of TopKeyword){
-                words+=word+";<br><br>";
+                words+=word+";<br>";
             }
             $('#Top5keyword').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/author/getRelatedAuthors?id='+id,
+        function (res) {
+            var RelatedAuthors=res.content;
+            var words="";
+
+            for(let word of RelatedAuthors){
+                words+=word+";<br>";
+            }
+            $('#RelatedAuthors').html(words);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+    getRequest(
+        '/author/getRelatedOrgs?id='+id,
+        function (res) {
+            var RelatedOrgs=res.content;
+            var words="";
+
+            for(let word of RelatedOrgs){
+                words+=word+";<br>";
+            }
+            $('#RelatedOrgs').html(words);
         },
         function (error) {
             alert(JSON.stringify(error));
