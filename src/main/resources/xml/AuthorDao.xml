@@ -91,4 +91,28 @@
         SELECT * FROM author order by Point desc limit 10
     </select>
 
+    <select id="getRelatedAuthor_byAuthorId"  resultType="java.lang.String" >
+        select Authors from(
+            select Authors,count(paper_id) as num from(
+                select  distinct s1.Authors,s1.paper_id from simplepaper s1,simplepaper s2 where(
+                    s1.paper_id=s2.paper_id and s2.Authors in(
+                        select Author_name from author where id=#{id}
+                        )
+                    )
+                ) u group by Authors order by num desc limit 5
+            ) v
+    </select>
+
+    <select id="getRelatedAuthor_byOrgId"  resultType="java.lang.String" >
+        select Authors from(
+            select Authors,count(paper_id) as num from(
+                select  distinct s1.Authors,s1.paper_id from simplepaper s1,simplepaper s2 where(
+                    s1.paper_id=s2.paper_id and s2.Author_Affiliations in(
+                        select Org_name from org where id=#{id}
+                    )
+                )
+            ) u group by Authors order by num desc limit 5
+		) v
+    </select>
+
 </mapper>

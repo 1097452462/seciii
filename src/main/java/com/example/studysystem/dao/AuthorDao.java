@@ -24,4 +24,6 @@ public interface AuthorDao {
     List<Author> getTopAuthor_point();   // 综合排名前10  70%论文数 30%引用数   作者
     List<Author> getTopAuthor_byName(List<String> name);//  同上，参数不同
     List<Author> getTopAuthor_byId(List<Integer> id);//  同上，参数不同
+    List<String> getRelatedAuthor_byAuthorId(int id); // 和这个作者一起发过论文的作者，前五，根据一起发过的论文数量降序
+    List<String> getRelatedAuthor_byOrgId(int id);// 和这个作者一起发过论文的机构，前五，根据一起发过的论文数量降序
 }

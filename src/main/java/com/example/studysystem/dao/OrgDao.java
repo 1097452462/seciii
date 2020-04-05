@@ -24,4 +24,6 @@ public interface OrgDao {
     List<Org> getTopOrg_citationSum();   //引用数前10 机构
     List<Org> getTopOrg_point();   // 综合排名前10  70%论文数 30%引用数   机构
     List<Org> getTopOrg(List<Integer> ids);//  同上，参数不同
+    List<String> getRelatedOrg_byAuthorId(int id);
+    List<String> getRelatedOrg_byOrgId(int id);
 }

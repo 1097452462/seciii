@@ -132,4 +132,27 @@ class OrgServiceImplTest {
         verify(mockOrgService,times(1)).sortByValueDescending(m1);
         assertEquals(m2,orgService.sortByValueDescending(m1));
     }
+
+    @Test
+    void getAuthorNum() {
+        prepare();
+        mockOrgService.getAuthorNum(1);
+        verify(mockOrgService,times(1)).getAuthorNum(1);
+        when(mockOrgDao.getAuthorNum(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",orgService.getAuthorNum(1).getMessage());
+        verify(mockOrgDao,times(1)).getAuthorNum(1);
+    }
+
+    @Test
+    void getTopAuthor() {
+        prepare();
+        mockOrgService.getTopAuthor(1);
+        verify(mockOrgService,times(1)).getTopAuthor(1);
+        when(mockOrgDao.getAuthors(1)).thenReturn("a;b;c");
+        List<String> l=new ArrayList<>();l.add("a");l.add("b");l.add("c");
+        when(mockAuthorDao.getTopAuthor_byName(l)).thenThrow(new RuntimeException());
+        assertEquals("失败",orgService.getTopAuthor(1).getMessage());
+        verify(mockOrgDao,times(1)).getAuthors(1);
+        verify(mockAuthorDao,times(1)).getTopAuthor_byName(l);
+    }
 }

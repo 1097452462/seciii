@@ -4,9 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
@@ -44,7 +48,7 @@ class OrgDaoTest {
     @Rollback
     void getPaperIdByOrg() {
         assert orgDao!=null;
-        assertTrue(orgDao.getPaperIdByOrg(1)==null||Integer.parseInt(orgDao.getPaperIdByOrg(1))>0);
+        assertTrue(orgDao.getPaperIdByOrg(1)==null||orgDao.getPaperIdByOrg(1).length()>0);
     }
 
     @Test
@@ -63,21 +67,21 @@ class OrgDaoTest {
         assertTrue(orgDao.getCitationSum(1)==null||orgDao.getCitationSum(1)>0);
     }
 
-//    @Test
-//    @Transactional
-//    @Rollback
-//    void getTopPaperIds() {
-//        assert orgDao!=null;
-//        assertNotNull(orgDao.getTopPaperIds(1));
-//    }
+    @Test
+    @Transactional
+    @Rollback
+    void getTopPaperIds() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getTopPaperIds(1));
+    }
 
-//    @Test
-//    @Transactional
-//    @Rollback
-//    void getKeywords() {
-//        assert orgDao!=null;
-//        assertNotNull(orgDao.getKeywords(1));
-//    }
+    @Test
+    @Transactional
+    @Rollback
+    void getKeywords() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getKeywords(1));
+    }
 
     @Test
     @Transactional
@@ -101,5 +105,30 @@ class OrgDaoTest {
     void getTopOrg_point() {
         assert orgDao!=null;
         assertNotNull(orgDao.getTopOrg_point());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getAuthorNum() {
+        assert orgDao!=null;
+        assertTrue(orgDao.getAuthorNum(1)==null||orgDao.getAuthorNum(1)>=0);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getAuthors() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getAuthors(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getTopOrg() {
+        assert orgDao!=null;
+        List<Integer> l=new ArrayList<>();l.add(1);
+        assertNotNull(orgDao.getTopOrg(l));
     }
 }

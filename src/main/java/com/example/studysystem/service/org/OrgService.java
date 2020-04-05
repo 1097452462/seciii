@@ -18,4 +18,7 @@ public interface OrgService {
 
      Response getTopAuthor(int id);
      Response getTop10Org(int mode);
+
+     Response getRelatedAuthors(int id);
+     Response getRelatedOrgs(int id);
 }

@@ -1,6 +1,7 @@
 package com.example.studysystem.service.author;
 
 import com.example.studysystem.dao.AuthorDao;
+import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Author;
@@ -17,12 +18,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorDao authorDao;
     @Autowired
-    private SimplePaperDao simplePaperDao;
+    private OrgDao orgDao;
     @Autowired
     private PaperDao paperDao;
-    public void set(AuthorDao a,SimplePaperDao s,PaperDao p){
+    public void set(AuthorDao a,OrgDao o,PaperDao p){
         this.authorDao=a;
-        this.simplePaperDao=s;
+        this.orgDao=o;
         this.paperDao=p;
     }
 
@@ -150,6 +151,26 @@ public class AuthorServiceImpl implements AuthorService {
                     break;
             }
             return Response.buildSuccess(authors);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getRelatedAuthors(int id) {// 和这个作者一起发过论文的作者，前五，根据一起发过的论文数量降序
+        try{
+            return Response.buildSuccess(authorDao.getRelatedAuthor_byAuthorId(id));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getRelatedOrgs(int id) {// 和这个作者一起发过论文的机构，前五，根据一起发过的论文数量降序
+        try{
+            return Response.buildSuccess(orgDao.getRelatedOrg_byAuthorId(id));
         }catch (Exception e) {
             e.printStackTrace();
             return (Response.buildFailure("失败"));

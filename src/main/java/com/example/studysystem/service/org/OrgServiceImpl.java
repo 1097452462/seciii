@@ -172,6 +172,26 @@ public class OrgServiceImpl implements OrgService{
         }
     }
 
+    @Override
+    public Response getRelatedAuthors(int id) {
+        try{
+            return Response.buildSuccess(authorDao.getRelatedAuthor_byOrgId(id));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getRelatedOrgs(int id) {
+        try{
+            return Response.buildSuccess(orgDao.getRelatedOrg_byOrgId(id));
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
     public <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>()

@@ -14,4 +14,6 @@ public interface AuthorService  {
     Response getTopPaper(int id);
     Response getTopKeyword(int id);
     Response getTop10Author(int mode);
+    Response getRelatedAuthors(int id);
+    Response getRelatedOrgs(int id);
 }

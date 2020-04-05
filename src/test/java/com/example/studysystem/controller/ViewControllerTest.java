@@ -47,4 +47,22 @@ class ViewControllerTest {
         mockViewController.jumpToAuthorDetail();
         verify(mockViewController,times(1)).jumpToAuthorDetail();
     }
+
+    @Test
+    void jumpToField() {
+        mockViewController.jumpToField();
+        verify(mockViewController,times(1)).jumpToField();
+    }
+
+    @Test
+    void jumpToFieldDetail() {
+        mockViewController.jumpToFieldDetail();
+        verify(mockViewController,times(1)).jumpToFieldDetail();
+    }
+
+    @Test
+    void jumpToMeeting() {
+        mockViewController.jumpToMeeting();
+        verify(mockViewController,times(1)).jumpToMeeting();
+    }
 }

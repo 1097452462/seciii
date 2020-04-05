@@ -42,4 +42,11 @@ class PaperDaoTest {
         List<Integer> l=new ArrayList<>();l.add(1);l.add(2);l.add(3);
         assertNotNull(paperDao.getPapersByIds(l));
     }
+
+    @Test
+    void getTopPaper() {
+        assert paperDao!=null;
+        List<Integer> l=new ArrayList<>();l.add(1);
+        assertNotNull(paperDao.getTopPaper(l));
+    }
 }
