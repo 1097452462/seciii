@@ -1,6 +1,7 @@
 package com.example.studysystem.service.author;
 
 import com.example.studysystem.dao.AuthorDao;
+import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
 import com.example.studysystem.entity.Response;
@@ -17,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AuthorServiceImplTest {
     private AuthorDao mockAuthorDao=mock(AuthorDao.class);
-    private SimplePaperDao mockSimplePaperDao=mock(SimplePaperDao.class);
+    private OrgDao mockOrgDao=mock(OrgDao.class);
     private PaperDao mockPaperDao=mock(PaperDao.class);
     private AuthorServiceImpl authorService=new AuthorServiceImpl();
     private AuthorServiceImpl mockAuthorService=mock(AuthorServiceImpl.class);
 
-    public void prepare(){authorService.set(mockAuthorDao,mockSimplePaperDao,mockPaperDao);}
+    public void prepare(){authorService.set(mockAuthorDao,mockOrgDao,mockPaperDao);}
     @Test
     void getAuthors() {
         prepare();

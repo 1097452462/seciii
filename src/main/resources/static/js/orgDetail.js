@@ -123,7 +123,7 @@ function display(paperList) {
             " border-radius: 6px;\n" +
             "    text-decoration: none;\n" +
             "    display: inline-block;\n" +
-            "    font-size:13px;' onclick='paperClick(" + paper.paper_id + ")'>论文详情</button>" + "</td></tr>";
+            "    font-size:13px;' onclick='paperClick(" + paper.id + ")'>论文详情</button>" + "</td></tr>";
     }
 
     $('#orgDetail-list').html(paperInfo);
