@@ -42,20 +42,20 @@ $(document).ready(function() {
         var Info = "";
         n=0;
         for (let a of List) {
-            Info += "<tr></tr><td>" + a.author_name + "</td>" +
-                "<td >" + a.org+ "</td>"+
-                "<td >" + a.paper_num+ "</td>" ;
+            Info += "<tr></tr><td class='aaa'>" + a.author_name + "</td>" +
+                "<td class='bbb'>" + a.org+ "</td>"+
+                "<td class='ccc'>" + a.paper_num+ "</td>" ;
 
             Info +=
-                "<td><button type='button' style='background-color: #4CAF50; /* Green */\n" +
+                "<td class='ddd'><button type='button' style='background-color: #4CAF50; /* Green */\n" +
                 "border: 2px solid #4CAF50;" +
                 "color: white;\n" +
-                "    padding: 7px 15px;\n" +
+
                 "    text-align: center;\n" +
                 " border-radius: 6px;\n" +
                 "    text-decoration: none;\n" +
                 "    display: inline-block;\n" +
-                "    font-size:16px;' onclick='authorClick("+ a.id + ")'>作者详情</button>" + "</td></tr>";
+                "    font-size:16px;' onclick='authorClick("+ a.id + ")'>详情</button>" + "</td></tr>";
             n+=1;
             if(n>1000){break}
         }
