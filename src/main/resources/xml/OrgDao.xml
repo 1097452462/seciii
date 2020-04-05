@@ -89,7 +89,7 @@
         order by Point desc limit 5
     </select>
 
-    <select id="getRelateOrg_byAuthorId"  resultType="java.lang.String" >
+    <select id="getRelatedOrg_byAuthorId"  resultType="java.lang.String" >
         select Author_Affiliations from(
             select Author_Affiliations,count(paper_id) as num from(
                 select  distinct s1.Author_Affiliations,s1.paper_id from simplepaper s1,simplepaper s2 where(
@@ -97,11 +97,11 @@
                         select Author_name from author where id=#{id}
                     )
                 )
-            ) u group by Author_Affiliations order by num desc limit 5
+            ) u group by Author_Affiliations order by num desc
 		) v
     </select>
 
-    <select id="getRelateOrg_byOrgId"  resultType="java.lang.String" >
+    <select id="getRelatedOrg_byOrgId"  resultType="java.lang.String" >
         select Author_Affiliations from(
             select Author_Affiliations,count(paper_id) as num from(
                 select  distinct s1.Author_Affiliations,s1.paper_id from simplepaper s1,simplepaper s2 where(
@@ -109,7 +109,7 @@
                         select Org_name from org where id=#{id}
                     )
                 )
-            ) u group by Author_Affiliations order by num desc limit 5
+            ) u group by Author_Affiliations order by num desc
 		) v
     </select>
 

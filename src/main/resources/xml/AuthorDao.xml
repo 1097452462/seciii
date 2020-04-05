@@ -99,7 +99,7 @@
                         select Author_name from author where id=#{id}
                         )
                     )
-                ) u group by Authors order by num desc limit 5
+                ) u group by Authors order by num desc
             ) v
     </select>
 
@@ -111,7 +111,7 @@
                         select Org_name from org where id=#{id}
                     )
                 )
-            ) u group by Authors order by num desc limit 5
+            ) u group by Authors order by num desc
 		) v
     </select>
 

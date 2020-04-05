@@ -9,7 +9,9 @@ $(document).ready(function() {
             author= res.content;
             $('#authorDetail-name').text(decodeURI(author.author_name));
             $('#authorDetail-org').text(decodeURI(author.org));
-            $('#authorDetail-num').text(author.paper_num+"  total papers");
+            $('#authorPaperNum').text(decodeURI(author.paper_num));
+            $('#authorCitationSum').text(decodeURI(author.citation_sum));
+            $('#authorDetail-num').text("total papers");
         },
         function (error) {
             alert(JSON.stringify(error));
@@ -17,16 +19,10 @@ $(document).ready(function() {
 
 
     );
-    getRequest(
-        '/author/getCitationSum?id='+id,
-        function (res) {
-            var CitationSum=res.content;
-            $('#authorCitationSum').text(decodeURI(CitationSum));
-        },
-        function (error) {
-            alert(JSON.stringify(error));
-        }
-    );
+
+
+
+
     getRequest(
         '/author/getTopKeyword?id='+id,
         function (res) {
@@ -34,7 +30,7 @@ $(document).ready(function() {
             var words="";
 
             for(let word of TopKeyword){
-                words+=word+";<br><br>";
+                words+=word+"<br>";
             }
             $('#Top5keyword').html(words);
         },
@@ -56,6 +52,49 @@ $(document).ready(function() {
             alert(JSON.stringify(error));
         }
     );
+
+    getRequest(
+        '/author/relevant-org?id='+id,
+        function (res) {
+            orgName= res.content;
+            $('#relevant-org-num').text(orgName.length);
+            var names="";
+            var i=0;
+            for(let p of orgName){
+                i++;
+                if(i>5)break;
+                names+=p+"<br>";
+            }
+            $('#RelevantOrg').html(names);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+
+    getRequest(
+        '/author/relevant-author?id='+id,
+        function (res) {
+            authorName= res.content;
+            $('#relevant-author-num').text(authorName.length);
+            var names="";
+            var i=0;
+            for(let p of authorName){
+                i++;
+                if(i>10)break;
+                names+=p;
+                if(i%2==1)
+                    names+="&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;";
+                else
+                    names+="<br>";
+            }
+            $('#RelevantAuthor').html(names);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
+
     $("#author-detail-paper").click(function () {
         getRequest(
             '/author/getSimplepaperById?id='+id,
