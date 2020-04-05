@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="UTF-8">
     <title>Field</title>
+    <link rel="stylesheet" type="text/css" href="/css/miaov.css" />
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/Statistic.css"/>
     <script src="/js/jquery.js"></script>
+    <script src="/js/echarts.js"></script>
+    <script src="/js/field2.js"></script>
     <!-- Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.js"></script>
 
@@ -38,15 +43,36 @@
 <hr style="margin-top: 30px">
 <h1 align="center">学术图谱系统-----研究方向</h1>
 <hr>
-<table class="table" align="center" border="1px" style="border: #1c196e" width="35%">
-    <thead>
-    <tr align="center" style="width: 100% border-box" ></tr>
-    </thead>
-    <div  style="overflow-y:scroll">
-        <tbody id="field-list" style="border: #8ae292">
+    <div class="first"  style="width: 50%;
+            float:left;
+            height: auto;">
+        <div style="float: left;
+            margin-bottom: 20px;
+            margin-left: 20px;">
+            <span>选择排行  </span>
+            <select id="method-select" class="form-control" style="display: inline-block;width:auto;">
+                <option value="1">论文总数排名</option>
+                <option value="2">引用总数排名</option>
+                <option value="3">综合排名</option>
+            </select>
+        </div>
+        <div class="card table-container" id="field-rating"></div>
     </div>
 
-</table>
+    <div class="second" style="width: 50%;float:left;height: auto;">
+        <div id="div1" >
+            <a href="/view/field-detail?field-id=1183" style="color: #000;">Deep learning</a>
+            <a href="/view/field-detail?field-id=4606" style="color: #000;">Machine learning</a>
+            <a href="/view/field-detail?field-id=1615" style="color: #000;">Galaxies: evolution</a>
+            <a href="/view/field-detail?field-id=2360" style="color: #000;">Methods: numerical</a>
+            <a href="/view/field-detail?field-id=1356" style="color: #000;">Cosmology: theory</a>
+            <a href="/view/field-detail?field-id=3867" style="color: #000;">Large-scale structure of universe</a>
+            <a href="/view/field-detail?field-id=1636" style="color: #000;">Galaxies: active</a>
+            <a href="/view/field-detail?field-id=2012" style="color: #000;">Galaxies: formation</a>
+            <a href="/view/field-detail?field-id=4811" style="color: #000;">Iot</a>
+            <a href="/view/field-detail?field-id=2211" style="color: #000;">Optimization</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>
