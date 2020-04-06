@@ -40,9 +40,9 @@ $(document).ready(function() {
             var names="";
             var i=0;
             for(let p of papers){
+                names+=p.document_title+";<br><br>";
                 i++;
                 if(i==3)break;
-                names+=p.document_title+";<br><br>";
             }
             $('#Top5paper').html(names);
         },
@@ -59,9 +59,9 @@ $(document).ready(function() {
             var names="";
             var i=0;
             for(let p of orgName){
-                i++;
-                if(i>3)break;
                 names+=p+"<br><br>";
+                i++;
+                if(i==3)break;
             }
             $('#RelevantOrg').html(names);
         },
@@ -93,22 +93,6 @@ $(document).ready(function() {
         }
     );
 
-    $("#author-detail-paper").click(function () {
-        getRequest(
-            '/author/getSimplepaperById?id='+id,
-            function (res) {
-                papers= res.content;
-                display(papers);
-                document.getElementById("author-detail-table").style.display="block";
-            },
-            function (error) {
-                alert(JSON.stringify(error));
-            }
-        );
-    });
-    $("#author-detail-paper-close").click(function () {
-        document.getElementById("author-detail-table").style.display="none";
-    });
 
 
     getRequest(
@@ -152,33 +136,7 @@ function getUrlParameter(name){
     }
 };
 
-function display(paperList) {
-    var paperInfo = "";
 
-    for (let paper of paperList) {
-        paperInfo += "<tr></tr><td>" + paper.document_title + "</td>" +
-            "<td >" + paper.authors+ "</td>" +
-            "<td >" + paper.publication_Year+ "</td>" +
-            "<td>" + paper.publication_Title.substr(0, 50)+"..." + "</td>" +
-            "<td >" + paper.author_Keywords.substr(0, 50)+"..." + "</td>";
-        paperInfo +=
-            "<td><button type='button' style='background-color: #4CAF50; /* Green */\n" +
-            "border: 2px solid #4CAF50;" +
-            "color: white;\n" +
-            "    padding: 7px 15px;\n" +
-            "    text-align: center;\n" +
-            " border-radius: 6px;\n" +
-            "    text-decoration: none;\n" +
-            "    display: inline-block;\n" +
-            "    font-size:13px;' onclick='paperClick(" + paper.id+ ")'>论文详情</button>" + "</td></tr>";
-    }
-
-    $('#authorDetail-list').html(paperInfo);
-
-}
-function paperClick(id){
-    window.open("/view/paper-detail?paper-id="+id);
-}
 
 function drawBar(dd) {
     option = {

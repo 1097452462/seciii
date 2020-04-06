@@ -5,6 +5,7 @@
     <title>org-Detail</title>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
     <script src="/js/jquery.js"></script>
+    <script src="/js/echarts.js"></script>
     <!-- Bootstrap 核心 JavaScript 文件 -->
     <script src="/js/bootstrap.js"></script>
     <!-- 引入js脚本文件 -->
@@ -12,53 +13,74 @@
     <script src="/js/orgDetail.js"></script>
 </head>
 <body>
-<div align="center">
-    <div id="orgDetail-name"style="font-size: 300%;"></div>
 
-    <hr>
-</div>
-<div>
-    <div style="width: 50%;float:left;height: auto;">
-        <div style="font-size: 220%;">Top Author :</div><br>
-        <div style="font-size: 150%;margin-left: 50px;color: #2994af;" id="TopAuthor" ></div>
-        <div style="font-size: 220%;">RelatedAuthors :</div><br>
-        <div style="font-size: 150%;margin-left: 50px;color: #2994af;" id="RelatedAuthors" ></div>
-        <div style="font-size: 220%;">RelatedOrgs :</div><br>
-        <div style="font-size: 150%;margin-left: 50px;color: #2994af;" id="RelatedOrgs" ></div>
+<table width="100%" style="height: 100%" >
+    <tr style="height: 20%">
+        <td colspan="3" align="center">
+            <div id="orgDetail-name"style="font-size: 300%;display: inline" ></div>
+            <br>
+            <div style="font-size: 130%;display: inline;">PaperNum:   </div><div  style="font-size: 200%;
+        display: inline;" id="orgPaperNum" ></div>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div style="font-size: 130%;display: inline;">CitationSum:   </div><div  style="font-size: 200%;
+        display: inline;" id="orgCitationSum" ></div>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div style="font-size: 130%;display: inline;">AuthorNum:   </div><div  style="font-size: 200%;
+        display: inline;" id="orgAuthorNum" ></div>
 
-    </div>
-    <div style="width: 50%;float:left;height: auto;">
-        <div style="font-size: 220%;display: inline;">AuthorNum:    </div><div  style="font-size: 200%;
-        display: inline;margin-right: 10px" id="authorNum" ></div>
-        <div style="font-size: 220%;display: inline;">CitationSum:    </div><div  style="font-size: 200%;
-        display: inline;" id="authorCitationSum" ></div><br>
-        <div style="font-size: 220%;">Top Research Fields :</div><br>
-        <div style="font-size: 150%;margin-left: 50px;color: #2994af;" id="Top5keyword" ></div><br>
-        <div style="font-size: 220%;" >Top Paper :</div><br>
-        <div style="font-size: 150%;margin-left: 50px; color: #2994af;" id="Top5paper" ></div>
+        </td>
+    </tr>
+    <tr style="height: 25%">
+        <td width="30%">
+            <div>
+                <p style="font-size: 170%;">Top Research Fields :</p>
+                <div style="font-size: 120%;margin-left: 50px;color: #2994af;" id="Top5keyword" ></div>
+            </div>
+        </td>
+        <td rowspan="2" width="40%" style="padding-top: 0;padding-bottom: 0" height=500px>
+            <div id="orgDetail-pie" style="height: 100%"></div>
+        </td>
+        <td width="30%" >
+            <div>
+                <p style="font-size: 170%;display: inline">Top Authors :</p>
+                <div style="font-size: 120%;margin-left: 50px;color: #2994af;" id="TopAuthor" ></div>
+            </div>
+            <p></p><p></p>
+            <div>
+                <p style="font-size: 170%;display: inline">Relevant Authors :</p>
+                <span id="relevant-author-num" style="font-size: 150%"></span><span style="font-size: 150%">  total</span>
+                <p style="font-size: 140%;color: #261eff">most relevant: </p>
+                <div style="font-size: 120%;margin-left: 50px;color: #2994af;" id="RelevantAuthor" ></div>
+            </div>
+        </td>
+    </tr>
 
-    </div>
-</div>
-<hr style="margin-top: 700px">
+    <tr style="height: 25%">
+        <td>
+            <div>
+                <br>
+                <p style="font-size: 170%;">Top Papers :</p>
+                <div style="font-size: 110%;margin-left: 10px; margin-right: 10px;color: #2994af;text-align: left" id="Top5paper" ></div>
+            </div>
+        </td>
+        <td style="padding-top: 1px">
+            <div>
+                <p style="font-size: 170%;display: inline">Relevant Organizations :    </p>
+                <span id="relevant-org-num" style="font-size: 150%"></span><span style="font-size: 150%">  total</span>
+                <p style="font-size: 140%;color: #261eff">most relevant: </p>
+                <div style="font-size: 105%;margin-left: 20px;color: #2994af;" id="RelevantOrg"  ></div>
+            </div>
+        </td>
+    </tr>
 
-<div align="center">
-    <div id="orgDetail-num" style="font-size: 200%">Total Papers:</div>
-    <button id="org-detail-paper">All Papers</button>
-    <button id="org-detail-paper-close">Close</button>
-</div>
+    <tr style="height: 30%">
+        <td colspan="3" style="padding-top: 0;padding-bottom: 0">
+            <div id="orgDetail-bar" style="height: 100%"></div>
+        </td>
+    </tr>
+
+</table>
 
 
-    <table id="org-detail-table"  class="table" align="center" border="1px" style="border: #152067;display: none">
-        <thead>
-        <tr align="center" style="width: 100% border-box" >
-            <th width="25%" >Document_title</th>
-            <th width="15%">Orgazation</th>
-            <th width="4%">Year</th>
-            <th >Publication_title</th>
-            <th >Author_keywords</th>
-        </tr>
-        </thead>
-        <tbody id="orgDetail-list" style="border: #8ae292">
-    </table>
 </body>
 </html>

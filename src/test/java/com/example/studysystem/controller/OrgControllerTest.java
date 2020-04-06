@@ -46,32 +46,7 @@ class OrgControllerTest {
         verify(mockOrgService,times(1)).searchOrgs("Hello world!","1");
     }
 
-    @Test
-    void getAuthorNum() {
-        prepare();
-        mockOrgController.getAuthorNum(1);
-        verify(mockOrgController,times(1)).getAuthorNum(1);
-        orgController.getAuthorNum(1);
-        verify(mockOrgService,times(1)).getAuthorNum(1);
-    }
 
-    @Test
-    void getPaperNum() {
-        prepare();
-        mockOrgController.getPaperNum(1);
-        verify(mockOrgController,times(1)).getPaperNum(1);
-        orgController.getPaperNum(1);
-        verify(mockOrgService,times(1)).getPaperNum(1);
-    }
-
-    @Test
-    void getCitationSum() {
-        prepare();
-        mockOrgController.getCitationSum(1);
-        verify(mockOrgController,times(1)).getCitationSum(1);
-        orgController.getCitationSum(1);
-        verify(mockOrgService,times(1)).getCitationSum(1);
-    }
 
     @Test
     void getTopPaper() {

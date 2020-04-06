@@ -51,21 +51,7 @@ class OrgDaoTest {
         assertTrue(orgDao.getPaperIdByOrg(1)==null||orgDao.getPaperIdByOrg(1).length()>0);
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    void getPaperNum() {
-        assert orgDao!=null;
-        assertTrue(orgDao.getPaperNum(1)==null||orgDao.getPaperNum(1)>=0);
-    }
 
-    @Test
-    @Transactional
-    @Rollback
-    void getCitationSum() {
-        assert orgDao!=null;
-        assertTrue(orgDao.getCitationSum(1)==null||orgDao.getCitationSum(1)>0);
-    }
 
     @Test
     @Transactional
@@ -105,14 +91,6 @@ class OrgDaoTest {
     void getTopOrg_point() {
         assert orgDao!=null;
         assertNotNull(orgDao.getTopOrg_point());
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    void getAuthorNum() {
-        assert orgDao!=null;
-        assertTrue(orgDao.getAuthorNum(1)==null||orgDao.getAuthorNum(1)>=0);
     }
 
     @Test

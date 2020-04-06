@@ -3,10 +3,7 @@ import com.example.studysystem.dao.AuthorDao;
 import com.example.studysystem.dao.OrgDao;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
-import com.example.studysystem.entity.Org;
-import com.example.studysystem.entity.Paper;
-import com.example.studysystem.entity.Response;
-import com.example.studysystem.entity.SimplePaper;
+import com.example.studysystem.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,35 +67,6 @@ public class OrgServiceImpl implements OrgService{
         }
     }
 
-    @Override
-    public Response getAuthorNum(int id) {
-        try{
-            return Response.buildSuccess(orgDao.getAuthorNum(id));
-        }catch (Exception e) {
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
-
-    @Override
-    public Response getPaperNum(int id) {
-        try{
-            return Response.buildSuccess(orgDao.getPaperNum(id));
-        }catch (Exception e) {
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
-
-    @Override
-    public Response getCitationSum(int id) {
-        try{
-            return Response.buildSuccess(orgDao.getCitationSum(id));
-        }catch (Exception e) {
-            e.printStackTrace();
-            return (Response.buildFailure("失败"));
-        }
-    }
 
     @Override
     public Response getTopPaper(int id) {
@@ -190,6 +158,71 @@ public class OrgServiceImpl implements OrgService{
             e.printStackTrace();
             return (Response.buildFailure("失败"));
         }
+    }
+
+    @Override
+    public Response getHistory(int id){
+        try{
+            List<History> histories=orgDao.getHistory(id);
+            List<Integer> ans=new ArrayList<>();
+            for(int i=1988;i<=2020;i++) {
+                boolean find=false;
+                for (History h : histories) {
+                    if(h.getYear().isEmpty())continue;
+                    if(Integer.parseInt(h.getYear())==i){
+                        ans.add(h.getNum());
+                        find=true;
+                        break;
+                    }
+                }
+                if(!find)ans.add(0);
+            }
+            return Response.buildSuccess(ans);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    @Override
+    public Response getInterest(int id){
+        try{
+            List<String> titles=orgDao.getTitles(id);
+            Map<String,Integer> map=new TreeMap<>();
+            for(String t:titles){
+                for(String s:t.split(" ")){
+                    if(s.isEmpty())continue;
+                    if(boringWord(s))continue;
+                    s=s.toLowerCase();
+                    if(map.containsKey(s))map.put(s,map.get(s)+1);
+                    else map.put(s,1);
+                }
+            }
+            map=sortByValueDescending(map);
+            List<List<String>> ans=new ArrayList<>();
+            int i=0;
+            for(Map.Entry<String,Integer> a:map.entrySet()){//System.out.println(a.getKey()+"  "+a.getValue());
+                List<String> temp=new ArrayList<>();
+                temp.add(a.getKey());
+                temp.add(Integer.toString(a.getValue()));
+                ans.add(temp);
+                i++;
+                if(i==8)break;
+            }
+            return Response.buildSuccess(ans);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    private boolean boringWord(String s){
+        if(s.contains("(")||s.contains(")"))return true;
+        String regex2 = ".*[0-9].*";
+        if(s.matches(regex2))return true;
+        String[] list={"of","an","for","a","and","from","on","in","the","high","low","over","with","to","through"};
+        for(String l:list)if(l.equals(s))return true;
+        return false;
     }
 
     public <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {

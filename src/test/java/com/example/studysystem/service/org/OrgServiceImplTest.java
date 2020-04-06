@@ -63,25 +63,6 @@ class OrgServiceImplTest {
         verify(mockOrgDao,times(1)).searchOrgs("Hello world!",1);
     }
 
-    @Test
-    void getPaperNum() {
-        prepare();
-        mockOrgService.getPaperNum(1);
-        verify(mockOrgService,times(1)).getPaperNum(1);
-        when(mockOrgDao.getPaperNum(1)).thenThrow(new RuntimeException());
-        assertEquals("失败",orgService.getPaperNum(1).getMessage());
-        verify(mockOrgDao,times(1)).getPaperNum(1);
-    }
-
-    @Test
-    void getCitationSum() {
-        prepare();
-        mockOrgService.getCitationSum(1);
-        verify(mockOrgService,times(1)).getCitationSum(1);
-        when(mockOrgDao.getCitationSum(1)).thenThrow(new RuntimeException());
-        assertEquals("失败",orgService.getCitationSum(1).getMessage());
-        verify(mockOrgDao,times(1)).getCitationSum(1);
-    }
 
     @Test
     void getTopPaper() {
@@ -133,15 +114,6 @@ class OrgServiceImplTest {
         assertEquals(m2,orgService.sortByValueDescending(m1));
     }
 
-    @Test
-    void getAuthorNum() {
-        prepare();
-        mockOrgService.getAuthorNum(1);
-        verify(mockOrgService,times(1)).getAuthorNum(1);
-        when(mockOrgDao.getAuthorNum(1)).thenThrow(new RuntimeException());
-        assertEquals("失败",orgService.getAuthorNum(1).getMessage());
-        verify(mockOrgDao,times(1)).getAuthorNum(1);
-    }
 
     @Test
     void getTopAuthor() {

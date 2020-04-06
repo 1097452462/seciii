@@ -184,11 +184,16 @@ public class AuthorServiceImpl implements AuthorService {
             List<History> histories=authorDao.getHistory(id);
             List<Integer> ans=new ArrayList<>();
             for(int i=1988;i<=2020;i++) {
+                boolean find=false;
                 for (History h : histories) {
                     if(h.getYear().isEmpty())continue;
-                    if(Integer.parseInt(h.getYear())==i)    ans.add(h.getNum());
-                    else ans.add(0);
+                    if(Integer.parseInt(h.getYear())==i) {
+                        ans.add(h.getNum());
+                        find=true;
+                        break;
+                    }
                 }
+                if(!find)ans.add(0);
             }
             return Response.buildSuccess(ans);
         }catch (Exception e) {
@@ -230,7 +235,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     private boolean boringWord(String s){
-        String[] list={"of","an","for","a","and","from","on","in","the","high","low"};
+        if(s.contains("(")||s.contains(")"))return true;
+        String regex2 = ".*[0-9].*";
+        if(s.matches(regex2))return true;
+        String[] list={"of","an","for","a","and","from","on","in","the","high","low","over","with","to","through"};
         for(String l:list)if(l.equals(s))return true;
         return false;
     }

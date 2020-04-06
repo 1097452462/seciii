@@ -7,6 +7,7 @@
         <id column="Author_list" property="Author_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_list" property="Paper_list" jdbcType="LONGVARCHAR" />
         <id column="Paper_num" property="Paper_num" jdbcType="INTEGER" />
+        <id column="Author_num" property="Author_num" jdbcType="INTEGER" />
         <id column="Citation_sum" property="Citation_sum" jdbcType="INTEGER" />
         <id column="Point" property="Point" jdbcType="INTEGER" />
     </resultMap>
@@ -16,6 +17,7 @@
     Author_list,
     Paper_list,
     Paper_num,
+    Author_num,
     Citation_sum,
     Point
     </sql>
@@ -38,21 +40,12 @@
         SELECT Paper_list FROM org where id = #{id}
     </select>
 
-    <select id="getPaperNum"  resultType="java.lang.Integer" >
-        SELECT Paper_num from org where id=#{id}
-    </select>
+
 
     <select id="getAuthors"  resultType="java.lang.String" >
         SELECT Author_list from org where id=#{id}
     </select>
 
-    <select id="getAuthorNum"  resultType="java.lang.Integer" >
-        SELECT Author_num from org where id=#{id}
-    </select>
-
-    <select id="getCitationSum"  resultType="java.lang.Integer" >
-        SELECT Citation_sum from org where id=#{id}
-    </select>
 
     <select id="getTopPaperIds"  resultType="java.lang.Integer">
         SELECT  p.id FROM simplepaper s,paper p,org o where
@@ -66,6 +59,11 @@
         )
     </select>
 
+    <select id="getTitles"  resultType="java.lang.String">
+        SELECT distinct lower(Document_title) FROM simplepaper where Author_Affiliations in(
+            SELECT Org_name from docs.org where id=#{id}
+        )
+    </select>
 
     <select id="getTopOrg_paperNum"  resultType="Org" >
         SELECT * FROM org order by Paper_num desc limit 10
@@ -111,6 +109,14 @@
                 )
             ) u group by Author_Affiliations order by num desc
 		) v
+    </select>
+
+    <select id="getHistory"  resultType="History" >
+        SELECT Publication_Year as year,count( distinct paper_id)as num FROM docs.simplepaper  where
+            Author_Affiliations in (
+			    select Org_name from docs.org where id=#{id}
+        )
+        group by Publication_Year;
     </select>
 
 </mapper>

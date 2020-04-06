@@ -6,9 +6,17 @@ public class Org {
     private String Author_list;
     private String Paper_list;
     private int Paper_num;
+    private int Author_num;
     private int Citation_sum;
     private float Point;
 
+    public int getAuthor_num() {
+        return Author_num;
+    }
+
+    public void setAuthor_num(int author_num) {
+        Author_num = author_num;
+    }
     public int getId() {
         return id;
     }

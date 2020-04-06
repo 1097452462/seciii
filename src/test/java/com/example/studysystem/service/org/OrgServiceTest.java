@@ -28,17 +28,6 @@ class OrgServiceTest {
         verify(mockOrgService,times(1)).searchOrgs("Hello world!","1");
     }
 
-    @Test
-    void getPaperNum() {
-        mockOrgService.getPaperNum(1);
-        verify(mockOrgService,times(1)).getPaperNum(1);
-    }
-
-    @Test
-    void getCitationSum() {
-        mockOrgService.getCitationSum(1);
-        verify(mockOrgService,times(1)).getCitationSum(1);
-    }
 
     @Test
     void getTopPaper() {
@@ -56,12 +45,6 @@ class OrgServiceTest {
     void getTop10Org() {
         mockOrgService.getTop10Org(anyInt());
         verify(mockOrgService,times(1)).getTop10Org(anyInt());
-    }
-
-    @Test
-    void getAuthorNum() {
-        mockOrgService.getAuthorNum(1);
-        verify(mockOrgService,times(1)).getAuthorNum(1);
     }
 
     @Test
