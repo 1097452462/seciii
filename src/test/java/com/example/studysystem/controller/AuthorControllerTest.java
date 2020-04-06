@@ -80,4 +80,49 @@ class AuthorControllerTest {
         authorController.getTop10Author(1);
         verify(mockAuthorService,times(1)).getTop10Author(1);
     }
+
+    @Test
+    void getRelatedAuthors() {
+        prepare();
+        mockAuthorController.getRelatedAuthors(1);
+        verify(mockAuthorController,times(1)).getRelatedAuthors(1);
+        authorController.getRelatedAuthors(1);
+        verify(mockAuthorService,times(1)).getRelatedAuthors(1);
+    }
+
+    @Test
+    void getRelatedOrgs() {
+        prepare();
+        mockAuthorController.getRelatedOrgs(1);
+        verify(mockAuthorController,times(1)).getRelatedOrgs(1);
+        authorController.getRelatedOrgs(1);
+        verify(mockAuthorService,times(1)).getRelatedOrgs(1);
+    }
+
+    @Test
+    void getRelevantAuthor() {
+        prepare();
+        mockAuthorController.getRelevantAuthor(1);
+        verify(mockAuthorController,times(1)).getRelevantAuthor(1);
+        authorController.getRelevantAuthor(1);
+        verify(mockAuthorService,times(1)).getRelatedAuthors(1);
+    }
+
+    @Test
+    void getRelevantOrg() {
+        prepare();
+        mockAuthorController.getRelevantOrg(1);
+        verify(mockAuthorController,times(1)).getRelevantOrg(1);
+        authorController.getRelevantOrg(1);
+        verify(mockAuthorService,times(1)).getRelatedOrgs(1);
+    }
+
+    @Test
+    void getHistory() {
+        prepare();
+        mockAuthorController.getHistory(1);
+        verify(mockAuthorController,times(1)).getHistory(1);
+        authorController.getHistory(1);
+        verify(mockAuthorService,times(1)).getHistory(1);
+    }
 }

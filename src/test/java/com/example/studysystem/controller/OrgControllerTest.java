@@ -108,4 +108,22 @@ class OrgControllerTest {
         orgController.getTop10Author(1);
         verify(mockOrgService,times(1)).getTop10Org(1);
     }
+
+    @Test
+    void getRelatedAuthors() {
+        prepare();
+        mockOrgController.getRelatedAuthors(1);
+        verify(mockOrgController,times(1)).getRelatedAuthors(1);
+        orgController.getRelatedAuthors(1);
+        verify(mockOrgService,times(1)).getRelatedAuthors(1);
+    }
+
+    @Test
+    void getRelatedOrgs() {
+        prepare();
+        mockOrgController.getRelatedOrgs(1);
+        verify(mockOrgController,times(1)).getRelatedOrgs(1);
+        orgController.getRelatedOrgs(1);
+        verify(mockOrgService,times(1)).getRelatedOrgs(1);
+    }
 }

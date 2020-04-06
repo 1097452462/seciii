@@ -69,4 +69,16 @@ class OrgServiceTest {
         mockOrgService.getTopAuthor(1);
         verify(mockOrgService,times(1)).getTopAuthor(1);
     }
+
+    @Test
+    void getRelatedAuthors() {
+        mockOrgService.getRelatedAuthors(1);
+        verify(mockOrgService,times(1)).getRelatedAuthors(1);
+    }
+
+    @Test
+    void getRelatedOrgs() {
+        mockOrgService.getRelatedOrgs(1);
+        verify(mockOrgService,times(1)).getRelatedOrgs(1);
+    }
 }

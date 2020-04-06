@@ -131,4 +131,20 @@ class OrgDaoTest {
         List<Integer> l=new ArrayList<>();l.add(1);
         assertNotNull(orgDao.getTopOrg(l));
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getRelatedOrg_byAuthorId() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getRelatedOrg_byAuthorId(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getRelatedOrg_byOrgId() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getRelatedOrg_byOrgId(1));
+    }
 }
