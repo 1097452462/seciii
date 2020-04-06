@@ -125,4 +125,28 @@ class AuthorDaoTest {
         List<Integer> l=new ArrayList<>();l.add(1);
         assertNotNull(authorDao.getTopAuthor_byId(l));
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getRelatedAuthor_byAuthorId() {
+        assert authorDao!=null;
+        assertNotNull(authorDao.getRelatedAuthor_byAuthorId(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getRelatedAuthor_byOrgId() {
+        assert authorDao!=null;
+        assertNotNull(authorDao.getRelatedAuthor_byOrgId(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getHistory() {
+        assert authorDao!=null;
+        assertNotNull(authorDao.getHistory(1));
+    }
 }

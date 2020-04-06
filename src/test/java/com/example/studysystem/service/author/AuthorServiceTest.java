@@ -59,4 +59,22 @@ class AuthorServiceTest {
         mockAuthorService.getTop10Author(1);
         verify(mockAuthorService,times(1)).getTop10Author(1);
     }
+
+    @Test
+    void getRelatedAuthors() {
+        mockAuthorService.getRelatedAuthors(1);
+        verify(mockAuthorService,times(1)).getRelatedAuthors(1);
+    }
+
+    @Test
+    void getRelatedOrgs() {
+        mockAuthorService.getRelatedOrgs(1);
+        verify(mockAuthorService,times(1)).getRelatedOrgs(1);
+    }
+
+    @Test
+    void getHistory() {
+        mockAuthorService.getHistory(1);
+        verify(mockAuthorService,times(1)).getHistory(1);
+    }
 }

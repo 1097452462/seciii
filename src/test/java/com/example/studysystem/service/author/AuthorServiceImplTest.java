@@ -136,4 +136,34 @@ class AuthorServiceImplTest {
         verify(mockAuthorService,times(1)).sortByValueDescending(m1);
         assertEquals(m2,authorService.sortByValueDescending(m1));
     }
+
+    @Test
+    void getRelatedAuthors() {
+        prepare();
+        mockAuthorService.getRelatedAuthors(1);
+        verify(mockAuthorService,times(1)).getRelatedAuthors(1);
+        when(mockAuthorDao.getRelatedAuthor_byAuthorId(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",authorService.getRelatedAuthors(1).getMessage());
+        verify(mockAuthorDao,times(1)).getRelatedAuthor_byAuthorId(1);
+    }
+
+    @Test
+    void getRelatedOrgs() {
+        prepare();
+        mockAuthorService.getRelatedOrgs(1);
+        verify(mockAuthorService,times(1)).getRelatedOrgs(1);
+        when(mockOrgDao.getRelatedOrg_byAuthorId(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",authorService.getRelatedOrgs(1).getMessage());
+        verify(mockOrgDao,times(1)).getRelatedOrg_byAuthorId(1);
+    }
+
+    @Test
+    void getHistory() {
+        prepare();
+        mockAuthorService.getHistory(1);
+        verify(mockAuthorService,times(1)).getHistory(1);
+        when(mockAuthorDao.getHistory(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",authorService.getHistory(1).getMessage());
+        verify(mockAuthorDao,times(1)).getHistory(1);
+    }
 }
