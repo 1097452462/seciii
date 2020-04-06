@@ -101,4 +101,22 @@ class OrgControllerTest {
         orgController.getRelatedOrgs(1);
         verify(mockOrgService,times(1)).getRelatedOrgs(1);
     }
+
+    @Test
+    void getHistory() {
+        prepare();
+        mockOrgController.getHistory(1);
+        verify(mockOrgController,times(1)).getHistory(1);
+        orgController.getHistory(1);
+        verify(mockOrgService,times(1)).getHistory(1);
+    }
+
+    @Test
+    void getInterest() {
+        prepare();
+        mockOrgController.getInterest(1);
+        verify(mockOrgController,times(1)).getInterest(1);
+        orgController.getInterest(1);
+        verify(mockOrgService,times(1)).getInterest(1);
+    }
 }

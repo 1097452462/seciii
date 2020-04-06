@@ -125,4 +125,19 @@ class OrgDaoTest {
         assert orgDao!=null;
         assertNotNull(orgDao.getRelatedOrg_byOrgId(1));
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getTitles() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getTitles(1));
+    }
+
+    @Test@Transactional
+    @Rollback
+    void getHistory() {
+        assert orgDao!=null;
+        assertNotNull(orgDao.getHistory(1));
+    }
 }

@@ -65,4 +65,10 @@ class ViewControllerTest {
         mockViewController.jumpToMeeting();
         verify(mockViewController,times(1)).jumpToMeeting();
     }
+
+    @Test
+    void jumpToMeetingDetail() {
+        mockViewController.jumpToMeetingDetail();
+        verify(mockViewController,times(1)).jumpToMeetingDetail();
+    }
 }

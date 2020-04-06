@@ -72,4 +72,24 @@ class PaperServiceImplTest {
         verify(mockSimplePaperDao,atLeastOnce()).simpleSelect_title(anyString());
         verify(mockSimplePaperDao,atLeastOnce()).simpleSelect_year(anyString());
     }
+
+    @Test
+    void getMeetingTop10() {
+        prepare();
+        mockPaperService.getMeetingTop10();
+        verify(mockPaperService,times(1)).getMeetingTop10();
+        when(mockPaperDao.getMeetingTop10()).thenThrow(new RuntimeException());
+        assertEquals("失败",paperService.getMeetingTop10().getMessage());
+        verify(mockPaperDao,times(1)).getMeetingTop10();
+    }
+
+    @Test
+    void getMeetingById() {
+        prepare();
+        mockPaperService.getMeetingById(1);
+        verify(mockPaperService,times(1)).getMeetingById(1);
+        when(mockPaperDao.getMeetingById(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",paperService.getMeetingById(1).getMessage());
+        verify(mockPaperDao,times(1)).getMeetingById(1);
+    }
 }

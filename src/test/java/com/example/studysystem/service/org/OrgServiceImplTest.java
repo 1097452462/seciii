@@ -147,4 +147,24 @@ class OrgServiceImplTest {
         assertEquals("失败",orgService.getRelatedOrgs(1).getMessage());
         verify(mockOrgDao,times(1)).getRelatedOrg_byOrgId(1);
     }
+
+    @Test
+    void getHistory() {
+        prepare();
+        mockOrgService.getHistory(1);
+        verify(mockOrgService,times(1)).getHistory(1);
+        when(mockOrgDao.getHistory(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",orgService.getHistory(1).getMessage());
+        verify(mockOrgDao,times(1)).getHistory(1);
+    }
+
+    @Test
+    void getInterest() {
+        prepare();
+        mockOrgService.getInterest(1);
+        verify(mockOrgService,times(1)).getInterest(1);
+        when(mockOrgDao.getTitles(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",orgService.getInterest(1).getMessage());
+        verify(mockOrgDao,times(1)).getTitles(1);
+    }
 }

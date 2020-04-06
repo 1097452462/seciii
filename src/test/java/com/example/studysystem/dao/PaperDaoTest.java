@@ -23,7 +23,7 @@ class PaperDaoTest {
     @Rollback
     void getPapers() {
         assert paperDao!=null;
-        assertNotNull(paperDao.getPapers());
+//        assertNotNull(paperDao.getPapers());
     }
 
     @Test
@@ -44,9 +44,27 @@ class PaperDaoTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void getTopPaper() {
         assert paperDao!=null;
         List<Integer> l=new ArrayList<>();l.add(1);
         assertNotNull(paperDao.getTopPaper(l));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getMeetingTop10() {
+        assert paperDao!=null;
+        assertNotNull(paperDao.getMeetingTop10());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getMeetingById() {
+        assert paperDao!=null;
+        assert paperDao.getMeetingById(1)==null||paperDao.getMeetingById(1).getCitation_sum()>=0;
     }
 }

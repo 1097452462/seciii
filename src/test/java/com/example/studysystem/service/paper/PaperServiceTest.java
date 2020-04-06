@@ -30,4 +30,16 @@ class PaperServiceTest {
         mockPaperService.searchPapers(null);
         verify(mockPaperService,times(1)).searchPapers(null);
     }
+
+    @Test
+    void getMeetingTop10() {
+        mockPaperService.getMeetingTop10();
+        verify(mockPaperService,times(1)).getMeetingTop10();
+    }
+
+    @Test
+    void getMeetingById() {
+        mockPaperService.getMeetingById(1);
+        verify(mockPaperService,times(1)).getMeetingById(1);
+    }
 }

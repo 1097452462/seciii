@@ -64,4 +64,16 @@ class OrgServiceTest {
         mockOrgService.getRelatedOrgs(1);
         verify(mockOrgService,times(1)).getRelatedOrgs(1);
     }
+
+    @Test
+    void getHistory() {
+        mockOrgService.getHistory(1);
+        verify(mockOrgService,times(1)).getHistory(1);
+    }
+
+    @Test
+    void getInterest() {
+        mockOrgService.getInterest(1);
+        verify(mockOrgService,times(1)).getInterest(1);
+    }
 }

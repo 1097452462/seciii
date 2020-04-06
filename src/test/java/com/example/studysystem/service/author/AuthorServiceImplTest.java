@@ -166,4 +166,14 @@ class AuthorServiceImplTest {
         assertEquals("失败",authorService.getHistory(1).getMessage());
         verify(mockAuthorDao,times(1)).getHistory(1);
     }
+
+    @Test
+    void getInterest() {
+        prepare();
+        mockAuthorService.getInterest(1);
+        verify(mockAuthorService,times(1)).getInterest(1);
+        when(mockAuthorDao.getTitles(1)).thenThrow(new RuntimeException());
+        assertEquals("失败",authorService.getInterest(1).getMessage());
+        verify(mockAuthorDao,times(1)).getTitles(1);
+    }
 }

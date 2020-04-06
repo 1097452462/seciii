@@ -149,4 +149,12 @@ class AuthorDaoTest {
         assert authorDao!=null;
         assertNotNull(authorDao.getHistory(1));
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    void getTitles() {
+        assert authorDao!=null;
+        assertNotNull(authorDao.getTitles(1));
+    }
 }

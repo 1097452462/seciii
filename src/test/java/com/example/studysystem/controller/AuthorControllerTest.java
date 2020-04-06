@@ -125,4 +125,13 @@ class AuthorControllerTest {
         authorController.getHistory(1);
         verify(mockAuthorService,times(1)).getHistory(1);
     }
+
+    @Test
+    void getInterest() {
+        prepare();
+        mockAuthorController.getInterest(1);
+        verify(mockAuthorController,times(1)).getInterest(1);
+        authorController.getInterest(1);
+        verify(mockAuthorService,times(1)).getInterest(1);
+    }
 }

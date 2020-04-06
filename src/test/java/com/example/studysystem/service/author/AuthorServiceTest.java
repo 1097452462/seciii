@@ -77,4 +77,10 @@ class AuthorServiceTest {
         mockAuthorService.getHistory(1);
         verify(mockAuthorService,times(1)).getHistory(1);
     }
+
+    @Test
+    void getInterest() {
+        mockAuthorService.getInterest(1);
+        verify(mockAuthorService,times(1)).getInterest(1);
+    }
 }

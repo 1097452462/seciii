@@ -47,4 +47,22 @@ class PaperControllerTest {
         paperController.searchUser(sp);
         verify(mockPaperService,times(1)).searchPapers(sp);
     }
+
+    @Test
+    void getMeetings() {
+        prepare();
+        mockPaperController.getMeetings();
+        verify(mockPaperController,times(1)).getMeetings();
+        paperController.getMeetings();
+        verify(mockPaperService,times(1)).getMeetingTop10();
+    }
+
+    @Test
+    void getMeetingById() {
+        prepare();
+        mockPaperController.getMeetingById(1);
+        verify(mockPaperController,times(1)).getMeetingById(1);
+        paperController.getMeetingById(1);
+        verify(mockPaperService,times(1)).getMeetingById(1);
+    }
 }
