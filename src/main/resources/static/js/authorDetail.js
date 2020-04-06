@@ -38,8 +38,11 @@ $(document).ready(function() {
         function (res) {
             papers= res.content;
             var names="";
+            var i=0;
             for(let p of papers){
-                names+=p.document_title+";<br>";
+                i++;
+                if(i==3)break;
+                names+=p.document_title+";<br><br>";
             }
             $('#Top5paper').html(names);
         },
@@ -57,8 +60,8 @@ $(document).ready(function() {
             var i=0;
             for(let p of orgName){
                 i++;
-                if(i>5)break;
-                names+=p+"<br>";
+                if(i>3)break;
+                names+=p+"<br><br>";
             }
             $('#RelevantOrg').html(names);
         },
@@ -119,7 +122,24 @@ $(document).ready(function() {
         }
     );
 
-
+    getRequest(
+        '/author/interest?id='+id,
+        function (res) {
+            var list=res.content;
+            var pp=[];
+            for(let l of list){
+                var e={
+                    value:parseInt(l[1]),
+                    name:l[0]
+                };
+                pp.push(e);
+            }
+            drawPie(pp);
+        },
+        function (error) {
+            alert(JSON.stringify(error));
+        }
+    );
 
 });
 function getUrlParameter(name){
@@ -161,8 +181,6 @@ function paperClick(id){
 }
 
 function drawBar(dd) {
-
-
     option = {
         color: ['#3398DB'],
         tooltip: {
@@ -205,11 +223,48 @@ function drawBar(dd) {
             }
         ]
     };
-
-
     var myChart = echarts.init(document.getElementById("authorDetail-bar"));
-    //var RateChart = echarts.init($("#authorDetail-bar")[0]);
     myChart.setOption(option);
+}
 
+function drawPie(pp){
+    option = {
 
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        grid: {
+            left: '5%',
+            right: '5%',
+            bottom: '5%',
+            top:'5%',
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        series: [
+
+            {
+                name: '面积模式',
+                type: 'pie',
+                radius: [30, 200],
+                center: ['50%', '50%'],
+                roseType: 'area',
+                data: pp
+            }
+        ]
+    };
+    var myChart = echarts.init(document.getElementById("authorDetail-pie"));
+    myChart.setOption(option);
 }

@@ -109,4 +109,9 @@ public class AuthorController {
         return authorService.getHistory(id);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/interest", method = RequestMethod.GET)
+    public Response getInterest(@RequestParam("id") int id){
+        return authorService.getInterest(id);
+    }
 }

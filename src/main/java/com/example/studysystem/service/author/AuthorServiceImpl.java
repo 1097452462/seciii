@@ -197,6 +197,44 @@ public class AuthorServiceImpl implements AuthorService {
         }
     }
 
+    @Override
+    public Response getInterest(int id){
+        try{
+            List<String> titles=authorDao.getTitles(id);
+            Map<String,Integer> map=new TreeMap<>();
+            for(String t:titles){
+                for(String s:t.split(" ")){
+                    if(s.isEmpty())continue;
+                    if(boringWord(s))continue;
+                    s=s.toLowerCase();
+                    if(map.containsKey(s))map.put(s,map.get(s)+1);
+                    else map.put(s,1);
+                }
+            }
+            map=sortByValueDescending(map);
+            List<List<String>> ans=new ArrayList<>();
+            int i=0;
+            for(Map.Entry<String,Integer> a:map.entrySet()){//System.out.println(a.getKey()+"  "+a.getValue());
+                List<String> temp=new ArrayList<>();
+                temp.add(a.getKey());
+                temp.add(Integer.toString(a.getValue()));
+                ans.add(temp);
+                i++;
+                if(i==8)break;
+            }
+            return Response.buildSuccess(ans);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+
+    private boolean boringWord(String s){
+        String[] list={"of","an","for","a","and","from","on","in","the","high","low"};
+        for(String l:list)if(l.equals(s))return true;
+        return false;
+    }
+
     public <K, V extends Comparable<? super V>> Map<K, V> sortByValueDescending(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>()

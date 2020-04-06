@@ -17,4 +17,5 @@ public interface AuthorService  {
     Response getRelatedAuthors(int id);
     Response getRelatedOrgs(int id);
     Response getHistory(int id);
+    Response getInterest(int id);
 }

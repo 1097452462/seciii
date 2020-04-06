@@ -63,6 +63,14 @@
         )
     </select>
 
+    <select id="getTitles"  resultType="java.lang.String">
+        SELECT distinct lower(Document_title) FROM simplepaper where Authors in(
+            SELECT Author_name from docs.author where id=#{id}
+        ) and Author_Affiliations in (
+			select org from docs.author where id=#{id}
+        )
+    </select>
+
     <select id="getTopAuthor_byName"  resultType="Author" parameterType="java.util.List">
         select * from author
         where Author_name in

@@ -21,6 +21,7 @@ public interface AuthorDao {
     Integer getCitationSum(@Param("id") int id);    //某个作者文章被引用数总和
     List<Integer> getTopPaperIds(@Param("id") int id);   //某个作者所有文章引用数最多的前五
     List<String> getKeywords(@Param("id") int id);
+    List<String> getTitles(@Param("id") int id);
     List<Author> getTopAuthor_paperNum();    // 论文数前10 作者
     List<Author> getTopAuthor_citationSum();   //引用数前10 作者
     List<Author> getTopAuthor_point();   // 综合排名前10  70%论文数 30%引用数   作者
