@@ -107,7 +107,7 @@ $(document).ready(function() {
                 }).reverse();
                 var option = {
                     title: {
-                        text: '机构活跃度排行',
+                        text: '研究方向活跃度排行',
                         subtext: '数据来自学术网站'
                     },
                     tooltip: {
