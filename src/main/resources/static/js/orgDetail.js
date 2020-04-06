@@ -198,7 +198,6 @@ function drawBar(dd) {
     var myChart = echarts.init(document.getElementById("orgDetail-bar"));
     myChart.setOption(option);
 }
-
 function drawPie(pp){
     option = {
 
