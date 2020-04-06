@@ -216,10 +216,24 @@ function drawPie(pp){
             {
                 name: '面积模式',
                 type: 'pie',
-                radius: [30, 200],
+                radius: [30, 180],
                 center: ['50%', '50%'],
                 roseType: 'area',
-                data: pp
+                data: pp,
+                labelLine: {
+                    smooth: 0.2,
+                    length: 5,
+                    length2: 5
+                },
+                label:{            //饼图图形上的文本标签
+                    normal:{
+                        show:true,
+                        textStyle : {
+                            fontWeight : 300 ,
+                            fontSize : 15    //文字的字体大小
+                        },
+                    }
+                },
             }
         ]
     };
