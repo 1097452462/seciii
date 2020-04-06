@@ -3,6 +3,7 @@ package com.example.studysystem.service.paper;
 import com.example.studysystem.db.InsertDB;
 import com.example.studysystem.dao.PaperDao;
 import com.example.studysystem.dao.SimplePaperDao;
+import com.example.studysystem.entity.Meeting;
 import com.example.studysystem.entity.Paper;
 import com.example.studysystem.entity.Response;
 import com.example.studysystem.entity.SimplePaper;
@@ -31,6 +32,26 @@ public class PaperServiceImpl implements PaperService {
         }
     }
 
+    @Override
+    public Response getMeetingTop10(){
+        try{
+            List<Meeting> meetings =paperDao.getMeetingTop10();
+            return Response.buildSuccess(meetings);
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
+    @Override
+    public Response getMeetingById(int id){
+        try{
+            Meeting meeting =paperDao.getMeetingById(id);
+            return Response.buildSuccess(meeting);
+        }catch (Exception e){
+            e.printStackTrace();
+            return (Response.buildFailure("失败"));
+        }
+    }
 
     @Override
     public Response getPapers() {

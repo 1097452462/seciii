@@ -57,4 +57,9 @@ public class ViewController {
     public String jumpToAuthorDetail(){
         return "authorDetail.html";
     }
+
+    @RequestMapping(value = "/meeting-detail")
+    public String jumpToMeetingDetail(){
+        return "meetingDetail.html";
+    }
 }

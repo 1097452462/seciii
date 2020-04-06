@@ -49,6 +49,17 @@ public class PaperController {
         return  response;
     }
 
-
-
+    @ResponseBody
+    @RequestMapping(value = "/meeting",method = RequestMethod.GET)
+    public Response getMeetings(){
+        Response response= paperService.getMeetingTop10();
+        return  response;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getMeetingById",method = RequestMethod.GET)
+    public Response getMeetingById(@RequestParam("id") int id){
+        //Response flag=paperService.plugPapers();System.out.println(flag);
+        Response response= paperService.getMeetingById(id);
+        return  response;
+    }
 }

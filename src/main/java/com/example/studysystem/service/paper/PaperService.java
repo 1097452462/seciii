@@ -13,4 +13,6 @@ public interface PaperService {
     Response getPapers();
     Response getPapersById(int id);
     Response searchPapers(SimplePaper simplePaper);
+    Response getMeetingTop10();
+    Response getMeetingById(int id);
 }

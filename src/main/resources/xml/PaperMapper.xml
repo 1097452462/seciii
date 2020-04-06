@@ -33,7 +33,9 @@
         <result column="Meeting_Date" property="Meeting_Date" jdbcType="LONGVARCHAR" />
         <result column="Publisher" property="Publisher" jdbcType="VARCHAR" />
         <result column="Document_Identifier" property="Document_Identifier" jdbcType="VARCHAR" />
+
     </resultMap>
+
     <sql id="Base_Column_List" >
     id,
     Document_title,
@@ -94,5 +96,12 @@
         </foreach>
         order by Article_Citation_Count desc limit 5
     </select>
-
+    <select id="getMeetingTop10" resultType="Meeting" parameterType="java.util.List">
+        SELECT id,Publication_Title,Publication_Year,count(*) as paper_num,sum(Article_Citation_Count) as citationSum
+        FROM docs.paper group by Publication_Title order by paper_num desc limit 10;
+    </select>
+    <select id="getMeetingById" resultType="Meeting" parameterType="java.lang.Integer">
+        SELECT * FROM (SELECT id,Publication_Title,Publication_Year,count(*) as paper_num,sum(Article_Citation_Count)
+        as citationSum FROM docs.paper group by Publication_Title order by paper_num desc)AS A WHERE id=#{id};
+    </select>
 </mapper>
