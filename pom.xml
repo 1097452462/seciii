@@ -88,29 +88,15 @@
                 <version>2.7</version>
                 <configuration>
                     <formats>
-                        <!-- The XML report (in target/site/cobertura/coverage.xml)
-                             is useful for uploading to Coveralls.
-                         -->
-                        <format>xml</format>
                         <format>html</format>
+                        <format>xml</format>
                     </formats>
-                    <maxmem>256m</maxmem>
-                    <instrumentation>
-                        <excludes>
-                            <exclude>com/alertavert/**/*Configuration.class</exclude>
-                            <exclude>com/alertavert/**/*Application.class</exclude>
-                        </excludes>
-                    </instrumentation>
-                    <check>
-                        <totalLineRate>70</totalLineRate>
-                    </check>
+                    <check></check>
+
                 </configuration>
+
             </plugin>
-            <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>3.0.1</version>
-            </plugin>
+
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
