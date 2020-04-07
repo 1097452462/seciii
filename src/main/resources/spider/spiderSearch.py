@@ -10,7 +10,7 @@ base_path = "C:\\Users\\15535\\Desktop\\spider\\"
 queryText="nju"#搜索的关键词
 url = 'https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText='+queryText+'&highlight=true&returnFacets=ALL&returnType=SEARCH&pageNumber='
 # 设置你需要的文章数量，一页25条 比如2表示你需要50-75篇文章
-maxPageNumber = 1
+maxPageNumber = 50
 # 执行函数
 def work(browser,url):
 
