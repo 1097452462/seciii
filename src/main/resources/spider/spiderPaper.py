@@ -4,17 +4,32 @@ import time
 import json
 import re
 import requests
+
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 ' \
              'Safari/537.36 '
 
-base_path = "C:\\Users\\15535\\Desktop\\spider\\"#spider所在目录
-base_num='0'
-start_num=10000#spider开始的文章pdflink
+base_path = "C:\\Users\\15535\\Desktop\\spider\\"  # spider所在目录
+base_num = '0'
+start_num = 10000  # spider开始的文章pdflink
+
+
 class TimeoutException(Exception):
     pass
 
 
 ThreadStop = Thread._Thread__stop
+
+
+def runOther(csv_path, myLinks):
+        ase_res = open('ase_res_my.json', 'a')
+        with open(csv_path, 'ab+') as f:
+            for i in myLinks:
+                try:
+                    myrun(f, i)
+                except TimeoutException as e:
+                    print('outtime')
+        ase_res.flush()
+        ase_res.close()
 
 
 def timelimited(timeout):
@@ -30,6 +45,7 @@ def timelimited(timeout):
                         self.result = function(*args, **kwargs)
                     except Exception, e:
                         self._error = str(e)
+
                 def _stop(self):
                     if self.isAlive():
                         ThreadStop(self)
@@ -52,33 +68,35 @@ def timelimited(timeout):
         return decorator2
 
     return decorator
-# ase
-# https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=ASE&highlight=true&returnType=SEARCH&returnFacets=ALL&refinements=PublicationTitle:2019%2034th%20IEEE%2FACM%20International%20Conference%20on%20Automated%20Software%20Engineering%20(ASE)&refinements=PublicationTitle:2017%2032nd%20IEEE%2FACM%20International%20Conference%20on%20Automated%20Software%20Engineering%20(ASE)&refinements=PublicationTitle:2015%2030th%20IEEE%2FACM%20International%20Conference%20on%20Automated%20Software%20Engineering%20(ASE)&refinements=PublicationTitle:2016%2031st%20IEEE%2FACM%20International%20Conference%20on%20Automated%20Software%20Engineering%20(ASE)&refinements=PublicationTitle:2013%2028th%20IEEE%2FACM%20International%20Conference%20on%20Automated%20Software%20Engineering%20(ASE)
-
-# icse
-# https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=ICSE&highlight=true&returnType=SEARCH&refinements=PublicationTitle:2015%20IEEE%2FACM%2037th%20IEEE%20International%20Conference%20on%20Software%20Engineering&refinements=PublicationTitle:2018%20IEEE%2FACM%2040th%20International%20Conference%20on%20Software%20Engineering%20(ICSE)&refinements=PublicationTitle:2019%20IEEE%2FACM%2041st%20International%20Conference%20on%20Software%20Engineering%20(ICSE)&refinements=PublicationTitle:2016%20IEEE%2FACM%2038th%20International%20Conference%20on%20Software%20Engineering%20(ICSE)&refinements=PublicationTitle:2017%20IEEE%2FACM%2039th%20International%20Conference%20on%20Software%20Engineering%20(ICSE)&returnFacets=ALL
-
 
 def get_keywords(keywords):
     for kds in keywords:
         if kds["type"] == 'IEEE Keywords':
             return kds["kwd"]
     return []
+
+
 def get_keywords1(keywords):
     for kds in keywords:
         if kds["type"] == 'INSPEC':
             return kds["kwd"]
     return []
+
+
 def get_keywords2(keywords):
     for kds in keywords:
         if kds["type"] == 'INSPEC: Non-Controlled Indexing':
             return kds["kwd"]
     return []
+
+
 def get_keywords3(keywords):
     for kds in keywords:
         if kds["type"] == 'Author Keywords ':
             return kds["kwd"]
     return []
+
+
 def get_reference(url, link_num):
     headers = {"Connection": "close", "Accept": "application/json, text/plain, */*", "cache-http-response": "true",
                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3377.1 Safari/537.36",
@@ -92,11 +110,14 @@ def get_reference(url, link_num):
     else:
         reference = list()
     return reference
+
+
 def get_keywords4(keywords):
     for kds in keywords:
         if kds["type"] == 'INSPEC: Controlled Indexing':
             return kds["kwd"]
     return []
+
 
 def ieee_info(url):
     headers = {'User-Agent': USER_AGENT}
@@ -111,9 +132,9 @@ def ieee_info(url):
     else:
         title = ''
     if 'publicationYear' in content:
-        publicationYear=content['publicationYear']
+        publicationYear = content['publicationYear']
     else:
-        publicationYear=''
+        publicationYear = ''
     if 'authors' in content:
         authors = content['authors']
     else:
@@ -128,56 +149,56 @@ def ieee_info(url):
         keywords = content['keywords']
     else:
         keywords = ''
-#____________________________
+    # ____________________________
     if 'startPage' in content:
-        startPage=content['startPage']
+        startPage = content['startPage']
     else:
-        startPage=''
+        startPage = ''
     if 'endPage' in content:
-        endPage=content['endPage']
+        endPage = content['endPage']
     else:
-        endPage=''
+        endPage = ''
     if 'publicationYear' in content:
-        publicationYear=content['publicationYear']
+        publicationYear = content['publicationYear']
     else:
-        publicationYear=''
+        publicationYear = ''
     if 'citationCount' in content:
-        citationCount=content['citationCount']
+        citationCount = content['citationCount']
     else:
-        citationCount=''
+        citationCount = ''
     if 'volume' in content:
-        volume=content['volume']
-    else :
-        volume=''
+        volume = content['volume']
+    else:
+        volume = ''
     if 'issue' in content:
-        issue=content['issue']
+        issue = content['issue']
     else:
-        issue=''
+        issue = ''
     if 'issn' in content:
-        issn=content['issn']
+        issn = content['issn']
     else:
-        issn=''
+        issn = ''
     if 'abstract' in content:
-        abstract=content['abstract']
+        abstract = content['abstract']
     else:
-        abstract=''
-#___________________________________
+        abstract = ''
+    # ___________________________________
     if 'pdfLink' in content:
-        pdfLink=content['pdfLink']
+        pdfLink = content['pdfLink']
     else:
-        pdfLink=''
+        pdfLink = ''
     if 'doi' in content:
         doi = content['doi']
     else:
         doi = ''
     if 'onlineDate' in content:
-        onlineDate=content['onlineDate']
+        onlineDate = content['onlineDate']
     else:
-        onlineDate=''
+        onlineDate = ''
     if 'publisher' in content:
-        publisher=content['publisher']
+        publisher = content['publisher']
     else:
-        publisher=''
+        publisher = ''
     # "Document Title",Authors,"Author Affiliations","Publication Title",Date Added To Xplore,
     # "Publication Year","Volume","Issue","Start Page","End Page","Abstract","ISSN",ISBNs,"DOI",
     # Funding Information,PDF Link,"Author Keywords","IEEE Terms","INSPEC Controlled Terms",
@@ -204,12 +225,13 @@ def ieee_info(url):
         publisher=publisher,
     )
     return paper
+
+
 @timelimited(10)
-def myrun(f,a):
+def myrun(f, a):
     try:
-        print("num:" + str(a) + " start...")
-        link_num = str(a)
-        url = "https://ieeexplore.ieee.org/document/" + link_num
+        print(a + " start...")
+        url = a
         paper = ieee_info(url)
 
         if paper['title'] == '':
@@ -223,9 +245,9 @@ def myrun(f,a):
             INSPECN = ''
             aukey = ''
             asdf = ''
-            a00 = 0;
+            a00 = 0
             for i in paper['authors']:
-                a00 = a00 + 1;
+                a00 = a00 + 1
                 if a00 == len(paper['authors']):
                     ss1 = i['firstName'].split(' ')
                     for j in ss1:
@@ -238,42 +260,42 @@ def myrun(f,a):
                         Authors = Authors + j[0] + '. '
                     Authors = Authors + i['lastName'] + '; '
                     Author_Affiliations = Author_Affiliations + i['affiliation'] + "; "
-            b00 = 0;
+            b00 = 0
             Keywords0 = get_keywords(paper['keywords'])
             for i in Keywords0:
-                b00 = b00 + 1;
+                b00 = b00 + 1
                 if b00 == len(Keywords0):
                     Keywords = Keywords + i
                 else:
                     Keywords = Keywords + i + ";"
             Keywords0 = get_keywords1(paper['keywords'])
-            b00 = 0;
+            b00 = 0
             for i in Keywords0:
-                b100 = b00 + 1;
+                b100 = b00 + 1
                 if b00 == len(Keywords0):
                     INSPEC = INSPEC + i
                 else:
                     INSPEC = INSPEC + i + ";"
             Keywords0 = get_keywords2(paper['keywords'])
-            b00 = 0;
+            b00 = 0
             for i in Keywords0:
-                b00 = b00 + 1;
+                b00 = b00 + 1
                 if b00 == len(Keywords0):
                     INSPECN = INSPECN + i
                 else:
                     INSPECN = INSPECN + i + ";"
             Keywords0 = get_keywords3(paper['keywords'])
-            b00 = 0;
+            b00 = 0
             for i in Keywords0:
-                b00 = b00 + 1;
+                b00 = b00 + 1
                 if b00 == len(Keywords0):
                     aukey = aukey + i
                 else:
                     aukey = aukey + i + ";"
             Keywords0 = get_keywords4(paper['keywords'])
-            b00 = 0;
+            b00 = 0
             for i in Keywords0:
-                b00 = b00 + 1;
+                b00 = b00 + 1
                 if b00 == len(Keywords0):
                     asdf = asdf + i
                 else:
@@ -323,29 +345,31 @@ def myrun(f,a):
             if ss[0] == '\"':
                 f.write(ss)
                 f.write('\r\n')
-            f.flush();
+            f.flush()
     except Exception:
         print("error")
 
+
 def ieee_parse(csv_path):
     # ase
-    ase_res = open(base_path + 'ase_res'+base_num+'.json', 'a')
+    ase_res = open(base_path + 'ase_res' + base_num + '.json', 'a')
     # icse
     # icse_res = open(base_path + 'icse_res.json', 'a')
 
     res = []
 
     # flag = False
-    a=start_num
+    a = start_num
     with open(csv_path, 'ab+') as f:
         while a < 10000000:
-                try:
-                    myrun(f,a)
-                    a=a+1
-                except TimeoutException as e:
-                    print('outtime')
+            try:
+                myrun(f, a)
+                a = a + 1
+            except TimeoutException as e:
+                print('outtime')
     ase_res.flush()
     ase_res.close()
+
 
 def format_reference(ref):
     print(ref)
@@ -357,19 +381,9 @@ def format_reference(ref):
             res.append(s)
     return res
 
-def do_something_after_timeout(f,a):
-    print('outtime')
-if __name__ == '__main__':
-    timelimited(5)
-    ieee_parse(base_path + 'ase'+base_num+'.csv')
-    # ieee_parse(base_path + 'icse15_16_17_18_19.csv')
-# @timelimited(2)
-# def asd():
-#     time.sleep(7)
-#     return "12312"
 
-# if __name__ == "__main__":
-#     try:
-#         print(asd())
-#     except TimeoutException as e:
-#         print("asdfasd")
+def do_something_after_timeout(f, a):
+    print('outtime')
+
+
+
