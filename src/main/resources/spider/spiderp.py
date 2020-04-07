@@ -9,6 +9,7 @@ browser = webdriver.Chrome()
 i=2009
 while i <=2020:
     try:
+#
         y=str(i)
         stt=time.time()
         print("Year "+y+' start.....')
